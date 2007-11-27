@@ -1,0 +1,1146 @@
+;; $Id: mpa.el,v 1.59 2007/09/28 16:04:48 swain Exp $
+
+;; $Log: mpa.el,v $
+;; Revision 1.59  2007/09/28 16:04:48  swain
+;; added log tailling code for pixami server
+;;
+;; Revision 1.58  2007/08/03 14:08:51  swain
+;; I'm tired of trying to cvs update in the www shell when I run
+;; sw-veracity. Fixing.
+;;
+;; Revision 1.57  2007/08/02 20:31:08  swain
+;; moved sw-highlight* to here, renamed mpa-highlight*
+;;
+;; Revision 1.56  2007/08/02 17:18:58  swain
+;; new function to parse an Authorize.net response string
+;;
+;; Revision 1.55  2007/07/19 18:44:31  swain
+;;
+;; Added func for store session db
+;;
+;; Revision 1.54  2007/07/19 18:37:19  swain
+;; fixed a collision
+;;
+;; Revision 1.53  2007/06/26 19:45:35  swain
+;; turn off read-only when i'm trying to explode the xml.
+;;
+;; Revision 1.52  2007/06/25 15:11:26  swain
+;; added function to open cc database on development; removed old php4
+;; lint checker.
+;;
+;; Revision 1.51  2007/05/23 14:17:36  swain
+;; Don't su - swain when swain
+;;
+;; Revision 1.50  2007/05/09 14:25:16  swain
+;; and defalias it. i shouldn't make so many tiny commits, should I?
+;;
+;; Revision 1.49  2007/05/09 14:23:55  swain
+;; Dunno why i never did (comint-send-input) on this command.
+;;
+;; Revision 1.48  2007/05/09 14:20:15  swain
+;; renamed a local variable
+;;
+;; Revision 1.47  2007/04/26 17:41:58  swain
+;; mpa-gallery, mpa-install... same thing
+;;
+;; Revision 1.46  2007/04/26 15:40:15  swain
+;; toggle-truncate-lines is the One True F12. Moved to swainlib, since I
+;; can't imagine living any other way.
+;;
+;; Revision 1.45  2007/04/20 19:56:20  swain
+;; Added polish to sw-tail-*-logs so I don't have to work so hard.
+;;
+;; Revision 1.44  2007/04/20 18:40:49  swain
+;; And make the error log buffer tiny before saving the window
+;; configuration to register two. Life is good!
+;;
+;; Revision 1.43  2007/04/20 18:38:19  swain
+;; finally added a (progn) to (sw-tail-swainstore-logs) to set font,
+;; background color and window (frame) size.
+;;
+;; Revision 1.42  2007/04/17 20:09:05  swain
+;; oops: left out a slash
+;;
+;; Revision 1.41  2007/04/17 19:59:01  swain
+;; Drastically (!) shortened this file by figuring out a simple recursive
+;; function to calculate the five levels subpath. Refactored throughout
+;; once this was solved. Lisp (if) statements are a bitch.
+;;
+;; Revision 1.40  2007/04/16 13:56:00  swain
+;; we don't use the function log anymore.
+;;
+;; Revision 1.39  2007/03/17 18:13:25  swain
+;; oops. typo.
+;;
+;; Revision 1.38  2007/03/17 18:12:46  swain
+;; updated osc_products
+;;
+;; Revision 1.37  2007/03/16 19:09:38  swain
+;; added mpa-clear-discounts
+;;
+;; Revision 1.36  2007/03/12 20:30:57  swain
+;; on second thought, put root in bin
+;;
+;; Revision 1.35  2007/03/12 20:30:27  swain
+;; updated mpa-ofs
+;;
+;; Revision 1.34  2007/03/12 16:20:12  swain
+;; tweaked (mpa-products)
+;;
+;; Revision 1.33  2007/03/09 20:44:36  swain
+;; Updated sw-ofs
+;;
+;; Revision 1.32  2007/03/06 16:25:57  swain
+;; Some updates. Nothing major.
+;;
+;; Revision 1.31  2007/03/02 22:19:04  swain
+;; Created new function, mpa-destroy-cart, which calls a stored procedure
+;; destroycart() with the osc session id under point.
+;;
+;; Revision 1.30  2007/02/16 22:02:56  swain
+;; updated to reflect new table names
+;;
+;; Revision 1.29  2006/10/25 15:56:44  swain
+;; added new function to put shells in veracity development directory
+;;
+;; Revision 1.28  2006/10/24 15:55:15  swain
+;; tweaked mpa-open-user-data-dirs
+;;
+;; Revision 1.27  2006/10/17 17:16:58  swain
+;; added mpa-ftp to take me to ftp directory faster
+;;
+;; Revision 1.26  2006/08/18 14:53:51  swain
+;; added mpa-ofs, a new function to move my shell buffers to the
+;; installation of the OFS.
+;;
+;; Revision 1.25  2006/08/17 15:05:44  swain
+;; added session_info_id to the output of mpa-session
+;;
+;; Revision 1.24  2006/08/14 15:44:37  swain
+;; sw-store goes to my build. mpa-store to the spork build.
+;;
+;; Revision 1.23  2006/08/10 18:23:13  swain
+;; wrote a function to init a shell buffer; wrote calls to do that
+;;
+;; Revision 1.22  2006/08/02 15:58:58  swain
+;; forgot sw-sql
+;;
+;; Revision 1.21  2006/08/02 15:44:04  swain
+;; Merging in changes from production.
+;;
+;; Revision 1.20  2006/08/02 15:42:04  swain
+;; Added func calls for all my shells.
+;;
+;; Revision 1.19  2006/07/31 16:34:56  swain
+;; added mpa-session, which neatly dumps all session info for me
+;;
+;; Revision 1.18  2006/07/21 20:06:44  swain
+;; Added mpa-products function, which will show me all the product info.
+;;
+;; Revision 1.17  2006/07/07 20:06:22  swain
+;; Added stuff from .emacs to this file that proved too useful.
+;;
+;; Revision 1.16  2006/07/06 19:29:32  swain
+;; New function to show user data directories. Eh, already wrote one but
+;; this one's better. Also added toggle read only to mpa-explode. I'm lazy.
+;;
+;; Revision 1.15  2006/06/27 15:05:48  swain
+;; Added sw-public_html.
+;;
+;; Revision 1.14  2006/06/02 19:51:34  swain
+;; admin me. pwn r00t.
+;;
+;; Revision 1.13  2006/05/25 17:49:33  swain
+;; one more renaming, comment correction
+;;
+;; Revision 1.12  2006/05/25 17:45:10  swain
+;; bug fix: use different buffer names between swainstore and store
+;;
+;; Revision 1.11  2006/05/25 17:39:58  swain
+;; Freedom has come today: proper differenciation of log tailing. Bully.
+;;
+;; Revision 1.10  2006/04/12 18:42:57  swain
+;; Moved the bulk of .emacs to here.
+;;
+;; Revision 1.9  2006/04/11 21:12:36  swain
+;; Added first version of mpa-open-albums, designed to save me oodles of time.
+;;
+;; Revision 1.8  2006/03/15 20:32:39  swain
+;; Extracted URLs. Used defvar to preset to production host.
+;;
+;; Revision 1.7  2006/03/14 22:26:26  swain
+;; Added two helper commands, mpa-bob and mpa-cel
+;;
+;; Revision 1.6  2006/02/15 15:31:31  swain
+;; Hmm. added functions to open cel1 and bob1 dirs.
+;;
+;; Revision 1.5  2005/10/26 16:42:59  swain
+;; Added some defaliases to make life easier for me; updated some doc strings.
+;;
+;; Revision 1.4  2005/10/26 16:33:39  swain
+;; Added sw-explode as mpa-explode and defaliased it.
+;;
+;; Revision 1.3  2005/10/26 15:54:19  swain
+;; Worked out an mpa-order function to render interesting parts of an order.
+;;
+;; Revision 1.2  2005/10/26 15:38:27  swain
+;; Finishing up first version.
+;;
+;; Revision 1.1  2005/10/26 15:26:03  swain
+;; I'm moving my assorted mpa related functions here.
+;;
+
+
+(defvar sw-my-hostname "myphotoalbum.com"
+  "Default hostname for MPA stuff.")
+
+(defun mpa-cvssync ()
+  "Open a shell buffer and name it \"cvssync\""
+  (interactive)
+  (let ( (cvssync-buffer (get-buffer "cvssync")) )
+    (if (bufferp cvssync-buffer)
+        (switch-to-buffer cvssync-buffer)
+      ;; else create it
+      (progn
+        (shell)
+        (rename-buffer "cvssync"))
+      )
+      (goto-char (point-max))
+    )
+  )
+
+
+(defun mpa-products ()
+  "do that voodoo that you do"
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive)
+  (insert "
+-- list products and their relevant fields
+SELECT DISTINCT p.products_id, 
+ p.products_price, 
+ pd.products_name,
+ constant_name, 
+ categories_id, 
+ ofs_prefix_code,
+ manufacturers_product_id
+FROM
+osc_products p,
+osc_products_to_categories pc,
+osc_products_description pd
+WHERE p.products_id=pd.products_id 
+AND  pc.products_id=pd.products_id
+AND pc.categories_id=1
+ORDER by p.products_id;
+
+")
+  (comint-send-input))
+
+
+(defun mpa-cart (sess-key)
+  "This is my WILLIAM BENDIX memorial CORNER where I worship William
+ Bendix like a GOD!!"
+(interactive "sess_key (this is your osCsid cookie): ")
+(switch-to-buffer "sql")
+(goto-char (point-max))
+(insert (format "SELECT * FROM osc_cart WHERE sess_key='%s'\\G" sess-key))
+(comint-send-input))
+
+(defun mpa-cart-contents (sess_key)
+  "Give unto me mine shopping cart contents, plebian."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sess_key (this is your osCsid cookie): ")
+  (insert (format "
+SELECT si.cart_id,
+       cba.cart_contents_id, 
+       cba.key,
+       cba.value 
+FROM
+       osc_cart si, 
+       osc_cart_contents cb,
+       osc_cart_contents_attributes cba 
+WHERE
+       cba.cart_contents_id=cb.cart_contents_id AND
+       cb.cart_id=si.cart_id AND
+       si.sess_key='%s';
+" sess_key))
+  (comint-send-input))
+
+
+(defun mpa-user (user)
+  "Look up an mpa user by username."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sUsername: ")
+  (insert (format "select * from users where username='%s'\\G select concat('http://', username, '.%s/') as link from users where username='%s'; select concat('http://www.%s/app/signup/confirm.cgi?u=', username, '&uid=', userid) as activation_link from users where username='%s'; select concat('http://', username, '.%s/ampira.redirect.php?uname=', username, '&password=', password) as login_link from users where username='%s';" user sw-my-hostname user sw-my-hostname user sw-my-hostname user))
+  (comint-send-input))
+
+
+(defun mpa-banned (user)
+  "Look up an mpa user by username in the banlist."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sUsername: ")
+  (insert (format "select * from banlist where username='%s'\\G" user))
+  (comint-send-input))
+
+(defun mpa-ebanned (email)
+  "Look up an mpa user by email in the banlist."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sEmail: ")
+  (insert (format "select * from banlist where email_address='%s'\\G" email))
+  (comint-send-input))
+
+
+(defun mpa-adminme ()
+  "pwn r00t"
+  (interactive)
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (insert "update users set status=9 where username='swain';")
+  (comint-send-input))
+
+(defun mpa-email (email)
+  "Look up an mpa user by email address."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sEmail address of user: ")
+  (insert (format "select * from users where email_address='%s'\\G select concat('http://', username, '.myphotoalbum.com/') as link from users where email_address='%s'; select concat('http://www.myphotoalbum.com/app/signup/confirm.cgi?u=', username, '&uid=', userid) as activation_link from users where email_address='%s'; select concat('http://', username, '.myphotoalbum.com/ampira.redirect.php?uname=', username, '&password=', password) as login_link from users where email_address='%s';" email email email email))
+  (comint-send-input))
+
+(set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
+
+
+(defun mpa-club (userid)
+"Generate an update statement to upgrade a user."
+(interactive "sEnter userid: ")
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+(insert (format "insert into prem_packages_history values(NULL, %s, 148, now(), now(), DATE_ADD( curdate(), interval 365 day));" userid))
+(comint-send-input)
+(insert (format "select packages_history_id from prem_packages_history where customer_id=%s;" userid))
+(comint-send-input)
+(insert (format "update users set package_type= where userid in (select customer_id from prem_packages_history where customer_id=%s);" userid))
+)
+
+(defun mpa-id (username)
+  "Insert a sql SELECT statement to get the user's userid."
+  (interactive "sUsername: ")
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (insert (format "select @id := userid from users where username='%s';" username))
+  (comint-send-input)
+)
+
+(defun mpa-lint ()
+  "Run a lint check on the file the current buffer is visiting."
+ (interactive)
+ (let ( (php-interpreter "/opt/php4/bin/php -l") ) 
+   (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
+   )
+ )
+
+(global-set-key [f5] 'mpa-lint)
+(defalias 'sw-lint 'mpa-lint)
+
+
+
+
+(defun sw-defeat-mandrake ()
+  "defeat mandrake's broken security model."
+  (interactive)
+    (shell-command (format "chown swain %s" buffer-file-name))
+    (shell-command (format "chmod a+r %s" buffer-file-name))
+    )
+
+
+(defun sw-x-defeat-mandrake ()
+  "defeat mandrake's broken security model. make the file executable."
+  (interactive)
+    (shell-command (format "chown swain %s" buffer-file-name))
+    (shell-command (format "chmod a+rx %s" buffer-file-name))
+    )
+
+
+
+(defun mpa-make-clubber (username interval)
+  "Turn a frog into a prince."
+  (interactive "sUsername to upgrade to club: \nnNumber of years to make premium member: ")
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (insert (format "
+BEGIN;
+-- get their userid first. save in @id.
+select @id := userid from users where username = '%s';
+
+-- now create a new row in prem_packages_history. set the expiration
+-- date for INTERVAL (365*N) DAY.
+insert into prem_packages_history 
+       (customer_id,  products_id,  date,   start_date,  expire_date)
+VALUES (@id,          '148',        NOW(),  NOW(),       DATE_ADD( CURDATE( ) , INTERVAL (365*%d) DAY ));
+
+-- now get the primary key just created for that user. save in @ptype.
+select @ptype := packages_history_id from prem_packages_history where customer_id = @id;
+
+-- finally, update the 'users' table setting package_type to the new key from prem_packages_history
+UPDATE users SET status = '4',  package_type = @ptype WHERE userid = @id;
+
+-- and confirm:
+select * from users, prem_packages_history where userid=@id and package_type=packages_history_id and customer_id=@id\\G
+
+" username interval))
+  (comint-send-input)
+  (message "Don't forget to type COMMIT or ROLLBACK!")
+  )
+
+
+(defun mpa-send-backslash-g ()
+  "meta return (M-RET) sends \G for mysql"
+  (interactive)
+  (insert "\\G")
+  (comint-send-input)
+  )
+(global-set-key [(meta ?)] 'mpa-send-backslash-g)
+
+
+
+(defun mpa-open-user-local-php (username)
+  "Prompt for a username, open user.local.php"
+  (interactive "sUsername: ")
+  (mpa-open-user-data-file username "user.local.php")
+  )
+
+
+(defun mpa-open-config (username)
+  "Prompt for a username, open config.php"
+  (interactive "sUsername: ")
+  (mpa-open-user-data-file username "config.php")
+  )
+
+
+(defun mpa-open-user-data-file (username filename)
+  "Open the given filename in the user's data directory"
+  (find-file (concat (mpa-fast-storage-path) "/" (make-five-levels-subpath username 1) "/" filename)))
+
+
+(defun make-five-levels-subpath (username counter)
+  "Calls itself until a string is constructed in the form: s/sw/swa/swai/swain/swain"
+  (if (= counter 6) username
+  (concat (substring username 0 counter) "/" (make-five-levels-subpath username (+ counter 1))))
+)
+
+(defun mpa-fast-storage-path ()
+  "return the fast storage path"
+  "/mnt/fast/vol01"
+)
+
+(defun mpa-slow-storage-path ()
+  "return the fast storage path"
+  "/mnt/slow/vol01"
+)
+
+
+(defalias 'sw-open-config 'mpa-open-config)
+
+
+(defun mpa-open-cel1 (username album)
+  "Prompt for an album, open that user's cel1 album dir."
+  (interactive "sUsername: \nsAlbum: ")
+  (find-file (concat (mpa-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album)))
+
+(defalias 'sw-open-cel1 'mpa-open-cel1)
+
+
+(defun mpa-open-bob1 (username album)
+  "Prompt for an album, open that user's bob1 album dir."
+  (interactive "sUsername: \nsAlbum: ")
+  (find-file (concat (mpa-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album)))
+
+(defalias 'sw-open-bob1 'mpa-open-bob1)
+
+
+(defun mpa-open-user-albums (username album)
+  "Prompt for an album, open that album on both bob1 and cel1."
+  (interactive "sUsername: \nsAlbum: ")
+
+    (find-file (concat (mpa-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album))
+    (split-window-vertically)
+    (find-file (concat (mpa-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album))
+    (window-configuration-to-register ?d)
+)
+
+
+(defun mpa-open-user-data-dirs (username)
+  "Prompt for a user, open that user's bob1 and cel1 album dirs."
+  (interactive "sUsername: ")
+    (find-file (concat (mpa-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums"))
+    (split-window-vertically)
+    (find-file (concat (mpa-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums"))
+    (window-configuration-to-register ?d)
+    )
+  
+
+
+
+(defalias 'sw-open-bob1 'mpa-open-bob1)
+
+
+(defun mpa-install ()
+  "Jump to the Gallery installation for this server, in the shell where the user is cvssync."
+  (interactive)
+  (switch-to-buffer (get-buffer "cvssync"))
+  (goto-char (point-max))
+  (insert "cd /mnt/cel-1/vol01/linkless/gallery")
+  (comint-send-input))
+
+(defalias  'mpa-gallery 'mpa-install)
+
+(defun mpa-xml-explode ()
+  "explode an xml file. That is, add linebreaks after every > char."
+  (interactive)
+  (if buffer-read-only (toggle-read-only) )
+  (replace-regexp ">" ">
+")
+)
+
+
+(defun mpa-order (orders_id)
+  "Render the pertinent parts of an mpa order."
+  (interactive "sorders_id: ")
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (window-configuration-to-register ?0)
+
+  (insert (format "select * from osc_orders_products where orders_id=%s\\G" orders_id))
+  (comint-send-input)
+
+  (sleep-for 1) ;; give the output time to show up.
+
+  (insert (format "select orders_products_id, products_options, products_options_values from osc_orders_products_attributes where orders_id=%s order by orders_products_id;" orders_id))
+  (comint-send-input)
+  )
+
+
+(defun mpa-explode ()
+  "Explode a serialized PHP data structure via replace-regexp"
+  (interactive)
+  (if buffer-read-only (toggle-read-only) )
+  (save-excursion
+    (point-min)
+    (replace-regexp "\\([;\\}]\\)\\([Osib]\\):" "\\1
+\\2")
+    )
+  )
+
+(defalias 'sw-explode 'mpa-explode)
+
+
+(defun mpa-cd-bob (username)
+  "Prompt for a username, insert a change directory command at point-max."
+  (interactive "sUsername: ")
+  (if (string= major-mode "shell-mode")
+      (progn
+        (goto-char (point-max))
+        (insert (concat "cd " (mpa-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums"))
+        (comint-send-input))
+    ;; else
+    (message "This is not a shell buffer.")
+    
+    )
+  )
+
+(defun mpa-cd-cel (username)
+  "Prompt for a username, insert a change directory command at point-max."
+  (interactive "sUsername: ")
+  (if (string= major-mode "shell-mode")
+      (progn
+       (goto-char (point-max))
+       (insert (concat "cd " (mpa-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums"))
+       (comint-send-input))
+    ;; else
+    (message "This is not a shell buffer.")
+    
+    )
+  )
+
+
+
+
+(defun sw-projects ()
+  "A GRAM??  A BRAM...  A GROOM...  A BROOM...  Oh, Yeh!!  Wash the
+ ROOM!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects")
+  (comint-send-input))
+
+
+(defun sw-gallery ()
+  "Jump to the CVS copy of Gallery I'm currently working on.."
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects/ampiradev/gallery")
+  (comint-send-input))
+
+(defun sw-signup ()
+  "Jump to mpa-signup."
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects/mpa-signup")
+  (comint-send-input))
+
+(defun sw-swain ()
+  "Stop laughing. It's not funny."
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd /mnt/cel-1/vol01/s/sw/swa/swai/swain/swain")
+  (comint-send-input))
+
+(defun sw-veracity ()
+  "Now, let's SEND OUT for QUICHE!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "www"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects/veracity")
+  (comint-send-input)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects/veracity")
+  (comint-send-input)
+)
+
+
+(defun sw-install ()
+  "Someone is DROOLING on my collar!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cvssync"))
+  (goto-char (point-max))
+  (insert "cd /mnt/cel-1/vol01/linkless/gallery")
+  (comint-send-input))
+
+(defun sw-public_html ()
+  "Oh, FISH sticks, CHEEZ WHIZ, GIN fizz, SHOW BIZ!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cvssync"))
+  (goto-char (point-max))
+  (insert "cd /opt/mpa/custom-sites/store/public_html")
+  (comint-send-input))
+
+
+(defun sw-gifts ()
+  "Well, I'm a classic ANAL RETENTIVE!!  And I'm looking for a way to
+ VICARIOUSLY experience some reason to LIVE!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd /opt/mpa/custom-sites/gifts")
+  (comint-send-input))
+ 
+(defun mpa-store ()
+  "..  or were you driving the PONTIAC that HONKED at me in MIAMI last Tuesday?"
+  (interactive)
+  (switch-to-buffer (get-buffer "cvssync"))
+  (goto-char (point-max))
+  (insert "cd /opt/mpa/custom-sites/store/public_html")
+  (comint-send-input))
+ 
+(defun sw-store ()
+  "..  or were you driving the PONTIAC that HONKED at me in MIAMI last Tuesday?"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~/public_html/projects/ampiradev/gallery-sc/public_html")
+  (comint-send-input))
+
+(defun sw-schema ()
+  "Look DEEP into the OPENINGS!!  Do you see any ELVES or EDSELS...
+ or a HIGHBALL??..."
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd /home/swain/public_html/projects/myphotoalbum/mysql/mpa")
+  (comint-send-input))
+
+;; new: move two shells to the same dir. revolutionary in its obviousness.
+(defun sw-ofs ()
+  "I was in EXCRUCIATING PAIN until I started reading JACK AND JILL Magazine!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "root"))
+  (goto-char (point-max))
+  (insert "cd /home/swain/public_html/projects/ofs/bin")
+  (comint-send-input)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd /home/swain/public_html/projects/ofs")
+  (comint-send-input))
+
+
+;; move two shells to the "live" dir for the ofs.
+(defun mpa-ofs ()
+  "I was in EXCRUCIATING PAIN until I started reading JACK AND JILL Magazine!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "root"))
+  (goto-char (point-max))
+  (insert "cd /opt/mpa/dpi/ofs/bin")
+  (comint-send-input)
+  (switch-to-buffer (get-buffer "cvssync"))
+  (goto-char (point-max))
+  (insert "cd /opt/mpa/dpi/ofs")
+  (comint-send-input))
+
+
+(defun mpa-ftp ()
+  "Somewhere in suburban Honolulu, an unemployed bellhop is whipping up
+ a batch of illegal psilocybin chop suey!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "root"))
+  (goto-char (point-max))
+  (insert "cd /opt/proftpd/var/ftp/pub")
+  (comint-send-input)
+)
+
+
+;; replace ^M in an entire buffer. Needs to be reworked to do only a
+;; region, eventually.
+(fset 'sw-replace-M
+   [?\M-< escape ?% ?\C-q ?\C-m return ?\C-q ?\C-j return ?!])
+
+
+(setq backup-by-copying t)
+
+(defun sw-fix-tail ()
+  "Colorize the window that tails logs."
+  (interactive)
+  (set-default-font "-adobe-courier-medium-r-normal-*-*-120-*-*-*-*-iso8859-1")
+  (set-background-color "#202020")
+  (set-foreground-color "goldenrod")
+)
+
+(defalias 'sw-fix-logs 'sw-fix-tail) ;; because i keep forgetting
+
+(fset 'sw-find-gallery-file
+   [?\C-x ?\C-f ?\C-a ?\C-k ?/ ?h ?o ?m ?e ?/ ?s ?w ?a ?n ?i ?/ backspace backspace backspace ?i ?n ?/ ?p ?u ?b ?l ?i ?c ?_ ?p ?r backspace backspace ?h ?t ?m ?l ?/ ?p ?r ?o ?j ?e ?c ?t ?s ?/ ?a ?m ?p ?i ?r ?a ?d ?e ?v ?/ ?g ?a ?l ?l ?e ?r ?y ?/])
+
+(defun sw-font ()
+  "Fix the fracking font."
+  (interactive)
+  (set-default-font "-adobe-courier-medium-r-normal-*-*-120-*-*-*-*-iso8859-1")
+  )
+
+;; override default command for grep-find. I want to look at php files in Gallery mostly.
+(setq grep-find-command "find . \\( -name \\*.php -o -name \\*.inc \\) -print0 | xargs -0 -e grep -n -e ")
+
+(defun sw-cvssync ()
+  "A named shell buffer for doing cvssync stuff."
+  (interactive)
+  (let ( (cvssync-buffer (get-buffer "cvssync")) )
+    (if (bufferp cvssync-buffer)
+        (switch-to-buffer cvssync-buffer)
+      ;; else create it                                                                                                              
+      (progn
+        (shell)
+        (rename-buffer "cvssync"))
+      )
+    )
+  )
+
+(defun sw-test ()
+  "Mmmmmm-MMMMMM!!  A plate of STEAMING PIECES of a PIG mixed
+ with the shreds of SEVERAL CHICKENS!!...  Oh BOY!!  I'm
+ about to swallow a TORN-OFF section of a COW'S LEFT LEG
+ soaked in COTTONSEED OIL and SUGAR!!  ..  Let's see..
+ Next, I'll have the GROUND-UP flesh of CUTE, BABY LAMBS
+ fried in the MELTED, FATTY TISSUES from a warm-blooded
+ animal someone once PETTED!!  ...  YUM!!  That was GOOD!!
+ For DESSERT, I'll have a TOFU BURGER with BEAN SPROUTS
+ on a stone-ground, WHOLE WHEAT BUN!!"
+  (interactive)
+  (let ( (test-buffer (get-buffer "test")) )
+    (if (bufferp test-buffer)
+        (switch-to-buffer test-buffer)
+      ;; else create it                                                                                                              
+      (progn
+        (shell)
+        (rename-buffer "test"))
+      )
+    )
+  )
+
+(defun sw-sessiondb ()
+  "I'm having an emotional outburst!!"
+  (interactive)
+  (let ( (sessions-buffer (get-buffer "sessions")) )
+    (if (bufferp sessions-buffer)
+        (switch-to-buffer sessions-buffer)
+      ;; else create it                                                                                                              
+      (progn
+        (shell)
+        (rename-buffer "sessions")
+        (insert "/d0/mysql/mpa/bin/mysql -S /tmp/mysql.session.sock  -uroot session")
+        (comint-send-input))
+      )
+    )
+  )
+
+(defalias 'mpa-sessiondb 'sw-sessiondb)
+
+
+(defun sw-storesessiondb ()
+  "Do I hear th' SPINNING of various WHIRRING, ROUND, and WARM
+ WHIRLOMATICS?!"
+  (interactive)
+  (let ( (sessions-buffer (get-buffer "store-sessions")) )
+    (if (bufferp sessions-buffer)
+        (switch-to-buffer sessions-buffer)
+      ;; else create it                                                                                                              
+      (progn
+        (shell)
+        (rename-buffer "store-sessions")
+        (insert "/d0/mysql/mpa/bin/mysql -S /tmp/mysql.session.sock  -uroot session2")
+        (comint-send-input))
+      )
+    )
+  )
+
+(defalias 'mpa-storesessiondb 'sw-storesessiondb)
+
+
+
+(defun sw-cc-db ()
+  "I'm having an emotional outburst!!"
+  (interactive)
+  (let ( (cc-db-buffer (get-buffer "cd db")) )
+    (if (bufferp cc-db-buffer)
+        (switch-to-buffer cc-db-buffer)
+      ;; else create it                                                                                                              
+      (progn
+        (shell)
+        (rename-buffer "cc db")
+        (insert "/d0/mysql/mpa/bin/mysql -S /tmp/mysql.mpa.sock -uroot store_cc")
+        (comint-send-input))
+      )
+    )
+  )
+
+(defalias 'mpa-cc-db 'sw-cc-db)
+
+
+(defun sw-lint-pl ()
+  "Run a lint check on the file the current buffer is visiting."
+ (interactive)
+ (let ( (php-interpreter "/usr/bin/perl -wc") ) 
+   (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
+   )
+ )
+
+(defun sw-lint-php ()
+  "Run a lint check on the file the current buffer is visiting."
+ (interactive)
+ (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
+   (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
+   )
+ )
+
+
+(defun sw-lint-php5 ()
+  "Run a lint check on the file the current buffer is visiting."
+ (interactive)
+ (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
+   (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
+   )
+ )
+
+(global-set-key [f5] 'sw-lint-php5)
+
+
+
+
+;; should factor out the alist used. pass it any alist, and
+;; whammo. tailed logs.
+
+(defvar sw-tail-store-frame-name "store logs" "Frame name for store logs")
+(defvar sw-tail-store-alist '(
+                             ("store log" . "/opt/mpa/logs/osc.log")
+                             ("func log" . "/opt/mpa/logs/osc_func.log")
+                             ("apache error2 log" . "/opt/apache2/logs/error_log")
+                             )
+  "List of store log files with names for buffers. Used by sw-tail-store-logs and sw-kill-store-logs.")
+
+(defvar sw-tail-swainstore-frame-name "swainstore logs" "Frame name for the swain store logs")
+(defvar sw-tail-swainstore-alist '(
+                             ("swainstore osc log" . "/tmp/osc.log")
+                             ;;("swainstore func log" . "/tmp/osc_func.log")
+                             ("swainstore apache error2 log" . "/opt/apache2/logs/store_error_log")
+                             )
+  "List of swainstore log files with names for buffers. Used by sw-tail-store-logs and sw-kill-store-logs.")
+
+
+(defvar sw-tail-pixami-frame-name "pixami logs" "Frame name for the pixami logs")
+(defvar sw-tail-pixami-alist '(
+                             ("catalina.log" . "/opt/tomcat/logs/catalina.out")
+                             ("pixami log (localhost.YYYY-MM-DD.log))" . "/opt/tomcat/logs/localhost.")
+                             )
+  "List of pixami log files with names for buffers. Used by sw-tail-pixami-logs and sw-kill-pixami-logs.")
+
+
+
+(defun sw-tail-store-logs ()
+  "Tail log files in shell buffers. The files to tail, and the names to give
+   to buffers, are in the alist sw-tail-store-alist."
+  (interactive)
+  (sw-tail-logs-meta sw-tail-store-alist sw-tail-store-frame-name)
+  (progn
+    (select-frame-by-name sw-tail-store-frame-name)
+    (sw-fix-logs)
+    (sw-colors "200020")
+    (set-frame-width (selected-frame) 165)
+    (set-frame-height (selected-frame) 70)
+    (enlarge-window -25)
+    (window-configuration-to-register ?3)
+    )
+)
+
+(defun sw-kill-store-logs ()
+  (interactive)
+  (sw-kill-logs-meta sw-tail-store-alist sw-tail-store-frame-name))
+
+
+
+
+(defun sw-tail-swainstore-logs ()
+  "Tail log files in shell buffers. The files to tail, and the names to give
+   to buffers, are in the alist sw-tail-store-alist."
+  (interactive)
+  (sw-tail-logs-meta sw-tail-swainstore-alist sw-tail-swainstore-frame-name)
+  (progn
+    (select-frame-by-name sw-tail-swainstore-frame-name)
+    (sw-fix-logs)
+    (sw-colors "002020")
+    (set-frame-width (selected-frame) 165)
+    (set-frame-height (selected-frame) 70)
+    (enlarge-window -25)
+    (window-configuration-to-register ?2)
+    )
+  )
+
+(defun sw-kill-swainstore-logs ()
+  (interactive)
+  (sw-kill-logs-meta sw-tail-swainstore-alist sw-tail-swainstore-frame-name))
+
+
+
+(defun sw-tail-pixami-logs ()
+  "Tail log files in shell buffers. The files to tail, and the names to give
+   to buffers, are in the alist sw-tail-store-alist."
+  (interactive)
+  (sw-tail-logs-meta sw-tail-pixami-alist sw-tail-pixami-frame-name)
+  (progn
+    (select-frame-by-name sw-tail-pixami-frame-name)
+    (sw-fix-logs)
+    (sw-colors "002000")
+    (set-frame-width (selected-frame) 165)
+    (set-frame-height (selected-frame) 70)
+    (enlarge-window -25)
+    (window-configuration-to-register ?2)
+    )
+  )
+
+(defun sw-kill-pixami-logs ()
+  (interactive)
+  (sw-kill-logs-meta sw-tail-pixami-alist sw-tail-pixami-frame-name))
+
+
+
+
+(defun sw-tail-logs-meta (store-alist store-frame-name)
+  "meta function for opening logs and tailing them in a new frame"
+  ;; if we are on a windowing system like X11, open this in a new frame
+  (if window-system
+    (let ((logs-frame (make-frame)))
+      (select-frame logs-frame)
+      (set-frame-name store-frame-name)))
+
+  (let (pair (file-alist store-alist))
+    (while (consp file-alist) 
+      ;; first time through these are equal so we do not split the buffer
+      (if (not (equal (safe-length file-alist) (safe-length store-alist)))
+          (split-window-vertically))
+      (setq pair (car file-alist))
+      (shell)
+      (rename-buffer (car pair))
+      (goto-char (point-max))
+      (insert (format "tail -f `ls -t %s* | head -1`" (cdr pair)))
+      (comint-send-input)
+      ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
+      (setq file-alist (cdr file-alist))
+      )
+    (balance-windows)
+    (window-configuration-to-register ?1))
+  )
+ 
+;; undo the work of sw-tail-logs-meta
+(defun sw-kill-logs-meta (store-alist store-frame-name)
+  "Kill the buffers tailing the log files as listed in store-alist."
+  (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
+      (progn
+        (switch-to-buffer (car (car store-alist)))
+        (delete-other-windows)
+        (let ((file-alist store-alist))
+          (while (consp file-alist)
+            (setq pair (car file-alist))
+            (unless (kill-buffer (car pair))
+              (message (format "Couldn't kill the buffer %s." (car pair))))
+            (setq file-alist (cdr file-alist))
+            ))
+        (when window-system
+          (select-frame-by-name store-frame-name)
+          (delete-frame))
+        )
+    ;; else:
+        (message "Log tailing buffers not deleted.")))
+
+
+(add-to-list 'auto-mode-alist '("gallery.conf$"     . php-mode))
+(add-to-list 'auto-mode-alist '("store.conf$"       . php-mode))
+(add-to-list 'auto-mode-alist '("store.swain.conf$" . php-mode))
+(add-to-list 'auto-mode-alist '("default$"          . php-mode))
+
+
+(fset 'flowerbox
+   [?/ ?* ?* tab return ?* tab return ?* ?/ tab up ? ])
+
+
+(fset 'spaceit
+   " \C-f ")
+
+(global-set-key [f10] 'spaceit)
+
+
+;; spy on what user deleted, by appending to an html file (which we 
+;; have to do, to get around hotlinking blocking via mod_rewrite)
+;; sample url:
+;; http://rawimages.myphotoalbum.com/c/ca/can/canu/canuc/canuckdaysfan/albums/album03/DSC02338.jpg
+;; (defun sw-trashcan-append ()
+;;   "append a url to the trashcan file"
+;;   (interactive)
+;;   (let ((path (buffer-substring (region-beginning) (region-end))))
+;;     ;; the 'path' variable will now contain something like:
+;;     ;; /mnt/bob-1/vol01/a/al/ale/alei/aleih/aleihah/albums/album01/DSCF0572.jpg
+;;     ;; we want these components:
+;;     ;; /a/al/ale/alei/aleih/aleihah, album01, DSCF0568.jpg
+;;     (setq trashcan-append-me (concat "http://rawimages.myphotoalbum.com" (car (cdr (split-string path "vol01")))))
+;;     (shell-command (format "echo '<a href=%s>%s</a><br>' >> /opt/mpa/custom-sites/nakedcowboy/xxx/trashcan.html" 
+;;                            trashcan-append-me
+;;                            trashcan-append-me)) 
+;;     )
+;;   )
+
+
+
+(defun mpa-init-shell (buffer-name command-string)
+  "Initialize buffer buffer-name with command string command-string."
+  (interactive)
+  (switch-to-buffer (get-buffer buffer-name))
+  (goto-char (point-max))                                                                                                                         
+  (insert command-string)
+  (comint-send-input)
+)
+
+;; this has to be run when running Emacs as a normal user; otherwise
+;; root can just su - to all the users itself.
+(defun sw-init-sudo (passwd)
+  "Prompt for password, execute a useless command"
+  (interactive "sPassword:")
+
+  ;; hack to seed the sudo command so following calls to sudo don't
+  ;; need a password
+  (shell-command (format "echo '%s' | sudo cat /dev/null" passwd))
+
+  (mpa-init-shell "sql" "mpa")
+  (mpa-init-shell "www" "sudo su - www")
+  (mpa-init-shell "cvssync" "sudo su - cvssync")
+  (mpa-init-shell "root" "sudo -s")
+  )
+
+
+(defun mpa-destroy-cart ()
+  "Delete the cart for the oscsid under point. Put
+   your cursor on the session ID in the osc log and run this function."
+  (interactive)
+  (let ( (mpa-oscsid (thing-at-point 'word)) )
+    (if (null mpa-oscsid)
+        (error "Point does not appear to be on an oscsid")
+      )
+    ;;(message (format "sid is %s" mpa-oscsid))
+    (switch-to-buffer "sql")
+    (goto-char (point-max))
+    (insert (format "call destroycart('%s');" mpa-oscsid))
+    (comint-send-input)
+    )
+  )
+
+(defun mpa-clear-discounts ()
+  "Remove offers from my cart. Coupons too."
+  (interactive)
+  (let ( (mpa-oscsid (thing-at-point 'word)) )
+    (if (null mpa-oscsid)
+        (error "Point does not appear to be on an oscsid")
+      )
+    ;;(message (format "sid is %s" mpa-oscsid))
+    (switch-to-buffer "sql")
+    (goto-char (point-max))
+    (insert (format "call clearoffers('%s');" mpa-oscsid))
+    (comint-send-input)
+    )
+  )
+
+
+(defun mpa-format-an-response (response-string)
+  "Format an Authorize.net response string into a readable way"
+  (interactive "sResponse string: ")
+  (switch-to-buffer (get-buffer-create "*Authorize.net Response*"))
+  (erase-buffer)
+  (mpa-recurse-an-response 1 (split-string response-string "|"))
+  (goto-char (point-min))
+)
+
+(defun mpa-recurse-an-response (counter response-list)
+  "recursively render the Authorize.net response"
+  (if (not (null response-list))
+      (progn
+        (insert (format "%d: %s\n" counter (car response-list)))
+        (mpa-recurse-an-response (+ counter 1) (cdr response-list))
+        )
+    )
+  )
+
+
+(defun mpa-highlight-items ()
+  "...PENGUINS are floating by..."
+  (interactive)
+  (hi-lock-face-buffer "CC expiry" 'hi-green-b)
+  (hi-lock-face-buffer "expired" 'hi-green-b)
+  (hi-lock-face-buffer "[^ ]+ application_top started" 'hi-green-b)
+  )
+
+
+(defun mpa-highlight-sessionkey ()
+  "If elected, Zippy pledges to each and every American
+ a 55-year-old houseboy..."
+  (interactive)
+  (let ( (mpa-basket-id (thing-at-point 'word)) )
+    (if (null mpa-basket-id)
+        (error "Point does not appear to be on a basket id")
+      )
+    (hi-lock-face-buffer mpa-basket-id 'hi-red-b)
+    )
+
+  (mpa-highlight-items)
+  )
