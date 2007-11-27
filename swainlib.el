@@ -1,4 +1,3 @@
-;; $Id: swainlib.el,v 1.50 2007/11/13 16:29:59 swain Exp $
 ;; hints:
 ;; rename-uniquely
 ;; rename-buffer is better though
