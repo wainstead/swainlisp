@@ -387,17 +387,22 @@ them."
       (shell)
       (rename-buffer sw-buff-name)
       (if (and sw-restore-shell-buffers-flag (file-exists-p (concat sw-buffer-file-name-prefix sw-buff-name)))
-          (progn
-            (message "Inserting auto-desktop-save data...")
-            (goto-char (point-min))
-            (insert-file (concat sw-buffer-file-name-prefix sw-buff-name))
-            (goto-char (point-max))
-            )
+          (sw-insert-saved-buffer-contents sw-buff-name)
         (message "No auto-desktop-save file exists for this buffer, or sw-restore-shell-buffers-flag is nil")
         )
       )
     )
   )
+
+
+
+(defun sw-insert-saved-buffer-contents (sw-buff-name)
+  (message "Inserting auto-desktop-save data...")
+  (goto-char (point-min))
+  (insert-file (concat sw-buffer-file-name-prefix sw-buff-name))
+  (goto-char (point-max))
+  )
+
 
 ;; open a shell to tail a log or other
 (fset 'sw-tail

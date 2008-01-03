@@ -1,13 +1,15 @@
 ;; Pulling the "commands" out of mpa.el so it's a pure library
-;; $Id: mpa-exec.el,v 1.1 2007/04/17 19:55:49 swain Exp $
 
+(setq sw-restore-shell-buffers-flag nil)
 (sw-cli)
 (sw-root)
 (sw-www)
 (sw-cvssync)
 (sw-test)
 (sw-sql)
+(setq sw-restore-shell-buffers-flag t)
 
+(mpa-init-shell "test" "cd ~/svn/pgms/perl")
 
 (if (string= (getenv "USER") "root")
     (progn

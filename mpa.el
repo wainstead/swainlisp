@@ -1067,6 +1067,14 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (mpa-init-shell "www" "sudo su - www")
   (mpa-init-shell "cvssync" "sudo su - cvssync")
   (mpa-init-shell "root" "sudo -s")
+
+  (sw-insert-saved-buffer-contents "cli")
+  (sw-insert-saved-buffer-contents "root")
+  (sw-insert-saved-buffer-contents "sql")
+  (sw-insert-saved-buffer-contents "test")
+  (sw-insert-saved-buffer-contents "cvssync")
+  (sw-insert-saved-buffer-contents "www")
+
   )
 
 
