@@ -414,6 +414,14 @@ them."
   )
 
 
+(defun sw-backup-saved-buffer-contents (sw-buff-name)
+  "Make a backup copy of the shell buffer auto save file"
+  (message (format "Backing up %s shell buffer contents..." sw-buff-name))
+  (rename-file 
+   (concat sw-buffer-file-name-prefix sw-buff-name)
+   (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "%s")))
+)
+
 ;; open a shell to tail a log or other
 (fset 'sw-tail
       "\C-[xshell\C-m\C-[xrename-buffer\C-mtail\C-m\C-xh\C-w\C-m")
