@@ -854,14 +854,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
 
 
-(defun mpa-init-shell (buffer-name command-string)
-  "Initialize buffer buffer-name with command string command-string."
-  (interactive)
-  (switch-to-buffer (get-buffer buffer-name))
-  (goto-char (point-max))                                                                                                                         
-  (insert command-string)
-  (comint-send-input)
-)
+(defalias 'mpa-init-shell 'sw-init-shell)
 
 ;; this has to be run when running Emacs as a normal user; otherwise
 ;; root can just su - to all the users itself.
