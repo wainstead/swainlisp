@@ -395,6 +395,16 @@ them."
   )
 
 
+(defun sw-init-shell (buffer-name command-string)
+  "Initialize buffer buffer-name with command string command-string."
+  (interactive)
+  (switch-to-buffer (get-buffer buffer-name))
+  (goto-char (point-max))                                                                                                                         
+  (insert command-string)
+  (comint-send-input)
+)
+
+
 
 (defun sw-insert-saved-buffer-contents (sw-buff-name)
   (message "Inserting auto-desktop-save data...")
