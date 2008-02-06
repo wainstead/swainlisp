@@ -46,6 +46,14 @@ ORDER by p.products_id;
 ")
   (comint-send-input))
 
+(defun mpa-subuser (subuser)
+  "Call the stored procedure showuser(subuser)."
+  (interactive "sSubuser name: ")
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (insert (format "call showuser('%s')\\G" subuser))
+  (comint-send-input)
+)
 
 (defun mpa-cart (sess-key)
   "This is my WILLIAM BENDIX memorial CORNER where I worship William
@@ -435,15 +443,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "cd /mnt/cel-1/vol01/linkless/gallery")
   (comint-send-input))
 
-(defun sw-public_html ()
-  "Oh, FISH sticks, CHEEZ WHIZ, GIN fizz, SHOW BIZ!!"
-  (interactive)
-  (switch-to-buffer (get-buffer "cvssync"))
-  (goto-char (point-max))
-  (insert "cd /opt/mpa/custom-sites/store/public_html")
-  (comint-send-input))
-
-
 (defun sw-gifts ()
   "Well, I'm a classic ANAL RETENTIVE!!  And I'm looking for a way to
  VICARIOUSLY experience some reason to LIVE!!"
@@ -466,7 +465,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd ~/public_html/projects/ampiradev/gallery-sc/public_html")
+  (insert "cd ~/public_html/projects/mpa_cart")
   (comint-send-input))
 
 (defun sw-schema ()
