@@ -1466,3 +1466,32 @@ after each yank."
       [?\C-x ?h ?\M-| ?p ?h ?p ?  ?- ?l return])
 
 
+;; stolen from:
+;; http://www.splode.com/~friedman/software/emacs-lisp/src/buffer-fns.el
+(defun apply-on-rectangle-region-points (fun beg end &rest args)
+  "Like `apply-on-rectangle', but pass points in the buffer instead of columns."
+  (apply-on-rectangle
+   (lambda (bcol ecol)
+     (apply fun
+            (progn
+              (move-to-column bcol 'coerce)
+              (point))
+            (progn
+              (move-to-column ecol 'coerce)
+              (prog1
+                  (point)
+                (beginning-of-line)))
+            args))
+   beg end))
+
+
+(defun downcase-rectangle (beg end)
+  "Convert the marked rectangle to lower case."
+  (interactive "r")
+  (apply-on-rectangle-region-points 'downcase-region beg end))
+
+
+(defun upcase-rectangle (beg end)
+  "Convert the marked rectangle to upper case."
+  (interactive "r")
+  (apply-on-rectangle-region-points 'upcase-region beg end))
