@@ -17,8 +17,6 @@
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
-;; $Id: desktop-auto-save.el,v 1.2 2006/02/22 19:41:22 swain Exp $
-
 
 ;; put these in your .emacs file or similar.
 
@@ -54,6 +52,16 @@
         (set-buffer buff)
         (when (string= major-mode "shell-mode")
           ;;(message (format "it's a shell: %s" (buffer-name buff)))
+          ;; if this buffer's contents have not been reloaded...
+
+          ;; thus far, this is just not working out... I want a
+          ;; buffer-local variable that indicates whether the buffer
+          ;; contents have been inserted. I want to insert them if
+          ;; it's nil. What's happening is the variable is "void" and
+          ;; desktop-write goes into an infinite loop making system
+          ;; beeps.
+
+          ;;(if (or (boundp 'buffer-contents-restored) (not buffer-contents-restored)) (sw-insert-saved-buffer-contents (buffer-name buff)))
           (sw-save-buffer-invisibly buff)
           )
         (setq bufflist (cdr bufflist))
@@ -92,3 +100,20 @@
     )
   )
 
+
+(defun sw-insert-saved-buffer-contents (sw-buff-name)
+  (message "Inserting auto-desktop-save data...")
+  (goto-char (point-min))
+  (insert-file (concat sw-buffer-file-name-prefix sw-buff-name))
+  (goto-char (point-max))
+  (setq buffer-contents-restored t) ;; should be buffer local variable, first created in sw-shell
+  )
+
+
+(defun sw-backup-saved-buffer-contents (sw-buff-name)
+  "Make a backup copy of the shell buffer auto save file"
+  (message (format "Backing up %s shell buffer contents..." sw-buff-name))
+  (rename-file 
+   (concat sw-buffer-file-name-prefix sw-buff-name)
+   (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "%s")))
+)
