@@ -386,6 +386,8 @@ them."
 
       (shell)
       (rename-buffer sw-buff-name)
+      ;;(make-local-variable 'buffer-contents-restored)
+      ;;(setq buffer-contents-restored nil)
       (if (and sw-restore-shell-buffers-flag (file-exists-p (concat sw-buffer-file-name-prefix sw-buff-name)))
           (sw-insert-saved-buffer-contents sw-buff-name)
         (message "No auto-desktop-save file exists for this buffer, or sw-restore-shell-buffers-flag is nil")
@@ -404,23 +406,6 @@ them."
   (comint-send-input)
 )
 
-
-
-(defun sw-insert-saved-buffer-contents (sw-buff-name)
-  (message "Inserting auto-desktop-save data...")
-  (goto-char (point-min))
-  (insert-file (concat sw-buffer-file-name-prefix sw-buff-name))
-  (goto-char (point-max))
-  )
-
-
-(defun sw-backup-saved-buffer-contents (sw-buff-name)
-  "Make a backup copy of the shell buffer auto save file"
-  (message (format "Backing up %s shell buffer contents..." sw-buff-name))
-  (rename-file 
-   (concat sw-buffer-file-name-prefix sw-buff-name)
-   (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "%s")))
-)
 
 ;; open a shell to tail a log or other
 (fset 'sw-tail
@@ -1495,3 +1480,4 @@ after each yank."
   "Convert the marked rectangle to upper case."
   (interactive "r")
   (apply-on-rectangle-region-points 'upcase-region beg end))
+
