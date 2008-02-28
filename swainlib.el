@@ -368,12 +368,6 @@
   )
 
 
-(defvar sw-restore-shell-buffers-flag t
-  "If t, shell buffer contents are inserted from the previous session.
-if available.  (This is the default). If nil, previous shell buffer
-contents are not restored.  This is necessary on some systems where
-the shell tries to execute the contents of the file.")
-
 (defun sw-shell (sw-buff-name)
   "Basically, a wrapper for M-x shell. Prompt for shell buffer name, and
 if there are autosaved contents from a previous incarnation, insert
