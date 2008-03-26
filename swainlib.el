@@ -157,7 +157,7 @@
 
 ;;(set default-major-mode 'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(global-set-key "\C-h" 'delete-backward-char)
+;;(global-set-key "\C-h" 'delete-backward-char)
 (global-set-key [(meta ??)] 'help) ;; finally
 
 ;; from a post on slashdot: how to do away with some of the gunk
@@ -1402,6 +1402,11 @@ after each yank."
     )
   )
 
+(defun sw-chmod-plusx ()
+  "Change the current file to executable."
+  (interactive)
+  (shell-command (format "chmod a+x %s" (buffer-file-name)))
+)
 
 ;; prototype Expect functionality. Long, long ways to go on this one.
 
