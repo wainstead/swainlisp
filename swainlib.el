@@ -1480,3 +1480,13 @@ after each yank."
   (interactive "r")
   (apply-on-rectangle-region-points 'upcase-region beg end))
 
+(defun sw-xml-prettyprint ()
+  "Pretty print the farking ugly xml file we're looking at"
+  (interactive)
+  (shell-command (format "xmllint --format %s" (buffer-file-name)))
+  (switch-to-buffer (get-buffer "*Shell Command Output*"))
+  (xml-mode)
+  (rename-buffer "XML pretty printed")
+  (delete-other-windows)
+  (toggle-read-only)
+  )
