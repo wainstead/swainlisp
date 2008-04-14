@@ -68,7 +68,7 @@ the shell tries to execute the contents of the file.")
           ;; desktop-write goes into an infinite loop making system
           ;; beeps.
 
-          ;;(if (or (boundp 'buffer-contents-restored) (not buffer-contents-restored)) (sw-insert-saved-buffer-contents (buffer-name buff)))
+          ;;(if (and (boundp 'buffer-contents-restored) (not buffer-contents-restored)) (sw-insert-saved-buffer-contents (buffer-name buff)))
           (sw-save-buffer-invisibly buff)
           )
         (setq bufflist (cdr bufflist))
@@ -87,7 +87,7 @@ the shell tries to execute the contents of the file.")
   "Write out shell buffer's contents for preservation behind-the-scenes."
   (set-buffer buffer)
   (let ( (coding-system-for-write 'no-conversion) ) 
-    (write-region (point-min) (point-max) (concat sw-buffer-file-name-prefix (buffer-name buffer))))
+    (write-region (point-min) (point-max) (concat sw-buffer-file-name-prefix (buffer-name buffer) (format-time-string "-%Y-%m-%d"))))
   )
 
 ;; so far, no go (no va) FIXME
@@ -113,7 +113,7 @@ the shell tries to execute the contents of the file.")
   (goto-char (point-min))
   (insert-file (concat sw-buffer-file-name-prefix sw-buff-name))
   (goto-char (point-max))
-  (setq buffer-contents-restored t) ;; should be buffer local variable, first created in sw-shell
+  ;;(setq buffer-contents-restored t) ;; should be buffer local variable, first created in sw-shell
   )
 
 
@@ -122,5 +122,5 @@ the shell tries to execute the contents of the file.")
   (message (format "Backing up %s shell buffer contents..." sw-buff-name))
   (rename-file 
    (concat sw-buffer-file-name-prefix sw-buff-name)
-   (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "%s")))
+   (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "-%Y-%m-%d")))
 )
