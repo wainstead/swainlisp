@@ -155,7 +155,7 @@ WHERE
 (defun mpa-lint ()
   "Run a lint check on the file the current buffer is visiting."
  (interactive)
- (let ( (php-interpreter "/opt/php4/bin/php -l") ) 
+ (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
    (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
    )
  )
@@ -305,7 +305,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defalias 'sw-open-bob1 'mpa-open-bob1)
 
 
-(defun mpa-install ()
+(defun mpa-gallery ()
   "Jump to the Gallery installation for this server, in the shell where the user is cvssync."
   (interactive)
   (switch-to-buffer (get-buffer "cvssync"))
@@ -313,14 +313,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "cd /mnt/cel-1/vol01/linkless/gallery")
   (comint-send-input))
 
-(defalias  'mpa-gallery 'mpa-install)
 
 (defun mpa-xml-explode ()
   "explode an xml file. That is, add linebreaks after every > char."
   (interactive)
-  (if buffer-read-only (toggle-read-only) )
-  (replace-regexp ">" ">
-")
+  (sw-xml-prettyprint)
 )
 
 
@@ -452,13 +449,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "cd /opt/mpa/custom-sites/gifts")
   (comint-send-input))
  
-(defun mpa-store ()
-  "..  or were you driving the PONTIAC that HONKED at me in MIAMI last Tuesday?"
-  (interactive)
-  (switch-to-buffer (get-buffer "cvssync"))
-  (goto-char (point-max))
-  (insert "cd /opt/mpa/custom-sites/store/public_html")
-  (comint-send-input))
  
 (defun sw-store ()
   "..  or were you driving the PONTIAC that HONKED at me in MIAMI last Tuesday?"
@@ -474,7 +464,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/myphotoalbum/mysql/mpa")
+  (insert "cd /home/swain/public_html/projects/schema/mpa")
   (comint-send-input))
 
 ;; new: move two shells to the same dir. revolutionary in its obviousness.
