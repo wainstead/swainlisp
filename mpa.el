@@ -20,7 +20,7 @@
   )
 
 
-(defun mpa-products ()
+(defun mpa-products-list ()
   "do that voodoo that you do"
   (switch-to-buffer "sql")
   (goto-char (point-max))
@@ -398,7 +398,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/ampiradev/gallery")
+  (insert "cd ~swain/public_html/projects/mpa_gallery")
   (comint-send-input))
 
 (defun sw-signup ()
@@ -437,7 +437,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cvssync"))
   (goto-char (point-max))
-  (insert "cd /mnt/cel-1/vol01/linkless/gallery")
+  (insert "cd /opt/mpa_gallery/current")
   (comint-send-input))
 
 (defun sw-gifts ()
@@ -446,11 +446,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd /opt/mpa/custom-sites/gifts")
+  (insert "cd /home/swain/public_html/projects/mpa_products")
   (comint-send-input))
  
  
-(defun sw-store ()
+(defun sw-cart ()
   "..  or were you driving the PONTIAC that HONKED at me in MIAMI last Tuesday?"
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
