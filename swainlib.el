@@ -1479,7 +1479,19 @@ after each yank."
   (shell-command (format "xmllint --format %s" (buffer-file-name)))
   (switch-to-buffer (get-buffer "*Shell Command Output*"))
   (xml-mode)
-  (rename-buffer "XML pretty printed")
   (delete-other-windows)
   (toggle-read-only)
   )
+
+(defun sw-xml-prettyprint-region ()
+  "Pretty print the farking ugly xml file we're looking at"
+  (interactive)
+  (shell-command (format "xmllint --format --nowarning -" ))
+  (switch-to-buffer (get-buffer "*Shell Command Output*"))
+  (xml-mode)
+  (delete-other-windows)
+  (toggle-read-only)
+  )
+
+(fset 'sw-xml-format-region
+   [?\C-u ?\M-| ?x ?m ?l ?l ?i ?n ?g backspace ?t ?  ?- ?- ?f ?o ?r ?m ?a ?t ?  ?- ?- ?n ?o ?a ?r backspace backspace ?w ?a ?r ?n ?i ?n ?g ?  ?- return])
