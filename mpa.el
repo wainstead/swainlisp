@@ -308,9 +308,9 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun mpa-gallery ()
   "Jump to the Gallery installation for this server, in the shell where the user is cvssync."
   (interactive)
-  (switch-to-buffer (get-buffer "cvssync"))
+  (switch-to-buffer (get-buffer "www"))
   (goto-char (point-max))
-  (insert "cd /mnt/cel-1/vol01/linkless/gallery")
+  (insert "cd /opt/mpa_gallery/current")
   (comint-send-input))
 
 
@@ -458,6 +458,14 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "cd ~/public_html/projects/mpa_cart")
   (comint-send-input))
 
+(defun sw-core ()
+  "Yow!  I forgot my PAIL!!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~/public_html/projects/mpa_core")
+  (comint-send-input))
+
 (defun sw-schema ()
   "Look DEEP into the OPENINGS!!  Do you see any ELVES or EDSELS...
  or a HIGHBALL??..."
@@ -489,7 +497,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (goto-char (point-max))
   (insert "cd /opt/mpa/dpi/ofs/bin")
   (comint-send-input)
-  (switch-to-buffer (get-buffer "cvssync"))
+  (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
   (insert "cd /opt/mpa/dpi/ofs")
   (comint-send-input))
@@ -981,3 +989,19 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "https://svn.corp.myphotoalbum.com/mpa_ofs/")
 )
 (global-set-key "\C-co" 'mpa-insert-svn-ofs)
+
+(defun mpa-insert-svn-core ()
+  "Yow!  I'm UNEMPLOYED!"
+  (interactive)
+  (insert "https://svn.corp.myphotoalbum.com/mpa_core/")
+)
+;; 'r' for 'core' since 'c' is taken by 'cart'
+(global-set-key "\C-cr" 'mpa-insert-svn-core)
+
+(defun mpa-insert-svn-signup ()
+  "Yow!  I'm UNEMPLOYED!"
+  (interactive)
+  (insert "https://svn.corp.myphotoalbum.com/mpa_signup/")
+)
+;; 'w' for 'wizard'
+(global-set-key "\C-cw" 'mpa-insert-svn-core)
