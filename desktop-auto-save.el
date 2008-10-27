@@ -51,43 +51,53 @@ the shell tries to execute the contents of the file.")
 ;; idea here is to preserve their contents in case of a crash.
 (defun sw-save-shell-buffer-contents ()
   "Find and save all buffers that are in shell-mode"
-  (interactive) 
-  (let ( (bufflist (buffer-list)) ) 
-    (while bufflist
-      (setq buff (car bufflist))
-      (save-excursion
-        (set-buffer buff)
-        (when (string= major-mode "shell-mode")
-          ;;(message (format "it's a shell: %s" (buffer-name buff)))
-          ;; if this buffer's contents have not been reloaded...
+  (interactive)
+  (and (file-accessible-directory-p sw-buffer-file-name-prefix)
+       (let ( (bufflist (buffer-list)) ) 
+         (while bufflist
+           (setq buff (car bufflist))
+           (save-excursion
+             (set-buffer buff)
+             (when (string= major-mode "shell-mode")
+               ;;(message (format "it's a shell: %s" (buffer-name buff)))
+               ;; if this buffer's contents have not been reloaded...
 
-          ;; thus far, this is just not working out... I want a
-          ;; buffer-local variable that indicates whether the buffer
-          ;; contents have been inserted. I want to insert them if
-          ;; it's nil. What's happening is the variable is "void" and
-          ;; desktop-write goes into an infinite loop making system
-          ;; beeps.
+               ;; thus far, this is just not working out... I want a
+               ;; buffer-local variable that indicates whether the buffer
+               ;; contents have been inserted. I want to insert them if
+               ;; it's nil. What's happening is the variable is "void" and
+               ;; desktop-write goes into an infinite loop making system
+               ;; beeps.
 
-          ;;(if (and (boundp 'buffer-contents-restored) (not buffer-contents-restored)) (sw-insert-saved-buffer-contents (buffer-name buff)))
-          (sw-save-buffer-invisibly buff)
-          )
-        (setq bufflist (cdr bufflist))
-        )
-      )
-    )
+               ;;(if (and (boundp 'buffer-contents-restored) (not buffer-contents-restored)) (sw-insert-saved-buffer-contents (buffer-name buff)))
+               (sw-save-buffer-invisibly buff)
+               )
+             (setq bufflist (cdr bufflist))
+             )
+           )
+         )
+       )
   )
 
-(defvar sw-buffer-file-name-prefix "~swain/.emacs.shellbuffer."
+(defvar sw-buffer-file-name-prefix "~swain/.emacs.shellbuffers/"
   "All shell buffers, when their contents are saved, get this string prefixed to the buffer name.")
 
-;; save a shell buffer's contents to ~/.emacs.shellbuffer.buffer-name; doesn't switch
+;; save a shell buffer's contents to ~/.emacs.shellbuffers/buffer-name; doesn't switch
 ;; buffer on user; hack from desktop.el which showed how to use write-region
 ;; to save the contents invisibly
 (defun sw-save-buffer-invisibly (buffer)
   "Write out shell buffer's contents for preservation behind-the-scenes."
   (set-buffer buffer)
   (let ( (coding-system-for-write 'no-conversion) ) 
-    (write-region (point-min) (point-max) (concat sw-buffer-file-name-prefix (buffer-name buffer) (format-time-string "-%Y-%m-%d"))))
+    ;; (write-region (point-min) (point-max) (concat sw-buffer-file-name-prefix (buffer-name buffer) (format-time-string "-%Y-%m-%d"))))
+    (write-region (point-min) (point-max) (sw-saved-buffer-filename (buffer-name buffer))))
+  )
+
+(defun sw-saved-buffer-filename (buffname)
+  "Make a buffer file name from the buffer name passed in."
+  "For example: pass in 'cli' and it returns '~swain/.emacs.shellbuffers/cli'"
+  (interactive "sname: ")
+  (message (concat sw-buffer-file-name-prefix buffname))
   )
 
 ;; so far, no go (no va) FIXME
