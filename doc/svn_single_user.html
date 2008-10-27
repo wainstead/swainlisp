@@ -1,0 +1,493 @@
+<html>
+<head>
+		<title>
+ONLamp.com: Single-User Subversion</title>
+        <script language="javascript" src="/common.js"></script>
+<meta name="GOOGLEBOT" content="NOARCHIVE">
+<meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+</head>
+<body  bgcolor="#ffffff" text="#000000">
+
+
+<a href="http://www.onlamp.com/">
+
+<img src="http://onlamp.com/images/onlamp/onlamp-logo.gif" alt="ONLamp.com" width="240" height="88" align="left" border="0" /></a>
+
+<dummy>&nbsp;&nbsp;&nbsp;</dummy>
+
+<br clear="all" />
+
+&nbsp;<font face="verdana,arial,helvetica" size="1">Published on <b>
+
+<a href="http://www.onlamp.com/">ONLamp.com</a></b> (<a href="http://www.onlamp.com/">http://www.onlamp.com/</a>)<br />
+
+ <!-- ---------- End of PERL --------------------- -->
+
+
+&nbsp;<a href='http://www.onlamp.com/pub/a/onlamp/2002/10/31/subversion.html'>http://www.onlamp.com/pub/a/onlamp/2002/10/31/subversion.html</a><br />
+&nbsp;<a href="/pub/a/general/print_code.html">See this</a> if you're having trouble printing code examples</font><br /><br clear="all" />
+
+<!-- ISI_LISTEN_START -->
+<span class=ISI_MESSAGE>
+<!--  
+This article is brought to you by Oreilly Net, your source for all
+Apache 
+ news.  -->
+</span>    
+
+<!--CS_PAGE_BREAK-->
+<h2>
+Single-User Subversion</h2>
+by <a href="/pub/au/1050">Rafael Garcia-Suarez</a><br />
+10/31/2002
+<!-- sidebar begins -->
+<!-- don't move sidebars -->
+<!-- sidebar ends -->
+
+<p>Subversion is an open source revision control system, similar in purpose to
+the well-known, widely deployed, and aging CVS.  It is designed to provide
+state-of-the-art versioning, built from modern technologies.  </p>
+
+<p>Subversion is still in development and has not reached version 1.0 yet.
+However, it's pretty stable and you can use it right now. In this article, we'll
+cover the basics of Subversion, how to install it, and how to use Subversion
+for personal projects. A future article will cover installing and using a
+multi-user, networked Subversion server.  </p>
+
+<ul>
+<li><a href="#what's_subversion_for">What's Subversion For?</a></li>
+<li><a href="#installing_subversion">Installing Subversion</a></li>
+<li><a href="#create_a_repository">Create a Repository</a></li>
+<li><a href="#check_out_a_working_copy">Check Out a Working Copy</a></li>
+<li><a href="#basic_commands">Basic Commands</a></li>
+<li><a href="#examining_your_changes">Examining Your Changes</a></li>
+<li><a href="#tags_and_branches">Tags and Branches</a></li>
+<li><a href="#distribution">Distribution</a></li>
+<li><a href="#don't_forget_...">Don't Forget ...</a></li>
+<li><a href="#hints_and_links">Hints and Links</a></li>
+</ul>
+
+<h3><a name="what's_subversion_for">What's Subversion For?</a></h3>
+
+<p>In short, Subversion helps developers to track changes in their project
+source files. You might ask why you would need a revision control system for
+your home projects, where you are the only person who decides how and where to
+make changes. There are several reasons: to retrieve and to compare previous
+releases, to hunt down regression bugs, to maintain backward-compatible
+branches, to produce neat changelogs, to work on two different fixes or
+improvements without confusion. Moreover, you'll get all this with little
+expense, because Subversion is surprisingly easy to install.</p>
+
+<!-- sidebar begins -->
+<!-- sidebar ends -->
+
+<p>A <em>Subversion repository</em> acts as a filesystem that remembers sets
+of changes made to it. It does this by storing files in a tree structure,
+tracking its evolution over time. The repository increments a global revision
+number with every set of changes <em>committed</em> into the repository.  As the
+whole tree is versioned, it acts as a regular filesystem.  Copying and renaming
+files is possible; creating a project branch is as easy as copying a
+directory.  You can also ask Subversion to produce a difference between two
+arbitrary revisions, or to check out some subtree at revision <em>N</em>.  </p>
+
+<h3><a name="installing_subversion">Installing Subversion</a></h3>
+
+<p>This section covers the installation of Subversion on Unix-like systems.
+(It's also possible to build and install Subversion on Windows.  See the
+<em>INSTALL</em> file of the Subversion distribution.) To install Subversion, you may
+have to upgrade (or install) some of the tools on your system
+(<code>autoconf</code>, <code>libtool</code>, <code>python2</code>). You'll
+need also the <code>expat</code> XML parsing library. For detailed info, see
+the <strong>BUILD REQUIREMENTS</strong> section of the <a
+href="http://svn.collab.net/repos/svn/trunk/INSTALL"><em>INSTALL</em> file</a>.
+Subversion is built completely on open source components.</p>
+
+<p>Subversion requires also a recent version of the Berkeley DB. Be sure to
+check the <i>README</i> and <i>INSTALL</i> files to make sure you
+have the correct version.  (As of this writing, Berkeley DB 4.0.14 worked.)
+Subversion uses this database as the underlying storage for its repositories.
+You can get it from <a href="http://www.sleepycat.com/">Sleepycat
+Software</a>.</p>
+
+<p>The Subversion snapshots, available from the main <a
+href="http://subversion.tigris.org/">Subversion site</a>, include all of
+the other libraries needed to install a local repository.  Building a
+network-accessible Subversion server requires Apache 2, but that's another
+article.  The <em>INSTALL</em> file also explains how to check out a fresh new Subversion
+from the repository (yes, the developers of Subversion do use their own
+software), but that's not absolutely needed as Subversion is becoming more
+stable. We'll use a snapshot. As of this writing, the revision number of the
+latest snapshot is 3578 (a.k.a. Subversion 0.14.5), but let's call it
+<code>XXXX</code>.</p>
+
+<p>Subversion development proceeds rapidly. To make upgrades easier, we'll
+install Subversion in its own subdirectory.  We'll also assume that you need to
+install the appropriate version of the Berkeley DB.  Commands prompted by a
+<code>#</code> should be run as root.  (If you don't have root access, install
+Subversion in your home directory instead of using <code>/usr/local</code> as in the
+examples below.) </p>
+
+<pre><code># mkdir /usr/local/subversion-rXXXX
+# ln -s /usr/local/subversion-rXXXX /usr/local/subversion
+
+$ gunzip -c db-4.0.14.tar.gz | tar xf -
+$ cd db-4.0.14/build_unix
+$ ../dist/configure --prefix=/usr/local/subversion-rXXXX
+$ make
+
+# make install</code></pre>
+
+<p>Make sure your system can find libraries in
+<code>/usr/local/subversion/lib</code>. This is generally accomplished by
+setting your system's equivalent to the environment variable
+<code>LD_LIBRARY_PATH</code>.  On Linux, you can also add this path to your
+<code>/etc/ld.so.conf</code> file and run <code>/sbin/ldconfig</code>.
+Then, build Subversion:</p>
+
+<pre><code>$ gunzip -c subversion-rXXXX.tar.gz | tar xf -
+$ cd subversion-rXXXX
+$ ./configure --with-berkeley-db=/usr/local/subversion-rXXXX \
+	--prefix=/usr/local/subversion-rXXXX
+$ make
+$ make check         # optional : runs the tests
+
+# make install</code></pre>
+
+<p>Finally, add <code>/usr/local/subversion/bin</code> to your <code>PATH</code>. That's
+it!</p>
+
+<h3><a name="create_a_repository">Create a repository</a></h3>
+
+<p>The next step is to create a repository to store your files. I'll put my
+repository in <code>/home/rafael/svn</code>, as I have plenty of room on this
+partition.</p>
+
+<pre><code>$ cd /home/rafael
+$ svnadmin create svn</code></pre>
+
+<p>I have now a directory, <code>/home/rafael/svn</code>, containing my
+repository.  It contains no files and has a revision number of 0.  I'll fix
+that by importing a source tree.  </p>
+
+<p>Suppose I'm working on a frobnizer. To create a directory
+<code>frobnizer</code> at the root level of the repository, and to import the
+contents of my tree <code>/home/rafael/frobnizer</code>, the appropriate
+command is:</p>
+
+<pre><code>$ svn import file:///home/rafael/svn /home/rafael/frobnizer frobnizer</code></pre>
+
+<p>Why the URI in the above command? The few <code>svn</code> commands that need to deal
+directly with a repository refer to it by a URL. <code>file://</code> URLs
+refer to repositories on a local disk. Subversion also supports
+<code>http://</code> and <code>https://</code> URIs for remote, Apache-powered
+Subversion servers.</p>
+
+<p>In fact, in order to organize your repository better, it's preferable to
+create a directory for your project, importing your files into a <em>trunk</em>
+subdirectory. We'll see the precise reasons for it later.  Instead of the above
+command, use:</p>
+
+<pre><code>$ svn mkdir file:///home/rafael/svn/frobnizer -m 'Create frobnizer project'
+$ svn import /home/rafael/frobnizer file:///home/rafael/svn \
+	frobnizer/trunk -m 'Initial import of frobnizer project'</code></pre>
+
+<p>The first command, <code>mkdir</code>, creates an empty subdirectory,
+<em>frobnizer</em>.  It also labels this change with the log message <em>Create
+frobnizer project</em>.  The second command performs the actual import, adding
+its own log message.</p>
+
+<p>You can create as many repositories as you like. If you work on several
+different, unrelated projects, you may want independent repositories for each.
+This will enable you to handle and to move them separately later.</p>
+
+<h3><a name="check_out_a_working_copy">Check out a working copy</a></h3>
+
+<p>You don't work directly in the repository. To make changes to your files,
+you must check out a working copy of the whole repository or of one of its
+subdirectories.  To do this, use <code>checkout</code>, performed here in a
+new <em>frobwork</em> directory:</p>
+
+<pre><code>$ svn checkout file:///home/rafael/svn/frobnizer ~/frobwork</code></pre>
+
+<p>This working copy contains all files that you've checked out, and you can
+now safely edit them.  Hidden <code>.svn</code> subdirectories will also
+contain client-side state data. These files allow Subversion to perform some
+operations without dealing directly with the repository.  This allows you to
+work off-line even if the repository is normally network accessible.  </p>
+
+<table id="page-break" width="100%" border="0" cellspacing="0" cellpadding="0" style="clear:left;"><tr><td><p class="secondary">
+<!--CS_PAGE_INDEX-->
+</p></td><td><p class="secondary" align="right">
+<a href="<!--CS_NEXT_REF-->">
+ </a></p></td></tr></table>
+
+
+
+<!--CS_PAGE_BREAK-->
+
+<p>
+
+
+
+
+<!--CS_PAGE_INDEX-->
+</p>
+
+<h3><a name="basic_commands">Basic Commands</a></h3>
+
+<p>Most <code>svn</code> commands don't use repository URIs, acting directly on a local
+working copy.  The most general form of an <code>svn</code> command is:</p>
+
+<pre><code>$ svn &lt;command&gt; [&lt;options&gt;] [&lt;targets&gt;]</code></pre> 
+
+<p>where <code>targets</code> is the list of files or directories to operate on, and
+<code>options</code> is an optional list of flags, in the familiar fashion of most
+Unix command-line interfaces. For most <code>svn</code> commands,
+<code>targets</code> defaults to the current directory, and the command operates
+recursively on each directory it processes.</p>
+
+<p>The first command we'll see is <code>svn commit</code> (also known as
+<code>svn ci</code>, which should look familiar to CVS users). This commits the
+modifications of the local files into the repository. For example,</p>
+
+<pre><code>$ svn commit *.c include</code></pre>
+
+<p>will check all <em>.c</em> files in the current directory, and all files in
+the <em>include</em> subdirectory, recursively for modifications and
+incorporate them into the repository.  Only modified files will be included in
+the change set.  As a consequence of this, a simple</p>
+
+<pre><code>$ svn commit</code></pre>
+
+<p>commits all modified files in the current directory and its
+subdirectories.</p>
+
+<p>Note that Subversion requires a log message when committing changes. You can
+specify the message via the <code>-m</code> command-line option, as in the
+<code>import</code> and <code>mkdir</code> examples above.  Lacking this
+option, <code>svn</code> will fire up the editor specified by one of the
+environment variables <code>SVN_EDITOR</code>, <code>VISUAL</code>, or
+<code>EDITOR</code>.</p>
+
+<p>Log messages can be retrieved by the <code>svn log</code> command, which
+presents a formatted list of changes for its targets. It accepts a
+<code>-v</code> (verbose) option to include in the changelog the list of files
+that were modified at each revision. The common <code>-r</code> option limits
+the list to a revision or a range of revisions.  For example, updating a
+<i>ChangeLog</i> file with all changes since revision #42 is as simple as:</p>
+
+<pre><code>$ cd ~/frobwork/trunk
+$ svn log -r42:HEAD &gt;&gt; ChangeLog
+$ svn commit ChangeLog -m 'Update ChangeLog'</code></pre>
+
+<p>Here, <code>HEAD</code> is a keyword that can be used in place of any revision number.
+It refers to the last revision number that was checked in the repository.</p>
+
+<p>If you're unhappy with your changes, the <code>svn revert</code> command
+will undo all local edits you've done to its targets. Unlike other
+<code>svn</code> commands, <code>revert</code> doesn't operate recursively on
+directories, unless you pass the <code>-R</code> option to it.</p>
+
+<p>To add or to remove files, use the <code>svn add</code> and <code>svn
+remove</code> commands. They mark files or directories to be added or removed
+into and from the repository at the next <code>commit</code>. Similarly, <code>svn
+mkdir</code> creates a new directory under version control in the working
+copy.</p>
+
+<p>As a rule of thumb, the set of changes included in a <code>commit</code> should address a
+specific problem or implement a well-defined functionality. Thinking about your
+log message before making the changes can help you to focus.  A single-purpose
+<code>commit</code> is easily examined (as a <code>diff</code>), so any bugs it may have
+introduced are appear more clearly.  Tracking down regressions is more
+difficult with several unrelated changes in a single <code>commit</code>.  </p>
+
+<h3><a name="examining_your_changes">Examining Your Changes</a></h3>
+
+<p>At some point in development, you will probably ask yourself <em>which files
+have I modified, and what changes did I make?</em> The <code>svn status</code>
+and <code>svn diff</code> commands provide answers.  </p>
+
+<p><code>svn status</code> scans the specified targets of your working copy for
+files that have changed since the last checkout or <code>commit</code>. For each file,
+it reports its status -- modified, added, deleted, or unknown to the
+versioning system.</p>
+
+<p><code>svn diff</code> produces a <code>diff</code> file applicable by the
+<code>patch(1)</code> program. By default, it uses the unified <code>diff</code> format.
+It's possible to pass additional options to the underlying <code>diff(1)</code>
+utility via the <code>-x</code> switch. By default, it compares the current
+working copy with the latest checked-out revision, but it's also able to
+produce a patch between two arbitrary revisions in the repository, or between
+your working copy and an older revision with the <code>-r</code> switch:</p>
+
+<pre><code>$ svn diff -r14:18 *.c *.h &gt; /tmp/r14-to-r18.patch</code></pre>
+
+<h3><a name="tags_and_branches">Tags and Branches</a></h3>
+
+<p>A simpler way of retrieving any previous state of a file within your working
+copy is to use <code>svn update</code>. This command updates its targets to
+their state at a specified revision (defaulting to the <code>HEAD</code> revision). For
+example,</p>
+
+<pre><code>$ svn update -r42 include</code></pre>
+	
+<p>reverts the <em>include</em> directory (and its contents) to the 42nd
+revision. (<code>update</code> is also used when you want to integrate changes
+from another working copy into your working copy, but we'll cover this in
+another article.) Subversion provides a more powerful mechanism to track the
+release points of your projects: <em>tags</em> and <em>branches</em>. There is
+no difference, from Subversion's viewpoint, between tags and branches; the
+difference is in how you use them.</p>
+
+<p>To create a tag or a branch, use the <code>svn copy</code> command.
+<code>svn copy</code> makes a copy of a versioned resource (a file or a
+directory), while retaining history. In other words, it doesn't add a file (or
+a whole tree) -- it only marks a new entry in the repository as being
+indentical to another one, <em>at a specified revision</em>. Thus, copies occur
+done in constant time, although they may logically create huge parallel
+trees.</p>
+
+<p>Let's take an example. Suppose I've just released a new <code>frobnizer</code>, version
+2.0, and I want Subversion to remember for me that <code>frobnizer</code> v2 corresponds to
+revision 42. Assuming the current revision level of directory <em>trunk</em> in
+my working copy is 42, I'll say:</p>
+
+<pre><code>$ cd ~/frobwork
+$ svn copy trunk frobnizer-2.0
+$ svn commit -m 'Release v2.0'</code></pre>
+
+<p>My repository has now two main subdirectories: <em>/frobnizer/trunk</em> and
+<em>/frobnizer/frobnizer-2.0</em>. They branch from the same revision, but can
+now evolve separately.</p>
+
+<p>If I decide to not commit any changes to the
+<em>/frobnizer/frobnizer-2.0</em> subdirectory, it's called a
+<strong>tag</strong>.  Otherwise, it's a <strong>branch</strong>.
+The advantage of a tag is obvious.  It's possible to check out
+<em>/frobnizer/frobnizer-2.0</em> to get the source for the <code>frobnizer</code> v2.</p>
+
+<p>Branches are mainly useful when a team of developers have commit access to a
+same repository. If a long, experimental development has to be made, it's
+better to create a branch, make the changes in it, and reintegrate them into
+the trunk when the development is finished. This avoids interferences.
+Subversion provides a mechanism (the <code>svn merge</code> command) to report
+the changes made in one branch into another.  Branches may not be very useful
+to you if you're the only Subversion user on your system, and that's why I won't
+elaborate on this subject. However, the Subversion developers recommend to
+create two subdirectories, <em>branches/</em> and <em>tags/</em>, along the
+<em>trunk/</em>, to store branches and tags.  (This is how the <a
+href="http://svn.collab.net/repos/svn/README">Subversion repository</a> is
+organized.)</p>
+
+<h3><a name="distribution">Distribution</a></h3>
+
+<p>Now that you've fixed many bugs, you've decided to release another version
+of your project as a source tarball.</p>
+
+<p>You can't just tar+gzip your working copy: it contains hidden Subversion
+files and probably also some other temporary files (backups, object files,
+etc.). The <code>svn export</code> command is here to help you. It checks out a
+specified version without including metadata.</p>
+
+<pre><code>$ svn export file:///home/rafael/svn/frobnizer/frobnizer-2.0
+$ tar cf frobnizer-2.0.tar frobnizer-2.0
+$ gzip -9 frobnizer-2.0.tar</code></pre>
+
+<h3><a name="don't_forget_...">Don't Forget ...</a></h3>
+
+<p>... to make backups! Your repository holds important information. It's
+possible to dump the contents of the repository (including all revisions) into a
+dumpfile.  This format is portable, and you can use it to reconstruct a
+repository if necessary.</p>
+
+<p>For example, it's useful to have, in a <code>crontab</code>, something like :</p>
+
+<pre><code>svnadmin dump /home/rafael/svn | gzip -9 &gt; dump.gz</code></pre>
+
+<p>This way, the repository can be restored via</p>
+
+<pre><code>gunzip -c dump.gz | svnadmin load /home/rafael/svn</code></pre>
+
+<h3><a name="hints_and_links">Hints and Links</a></h3>
+
+<p>The most useful <code>svn</code> subcommand, at least for beginners, is
+<code>help</code>. <code>svn help</code> gives a summary of all subcommands
+available, and <code>svn help foo</code> describes the subcommand
+<code>foo</code>. Read also the <code>svn(1)</code> and
+<code>svnadmin(1)</code> manpages. <code>svnadmin</code> is for administrative
+commands.</p>
+
+<p>The <a href="http://subversion.tigris.org/">Subversion home page</a> holds a
+substantial amount of information. The <a
+href="http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=256">Subversion
+Book</a>, a work in progress, is also useful, containing far more information
+than possible to put in a small article.</p>
+
+<p><i>
+<a href="/pub/au/1050">Rafael Garcia-Suarez</a> 
+is a French software engineer and Unix system administrator.
+
+</i></p>
+
+<hr size="1" noshade />
+
+<p>Return to <a href="http://www.onlamp.com/">ONLamp.com</a>.</p>
+
+
+
+
+<p><font face="verdana,arial,helvetica" size="1">Copyright &copy; 2007 O'Reilly Media, Inc.</font></p>
+
+<!-- ISI_LISTEN_STOP -->  
+
+ <!--WEBSIDESTORY CODE HBX1.0 (Universal)-->
+    <!--COPYRIGHT 1997-2004 WEBSIDESTORY,INC. ALL RIGHTS RESERVED. U.S.PATENT No. 6,393,479B1. MORE INFO:http://websidestory.com / privacy-->
+    <script language="javascript" type="text/javascript">
+    var _hbEC=0,_hbE=new Array;function _hbEvent(a,b){b=_hbE[_hbEC++]=new Object();b._N=a;b._C=0;return b;}
+    var hbx=_hbEvent("pv");hbx.vpc="HBX0100u";hbx.gn="ehg-oreilly.hitbox.com";
+
+    //"BCB: onlamp.com,/a/2820, DM550308O2RV";
+
+    hbx.acct="DM550308O2RV;DM520404M4ZR"; //ACCOUNT NUMBER(S)
+    hbx.pn="Single-User+Subversion"; //PAGE NAME(S)
+    hbx.mlc="/lpt/a/;/onlamp.com/lpt/a/"; //MULTI-LEVEL CONTENT CATEGORY
+    hbx.pndef="title"; //DEFAULT PAGE NAME
+    hbx.ctdef="full"; //DEFAULT CONTENT CATEGORY
+
+    hbx.lt="auto"; //LINK TRACKING 
+    hbx.dlf="n"; //DOWNLOAD FILTER
+    hbx.dft="n"; //DOWNLOAD FILE NAMING
+    hbx.elf="n"; //EXIT LINK FILTER
+
+    //SEGMENTS AND FUNNELS
+    hbx.seg=""; //VISITOR SEGMENTATION
+    hbx.fnl=""; //FUNNELS
+
+    //CAMPAIGNS
+    hbx.cmp=""; //CAMPAIGN ID
+    hbx.cmpn="CMP"; //CAMPAIGN ID IN QUERY
+    hbx.hra=""; //RESPONSE ATTRIBUTE
+    hbx.hqsr=""; //RESPONSE ATTRIBUTE IN REFERRAL QUERY
+    hbx.hqsp="ATT"; //RESPONSE ATTRIBUTE IN QUERY
+    hbx.hlt=""; //LEAD TRACKING
+    hbx.hla=""; //LEAD ATTRIBUTE
+    hbx.gp=""; //CAMPAIGN GOAL
+    hbx.gpn=""; //CAMPAIGN GOAL IN QUERY
+    hbx.hcn=""; //CONVERSION ATTRIBUTE
+    hbx.hcv=""; //CONVERSION VALUE
+    hbx.cp="null"; //LEGACY CAMPAIGN
+    hbx.cpd=""; //CAMPAIGN DOMAIN
+
+    //CUSTOM VARIABLES
+    hbx.ci="";//CUSTOMER ID
+    hbx.hc1="";//CUSTOM 1
+    hbx.hc2="";//CUSTOM 2
+    hbx.hc3="";//CUSTOM 3
+    hbx.hc4="";//CUSTOM 4 
+    hbx.pec="";//ERROR CODES
+    </script><script language="javascript1.1" defer="defer"  src="http://www.oreillynet.com/hbx.js" type="text/javascript"></script><!--//-->  
+    <!-- END WEBSIDESTORY CODE  -->
+ </body>
+
+
+</html>
