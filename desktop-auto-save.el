@@ -134,3 +134,9 @@ the shell tries to execute the contents of the file.")
    (concat sw-buffer-file-name-prefix sw-buff-name)
    (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "-%Y-%m-%d")))
 )
+
+(defun sw-forcibly-insert-buffer ()
+  "yay"
+  (interactive)
+  (sw-insert-saved-buffer-contents (buffer-name))
+)
