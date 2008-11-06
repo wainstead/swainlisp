@@ -1495,3 +1495,13 @@ after each yank."
 
 (fset 'sw-xml-format-region
    [?\C-u ?\M-| ?x ?m ?l ?l ?i ?n ?g backspace ?t ?  ?- ?- ?f ?o ?r ?m ?a ?t ?  ?- ?- ?n ?o ?a ?r backspace backspace ?w ?a ?r ?n ?i ?n ?g ?  ?- return])
+
+;; check the man page for the 'date' command to format the day/time
+;; differently..
+(defun sw-display-seconds-in-status-bar ()
+  "Make the clock display the seconds so I know when cron is going to run..."
+  (interactive)
+  (setq display-time-interval 1)
+  (setq display-time-format "%c")
+  (display-time)
+  )
