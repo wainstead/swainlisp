@@ -4,20 +4,6 @@
 (defvar sw-my-hostname "myphotoalbum.com"
   "Default hostname for MPA stuff.")
 
-(defun mpa-cvssync ()
-  "Open a shell buffer and name it \"cvssync\""
-  (interactive)
-  (let ( (cvssync-buffer (get-buffer "cvssync")) )
-    (if (bufferp cvssync-buffer)
-        (switch-to-buffer cvssync-buffer)
-      ;; else create it
-      (progn
-        (shell)
-        (rename-buffer "cvssync"))
-      )
-      (goto-char (point-max))
-    )
-  )
 
 
 (defun mpa-products-list ()
@@ -306,7 +292,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
 
 (defun mpa-gallery ()
-  "Jump to the Gallery installation for this server, in the shell where the user is cvssync."
+  "Jump to the Gallery installation for this server, in the shell where the user is www."
   (interactive)
   (switch-to-buffer (get-buffer "www"))
   (goto-char (point-max))
@@ -432,14 +418,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 )
 
 
-(defun sw-install ()
-  "Someone is DROOLING on my collar!!"
-  (interactive)
-  (switch-to-buffer (get-buffer "cvssync"))
-  (goto-char (point-max))
-  (insert "cd /opt/mpa_gallery/current")
-  (comint-send-input))
-
 (defun sw-gifts ()
   "Well, I'm a classic ANAL RETENTIVE!!  And I'm looking for a way to
  VICARIOUSLY experience some reason to LIVE!!"
@@ -544,19 +522,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 ;; override default command for grep-find. I want to look at php files in Gallery mostly.
 (setq grep-find-command "find . \\( -name \\*.php -o -name \\*.inc \\) -print0 | xargs -0 -e grep -n -e ")
 
-(defun sw-cvssync ()
-  "A named shell buffer for doing cvssync stuff."
-  (interactive)
-  (let ( (cvssync-buffer (get-buffer "cvssync")) )
-    (if (bufferp cvssync-buffer)
-        (switch-to-buffer cvssync-buffer)
-      ;; else create it                                                                                                              
-      (progn
-        (shell)
-        (rename-buffer "cvssync"))
-      )
-    )
-  )
 
 (defun sw-test ()
   "Mmmmmm-MMMMMM!!  A plate of STEAMING PIECES of a PIG mixed
@@ -865,14 +830,12 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
   (mpa-init-shell "sql" "mpa")
   (mpa-init-shell "www" "sudo su - www")
-  (mpa-init-shell "cvssync" "sudo su - cvssync")
   (mpa-init-shell "root" "sudo -s")
 
   (sw-insert-saved-buffer-contents "cli")
   (sw-insert-saved-buffer-contents "root")
   (sw-insert-saved-buffer-contents "sql")
   (sw-insert-saved-buffer-contents "test")
-  (sw-insert-saved-buffer-contents "cvssync")
   (sw-insert-saved-buffer-contents "www")
 
   )
