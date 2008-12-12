@@ -4,7 +4,6 @@
 (sw-cli)
 (sw-root)
 (sw-www)
-(sw-cvssync)
 (sw-test)
 (sw-sql)
 (setq sw-restore-shell-buffers-flag t)
@@ -17,7 +16,6 @@
       (mpa-init-shell "cli" "su - swain")
       (mpa-init-shell "sql" "mpa")
       (mpa-init-shell "www" "su - www")
-      (mpa-init-shell "cvssync" "su - cvssync")
       ))
   ;; else we need to use sudo
 ;;  (progn
