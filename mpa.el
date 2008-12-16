@@ -388,12 +388,12 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (comint-send-input))
 
 (defun sw-signup ()
-  "Jump to mpa-signup."
+  "Jump to my copy of mpa_signup."
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
   (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/mpa-signup")
+  (insert "cd ~swain/public_html/projects/mpa_signup")
   (comint-send-input))
 
 (defun sw-swain ()
