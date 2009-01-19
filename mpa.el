@@ -975,4 +975,4 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (insert "https://svn.corp.myphotoalbum.com/mpa_veracity/")
 )
 ;; 'v' for 'veracity'
-(global-set-key "\C-cv" 'mpa-insert-svn-core)
+(global-set-key "\C-cv" 'mpa-insert-svn-veracity)
