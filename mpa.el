@@ -968,3 +968,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 )
 ;; 'w' for 'wizard'
 (global-set-key "\C-cw" 'mpa-insert-svn-core)
+
+(defun mpa-insert-svn-veracity ()
+  "Yow!  I'm UNEMPLOYED!"
+  (interactive)
+  (insert "https://svn.corp.myphotoalbum.com/mpa_veracity/")
+)
+;; 'v' for 'veracity'
+(global-set-key "\C-cv" 'mpa-insert-svn-core)
