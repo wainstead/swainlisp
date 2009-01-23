@@ -409,11 +409,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "www"))
   (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/veracity")
+  (insert "cd ~swain/public_html/projects/mpa_veracity")
   (comint-send-input)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/veracity")
+  (insert "cd ~swain/public_html/projects/mpa_veracity")
   (comint-send-input)
 )
 
@@ -459,11 +459,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "root"))
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/ofs/bin")
+  (insert "cd /home/swain/public_html/projects/mpa_ofs/bin")
   (comint-send-input)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/ofs")
+  (insert "cd /home/swain/public_html/projects/mpa_ofs")
   (comint-send-input))
 
 
@@ -640,7 +640,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defvar sw-tail-store-frame-name "store logs" "Frame name for store logs")
 (defvar sw-tail-store-alist '(
                              ("store log" . "/opt/mpa/logs/osc.log")
-                             ("func log" . "/opt/mpa/logs/osc_func.log")
                              ("apache error2 log" . "/opt/apache2/logs/error_log")
                              )
   "List of store log files with names for buffers. Used by sw-tail-store-logs and sw-kill-store-logs.")
