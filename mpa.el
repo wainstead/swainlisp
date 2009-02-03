@@ -975,3 +975,33 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 )
 ;; 'v' for 'veracity'
 (global-set-key "\C-cv" 'mpa-insert-svn-veracity)
+
+(defvar sw-tail-mpp-frame-name "myphotopro" "Frame name for mpp logs")
+(defvar sw-tail-mpp-alist '(
+                             ("production.log" . "/opt/myphotopro/current/log/production.log")
+                             ("mongrel 8001" . "/opt/myphotopro/current/log/mongrel.8001.log")
+                             ("mongrel 8002" . "/opt/myphotopro/current/log/mongrel.8002.log")
+                             )
+  "List of mpp log files with names for buffers. Used by sw-tail-mpp-logs.")
+
+(defun sw-tail-mpp-logs ()
+  "Tail log files in shell buffers. The files to tail, and the names to give
+   to buffers, are in the alist sw-tail-store-alist."
+  (interactive)
+  (sw-tail-logs-meta sw-tail-mpp-alist sw-tail-mpp-frame-name)
+  (progn
+    (select-frame-by-name sw-tail-mpp-frame-name)
+    (sw-fix-logs)
+    (sw-colors "200020")
+    (set-frame-width (selected-frame) 165)
+    (set-frame-height (selected-frame) 70)
+    (enlarge-window -25)
+    (window-configuration-to-register ?3)
+    )
+)
+
+(defun sw-kill-mpp-logs ()
+  (interactive)
+  (sw-kill-logs-meta sw-tail-mpp-alist sw-tail-mpp-frame-name))
+
+
