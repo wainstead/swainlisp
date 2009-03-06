@@ -1005,3 +1005,22 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (sw-kill-logs-meta sw-tail-mpp-alist sw-tail-mpp-frame-name))
 
 
+(defun mkcd (username pathfunc)
+  "takes a username and either mpa-fast-storage-path or
+   mpa-slow-storage-path. Returns the cd command."
+  (concat "cd " (funcall pathfunc) "/" (make-five-levels-subpath username 1))
+  )
+
+
+(defun mkcdfast (username)
+  (interactive "sUsername: ")
+  (comint-goto-process-mark)
+  (insert (mkcd username 'mpa-fast-storage-path))
+  )
+
+(defun mkcdslow (username)
+  "Were these parsnips CORRECTLY MARINATED in TACO SAUCE?"
+  (interactive "sUsername: ")
+  (comint-goto-process-mark)
+  (insert (mkcd username 'mpa-slow-storage-path))
+  )
