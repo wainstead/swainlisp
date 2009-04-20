@@ -450,7 +450,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/schema/mpa")
+  (insert "cd /home/swain/public_html/projects/schema/")
   (comint-send-input))
 
 ;; new: move two shells to the same dir. revolutionary in its obviousness.
