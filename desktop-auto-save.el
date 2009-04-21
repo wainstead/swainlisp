@@ -140,3 +140,31 @@ the shell tries to execute the contents of the file.")
   (interactive)
   (sw-insert-saved-buffer-contents (buffer-name))
 )
+
+;; as of april 2009, here's the way to do it; relies on our ability to
+;; svn revert the shellbuffer files. You have "within the hour" to
+;; restore the shell buffer contents before the cron job commits them
+;; to the local svn repository. After that, you'll have to manually
+;; retrieve the version you want.
+(defun sw-restore-shellbuffers-contents ()
+  "do an svn revert on the shell buffers directory, then for each
+open buffer, insert its file at point-min"
+  (interactive)
+  (shell-command "svn revert ~swain/.emacs.shellbuffers/*")
+  ;; now recurse, since they are reverted. Don't want to revert every
+  ;; time.
+  (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
+
+;; recursive function called by sw-restore-shellbuffers-contents
+(defun sw-insert-previous-shellbuffer-contents (shell-buffer-list)
+  "recursively insert shell buffer contents"
+  (if (car shell-buffer-list)
+      (progn
+        (switch-to-buffer (get-buffer (car shell-buffer-list)))
+        (goto-char (point-min))
+        (insert-file (format "~swain/.emacs.shellbuffers/%s" (car shell-buffer-list)))
+        (goto-char (point-max))
+        (sw-insert-previous-shellbuffer-contents (cdr shell-buffer-list))
+        )
+    )
+  )
