@@ -919,7 +919,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun mpa-insert-svn ()
   "An INK-LING?  Sure -- TAKE one!!  Did you BUY any COMMUNIST UNIFORMS??"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/")
+  (insert "https://svn.myphotoalbum.com/")
 )
 (global-set-key "\C-cs" 'mpa-insert-svn)
 
@@ -927,35 +927,35 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun mpa-insert-svn-gallery ()
   "I am covered with pure vegetable oil and I am writing a best seller!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_gallery/")
+  (insert "https://svn.myphotoalbum.com/mpa_gallery/")
 )
 (global-set-key "\C-cg" 'mpa-insert-svn-gallery)
 
 (defun mpa-insert-svn-products ()
   "This is a NO-FRILLS flight -- hold th' CANADIAN BACON!!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_products/")
+  (insert "https://svn.myphotoalbum.com/mpa_products/")
 )
 (global-set-key "\C-cp" 'mpa-insert-svn-products)
 
 (defun mpa-insert-svn-cart ()
   "Yow!  Now we can become alcoholics!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_cart/")
+  (insert "https://svn.myphotoalbum.com/mpa_cart/")
 )
 (global-set-key "\C-cc" 'mpa-insert-svn-cart)
 
 (defun mpa-insert-svn-ofs ()
   "Yow!  I'm UNEMPLOYED!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_ofs/")
+  (insert "https://svn.myphotoalbum.com/mpa_ofs/")
 )
 (global-set-key "\C-co" 'mpa-insert-svn-ofs)
 
 (defun mpa-insert-svn-core ()
   "Yow!  I'm UNEMPLOYED!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_core/")
+  (insert "https://svn.myphotoalbum.com/mpa_core/")
 )
 ;; 'r' for 'core' since 'c' is taken by 'cart'
 (global-set-key "\C-cr" 'mpa-insert-svn-core)
@@ -963,7 +963,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun mpa-insert-svn-signup ()
   "Yow!  I'm UNEMPLOYED!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_signup/")
+  (insert "https://svn.myphotoalbum.com/mpa_signup/")
 )
 ;; 'w' for 'wizard'
 (global-set-key "\C-cw" 'mpa-insert-svn-core)
@@ -971,7 +971,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun mpa-insert-svn-veracity ()
   "Yow!  I'm UNEMPLOYED!"
   (interactive)
-  (insert "https://svn.corp.myphotoalbum.com/mpa_veracity/")
+  (insert "https://svn.myphotoalbum.com/mpa_veracity/")
 )
 ;; 'v' for 'veracity'
 (global-set-key "\C-cv" 'mpa-insert-svn-veracity)
