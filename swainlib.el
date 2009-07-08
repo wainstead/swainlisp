@@ -107,6 +107,10 @@
 ;; term mode: http://www.bothner.com/~bothner/software/README.term
 ;; C-c C-l for line mode (like shell mode) and C-c C-k for char mode (xterm)
 
+
+;; C-M-f goto closing brace (standing on the opening brace)
+;; C-M-b goto opening brace (standing on the closing brace)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
 
 ;;;;;;;;; TODO
@@ -128,6 +132,7 @@
 ;; us whether we've already written out a file. If it's null, test to
 ;; see if the file is there; if it is, prompt the user yes or no if we
 ;; can overwrite it.
+
 
 
 ;; END CHEAT SHEET ETC.
@@ -561,6 +566,7 @@ them."
 (add-to-list 'auto-mode-alist '("\\.rb$"      . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
+(add-to-list 'auto-mode-alist '("\\.tpl$"     . php-mode        ))
 
 ;;(autoload 'javascript-mode "javascript-mode" "JavaScript mode" t)
 
