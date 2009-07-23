@@ -117,17 +117,18 @@ WHERE
 (set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
 
 
-(defun mpa-club (userid)
-"Generate an update statement to upgrade a user."
-(interactive "sEnter userid: ")
+(defun mpa-club (username)
+  "Generate an update statement to update a club membership."
+  (interactive "sEnter username: ")
   (switch-to-buffer "sql")
   (goto-char (point-max))
-(insert (format "insert into prem_packages_history values(NULL, %s, 148, now(), now(), DATE_ADD( curdate(), interval 365 day));" userid))
-(comint-send-input)
-(insert (format "select packages_history_id from prem_packages_history where customer_id=%s;" userid))
-(comint-send-input)
-(insert (format "update users set package_type= where userid in (select customer_id from prem_packages_history where customer_id=%s);" userid))
+  (insert (format "select @userid := userid from users where username = '%s'\\G" username))
+  (insert "select * from mpa_club_memberships where mpa_userid=@userid\\G")
+  (comint-send-input)
+  (insert "update mpa_club_memberships set expire_date= where mpa_userid = @userid limit 1 \\G")
+  (backward-char 38)
 )
+
 
 (defun mpa-id (username)
   "Insert a sql SELECT statement to get the user's userid."
