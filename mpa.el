@@ -385,7 +385,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/mpa_gallery")
+  (insert "cd ~swain/public_html/projects/mpa_gallery/website")
   (comint-send-input))
 
 (defun sw-signup ()
