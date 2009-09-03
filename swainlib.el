@@ -470,6 +470,8 @@ them."
   (insert "\n\n\n#########################################################################\n")
   (insert (format-time-string "%y%m%d %c\n\n" (current-time))))
 
+(defalias 'sw-start-new-log-entry 'start-new-log-entry)
+
 ;; Insert the date and time in a sortable way 
 (defun sw-insert-date ()
   "Insert the current date and time so I can track myself"
