@@ -155,6 +155,12 @@ open buffer, insert its file at point-min"
   ;; time.
   (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
 
+(defun sw-restore-recent-shellbuffers-contents ()
+  "don't do an svn revert on the shell buffers directory, then for each
+open buffer, insert its file at point-min"
+  (interactive)
+  (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
+
 ;; recursive function called by sw-restore-shellbuffers-contents
 (defun sw-insert-previous-shellbuffer-contents (shell-buffer-list)
   "recursively insert shell buffer contents"
