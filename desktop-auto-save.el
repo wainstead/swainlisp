@@ -163,7 +163,9 @@ open buffer, insert its file at point-min"
 
 ;; recursive function called by sw-restore-shellbuffers-contents
 (defun sw-insert-previous-shellbuffer-contents (shell-buffer-list)
-  "recursively insert shell buffer contents"
+  "insert shell buffer contents from a previous session, and
+   recurse on the list of shellbuffer names to do the same for each
+   shell buffer so named."
   (if (car shell-buffer-list)
       (progn
         (switch-to-buffer (get-buffer (car shell-buffer-list)))
