@@ -4,6 +4,9 @@
 (defvar sw-my-hostname "myphotoalbum.com"
   "Default hostname for MPA stuff.")
 
+(defvar sw-plr-hostname "polaroidstudio.com"
+  "Default hostname for PLR stuff.")
+
 
 
 (defun mpa-products-list ()
@@ -85,7 +88,7 @@ WHERE
   (switch-to-buffer "sql")
   (goto-char (point-max))
   (interactive "sUsername: ")
-  (insert (format "select * from users where username='%s' and service_id=2\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-my-hostname user))
+  (insert (format "select * from users where username='%s' and service_id=2\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-plr-hostname user))
   (comint-send-input))
 
 
