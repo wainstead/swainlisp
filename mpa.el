@@ -77,7 +77,15 @@ WHERE
   (switch-to-buffer "sql")
   (goto-char (point-max))
   (interactive "sUsername: ")
-  (insert (format "select * from users where username='%s'\\G select concat('http://', username, '.%s/') as link from users where username='%s'; select concat('http://www.%s/activate.php?u=', username, '&uid=', userid) as activation_link from users where username='%s'; select concat('http://', username, '.%s/ampira.redirect.php?uname=', username, '&password=', password) as login_link from users where username='%s';" user sw-my-hostname user sw-my-hostname user sw-my-hostname user))
+  (insert (format "select * from users where username='%s' and service_id=1\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-my-hostname user))
+  (comint-send-input))
+
+(defun plr-user (user)
+  "Look up an mpa user by username."
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sUsername: ")
+  (insert (format "select * from users where username='%s' and service_id=2\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-my-hostname user))
   (comint-send-input))
 
 
