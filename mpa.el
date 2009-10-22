@@ -665,12 +665,12 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   "List of swainstore log files with names for buffers. Used by sw-tail-store-logs and sw-kill-store-logs.")
 
 
-(defvar sw-tail-pixami-frame-name "pixami logs" "Frame name for the pixami logs")
-(defvar sw-tail-pixami-alist '(
-                             ("catalina.log" . "/opt/tomcat/logs/catalina.out")
-                             ("pixami log (localhost.YYYY-MM-DD.log))" . "/opt/tomcat/logs/localhost.")
-                             )
-  "List of pixami log files with names for buffers. Used by sw-tail-pixami-logs and sw-kill-pixami-logs.")
+(defvar sw-tail-plrdevel-frame-name "plrdevel logs" "Frame name for the plrdevel logs")
+(defvar sw-tail-plrdevel-alist '(
+                                 ("plrdevel error log" . "/opt/apache2/logs/plrdevel_error_log")
+                                 ("plrdevel access log" . "/opt/apache2/logs/plrdevel_access_log")
+                                 )
+  "List of plrdevel log files with names for buffers. Used by sw-tail-plrdevel-logs and sw-kill-plrdevel-logs.")
 
 
 
@@ -719,13 +719,13 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
 
 
-(defun sw-tail-pixami-logs ()
+(defun sw-tail-plrdevel-logs ()
   "Tail log files in shell buffers. The files to tail, and the names to give
    to buffers, are in the alist sw-tail-store-alist."
   (interactive)
-  (sw-tail-logs-meta sw-tail-pixami-alist sw-tail-pixami-frame-name)
+  (sw-tail-logs-meta sw-tail-plrdevel-alist sw-tail-plrdevel-frame-name)
   (progn
-    (select-frame-by-name sw-tail-pixami-frame-name)
+    (select-frame-by-name sw-tail-plrdevel-frame-name)
     (sw-fix-logs)
     (sw-colors "002000")
     (set-frame-width (selected-frame) 165)
@@ -735,9 +735,9 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
     )
   )
 
-(defun sw-kill-pixami-logs ()
+(defun sw-kill-plrdevel-logs ()
   (interactive)
-  (sw-kill-logs-meta sw-tail-pixami-alist sw-tail-pixami-frame-name))
+  (sw-kill-logs-meta sw-tail-plrdevel-alist sw-tail-plrdevel-frame-name))
 
 
 
