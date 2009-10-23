@@ -686,7 +686,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
     (set-frame-width (selected-frame) 165)
     (set-frame-height (selected-frame) 70)
     (enlarge-window -25)
-    (window-configuration-to-register ?3)
+    (window-configuration-to-register ?4)
     )
 )
 
@@ -731,7 +731,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
     (set-frame-width (selected-frame) 165)
     (set-frame-height (selected-frame) 70)
     (enlarge-window -25)
-    (window-configuration-to-register ?2)
+    (window-configuration-to-register ?3)
     )
   )
 
@@ -1008,7 +1008,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
     (set-frame-width (selected-frame) 165)
     (set-frame-height (selected-frame) 70)
     (enlarge-window -25)
-    (window-configuration-to-register ?3)
+    (window-configuration-to-register ?5)
     )
 )
 
