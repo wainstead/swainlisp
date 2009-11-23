@@ -982,6 +982,12 @@ class %s extends Exception {
   (sw-move-shell-here "root")
   )
 
+(defun sw-move-www-here ()
+  "move the buffer named www to the current directory"
+  (interactive)
+  (sw-move-shell-here "www")
+  )
+
 
 (defun sw-delete-to-end ()
   "Delete all chars from point to end of buffer. Save the stuff in
