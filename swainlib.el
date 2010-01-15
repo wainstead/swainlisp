@@ -170,7 +170,7 @@
 
 ;;(when emacs22
 (blink-cursor-mode -1)
-(tool-bar-mode -1)
+;(tool-bar-mode -1)
 ;;    (tooltip-mode -1)
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
