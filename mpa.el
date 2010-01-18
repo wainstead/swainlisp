@@ -4,10 +4,6 @@
 (defvar sw-my-hostname "myphotoalbum.com"
   "Default hostname for MPA stuff.")
 
-(defvar sw-plr-hostname "polaroidstudio.com"
-  "Default hostname for PLR stuff.")
-
-
 
 (defun mpa-products-list ()
   "do that voodoo that you do"
@@ -83,13 +79,6 @@ WHERE
   (insert (format "select * from users where username='%s' and service_id=1\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-my-hostname user))
   (comint-send-input))
 
-(defun plr-user (user)
-  "Look up an mpa user by username."
-  (switch-to-buffer "sql")
-  (goto-char (point-max))
-  (interactive "sUsername: ")
-  (insert (format "select * from users where username='%s' and service_id=2\\G select concat('http://', username, '.%s/') as link from users where service_id=2 and username='%s'; " user  sw-plr-hostname user))
-  (comint-send-input))
 
 
 (defun mpa-banned (user)
@@ -665,12 +654,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   "List of swainstore log files with names for buffers. Used by sw-tail-store-logs and sw-kill-store-logs.")
 
 
-(defvar sw-tail-plrdevel-frame-name "plrdevel logs" "Frame name for the plrdevel logs")
-(defvar sw-tail-plrdevel-alist '(
-                                 ("plrdevel error log" . "/opt/apache2/logs/plrdevel_error_log")
-                                 ("plrdevel access log" . "/opt/apache2/logs/plrdevel_access_log")
-                                 )
-  "List of plrdevel log files with names for buffers. Used by sw-tail-plrdevel-logs and sw-kill-plrdevel-logs.")
 
 
 
@@ -716,29 +699,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun sw-kill-swainstore-logs ()
   (interactive)
   (sw-kill-logs-meta sw-tail-swainstore-alist sw-tail-swainstore-frame-name))
-
-
-
-(defun sw-tail-plrdevel-logs ()
-  "Tail log files in shell buffers. The files to tail, and the names to give
-   to buffers, are in the alist sw-tail-store-alist."
-  (interactive)
-  (sw-tail-logs-meta sw-tail-plrdevel-alist sw-tail-plrdevel-frame-name)
-  (progn
-    (select-frame-by-name sw-tail-plrdevel-frame-name)
-    (sw-fix-logs)
-    (sw-colors "002000")
-    (set-frame-width (selected-frame) 165)
-    (set-frame-height (selected-frame) 70)
-    (enlarge-window -25)
-    (window-configuration-to-register ?3)
-    )
-  )
-
-(defun sw-kill-plrdevel-logs ()
-  (interactive)
-  (sw-kill-logs-meta sw-tail-plrdevel-alist sw-tail-plrdevel-frame-name))
-
 
 
 
