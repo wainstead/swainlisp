@@ -996,3 +996,13 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (comint-goto-process-mark)
   (insert (mkcd username 'mpa-slow-storage-path))
   )
+
+
+(defun sw-update-builds ()
+  "update all of my builds on torque for me"
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "updateall")
+  (comint-send-input))
+
+(global-set-key (kbd "<f2> u") (lambda () (interactive) (sw-update-builds)))
