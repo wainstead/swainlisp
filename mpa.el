@@ -998,6 +998,27 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   )
 
 
+
+
+
+(defun mpa-photo-info (photoid)
+  "fully grok a photo"
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sPhoto ID: ")
+  (insert (format "select u.username, pg.name, pp.filename, pp.ext, u.service_id from pro_portfolio_photos pp, pro_portfolio_gallery pg, pro_portfolio_gallery_photos pgp, users u where pp.id = %s and pp.id=pgp.photo_id and pgp.gallery_id = pg.id and pp.photog_id = u.userid;" photoid))
+  (comint-send-input))
+
+
+(defun mpa-album-info (galleryid)
+  "fully grok an album"
+  (switch-to-buffer "sql")
+  (goto-char (point-max))
+  (interactive "sGallery/Album ID: ")
+  (insert (format "select username, name, service_id from users u, pro_portfolio_gallery pg where userid=owner_id and id = %s;" galleryid))
+  (comint-send-input))
+
+
 (defun sw-update-builds ()
   "update all of my builds on torque for me"
   (switch-to-buffer (get-buffer "cli"))
