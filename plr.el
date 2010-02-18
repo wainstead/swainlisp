@@ -196,18 +196,18 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 )
 
 
-(defun plr-open-fast (username album)
+(defun plr-open-fast (username)
   "Prompt for an album, open that user's fast1 album dir."
-  (interactive "sUsername: \nsAlbum: ")
-  (find-file (concat (plr-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album)))
+  (interactive "sUsername: ")
+  (find-file (concat (plr-fast-storage-path) "/" (make-five-levels-subpath username 1) "/albums/")))
 
 
-(defun plr-open-slow (username album)
+(defun plr-open-slow (username)
   "Prompt for an album, open that user's slow album dir."
-  (interactive "sUsername: \nsAlbum: ")
-  (find-file (concat (plr-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums/" album)))
+  (interactive "sUsername: ")
+  (find-file (concat (plr-slow-storage-path) "/" (make-five-levels-subpath username 1) "/albums/")))
 
-(defun plr-open-user-albums (username album)
+(defun plr-open-album (username album)
   "Prompt for an album, open that album on both fast and slow."
   (interactive "sUsername: \nsAlbum: ")
 
@@ -387,7 +387,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
 
 
-(defun mkcd (username pathfunc)
+(defun plr-mkcd (username pathfunc)
   "takes a username and either plr-fast-storage-path or
    plr-slow-storage-path. Returns the cd command."
   (concat "cd " (funcall pathfunc) "/" (make-five-levels-subpath username 1))
@@ -397,12 +397,12 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (defun plrfast (username)
   (interactive "sUsername: ")
   (comint-goto-process-mark)
-  (insert (mkcd username 'plr-fast-storage-path))
+  (insert (plr-mkcd username 'plr-fast-storage-path))
   )
 
 (defun plrslow (username)
   "Were these parsnips CORRECTLY MARINATED in TACO SAUCE?"
   (interactive "sUsername: ")
   (comint-goto-process-mark)
-  (insert (mkcd username 'plr-slow-storage-path))
+  (insert (plr-mkcd username 'plr-slow-storage-path))
   )
