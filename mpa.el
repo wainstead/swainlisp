@@ -412,10 +412,6 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (goto-char (point-max))
   (insert "cd ~swain/public_html/projects/mpa_veracity")
   (comint-send-input)
-  (switch-to-buffer (get-buffer "cli"))
-  (goto-char (point-max))
-  (insert "cd ~swain/public_html/projects/mpa_veracity")
-  (comint-send-input)
 )
 
 
