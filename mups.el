@@ -1,6 +1,8 @@
 ;; $Id: mups.el,v 1.6 2007/07/05 19:09:20 swain Exp $
 
 (defvar sw-tail-mups-alist '(
+                             ("opp-2" . "opp-2") 
+                             ("opp-1" . "opp-1") 
                              ("swg-3" . "swg-3") 
                              ("mup-3" . "mup-3")
                              ("mup-2" . "mup-2")
@@ -13,16 +15,17 @@
   "Tail error logs on the mup servers in shell buffers."
   (interactive)
   ;; if we are on a windowing system like X11, open this in a new frame
-  (if window-system
-    (let ((mups-frame (make-frame)))
-      (select-frame mups-frame)
-      (set-frame-name "mups")))
+;;   (if window-system
+;;     (let ((mups-frame (make-frame)))
+;;       (select-frame mups-frame)
+;;       (set-frame-name "mups")))
 
   (let (pair (file-alist sw-tail-mups-alist))
     (while (consp file-alist) 
       ;; first time through these are equal so we do not split the buffer
       (if (not (equal (safe-length file-alist) (safe-length sw-tail-mups-alist)))
           (split-window-vertically))
+      (balance-windows)
       (setq pair (car file-alist))
       (shell)
       (rename-buffer (car pair))
