@@ -1040,9 +1040,10 @@ the kill ring."
         (if (functionp 'sw-fix-logs)
             (progn
               (sw-fix-logs)
-              (sw-colors "202020")
+              (sw-colors "303030")
               (set-frame-width (selected-frame) 250)
               (set-frame-height (selected-frame) 84)
+              (enlarge-window -25)
               )
           )
         )
@@ -1062,7 +1063,7 @@ the kill ring."
       ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
       (setq file-alist (cdr file-alist))
       )
-    (balance-windows)
+    ;(balance-windows)
     (window-configuration-to-register ?1))
   )
  
@@ -1392,3 +1393,6 @@ after each yank."
   (setq display-time-format "%c")
   (display-time)
   )
+
+
+(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
