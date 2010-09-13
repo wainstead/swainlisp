@@ -684,7 +684,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (progn
     (select-frame-by-name sw-tail-swainstore-frame-name)
     (sw-fix-logs)
-    (sw-colors "002020")
+    (sw-colors "003030")
     (set-frame-width (selected-frame) 250)
     (set-frame-height (selected-frame) 84)
     (enlarge-window -25)
