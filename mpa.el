@@ -752,8 +752,11 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 (add-to-list 'auto-mode-alist '("default$"          . php-mode))
 
 
+;;(fset 'flowerbox
+  ;; [?/ ?* ?* tab return ?* tab return ?* ?/ tab up ? ])
+
 (fset 'flowerbox
-   [?/ ?* ?* tab return ?* tab return ?* ?/ tab up ? ])
+   "/**\C-m*\C-m*/\C-[OA ")
 
 
 (fset 'spaceit
