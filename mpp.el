@@ -3,7 +3,7 @@
   (interactive)
   (switch-to-buffer (get-buffer "cli"))
   (goto-char (point-max))
-  (insert "cd ~swain/Sites/projects/myphotopro")
+  (insert "cd ~swain/Sites/projects/mpa/myphotopro")
   (comint-send-input))
 
 (defun sw-stop-rails () 
@@ -44,23 +44,23 @@
 
   (sw-shell "console")
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/myphotopro")
+  (insert "cd /Users/swain/Sites/projects/mpa/myphotopro")
   (comint-send-input)
 
   (sw-shell "mongrel")
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/myphotopro")
+  (insert "cd /Users/swain/Sites/projects/mpa/myphotopro")
   (comint-send-input)
 
 
   (sw-shell "cli")
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/myphotopro")
+  (insert "cd /Users/swain/Sites/projects/mpa/myphotopro")
   (comint-send-input)
 
   (sw-shell "sql")
   (goto-char (point-max))
-  (insert "cd /home/swain/public_html/projects/myphotopro")
+  (insert "cd /Users/swain/Sites/projects/mpa/myphotopro")
   (comint-send-input)
 
   (setq sw-restore-shell-buffers-flag t)
