@@ -128,6 +128,15 @@
 ;; output in shell mode is excessive, turn off font lock mode and keep
 ;; the buffer size under a certain limit.
 
+;; M-x comint-truncate-buffer This command truncates the shell buffer
+;; to a certain maximum number of lines, specified by the variable
+;; comint-buffer-maximum-size. Here's how to do this automatically
+;; each time you get output from the subshell:
+
+;;               (add-hook 'comint-output-filter-functions
+;;                         'comint-truncate-buffer)
+
+
 ;; for desktop-auto-save, defvar a flag variable t or null that tells
 ;; us whether we've already written out a file. If it's null, test to
 ;; see if the file is there; if it is, prompt the user yes or no if we
@@ -170,7 +179,7 @@
 
 ;;(when emacs22
 (blink-cursor-mode -1)
-(tool-bar-mode -1)
+;;(tool-bar-mode -1)
 ;;    (tooltip-mode -1)
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
@@ -548,7 +557,7 @@ them."
 " 'bookmark-bmenu-this-window)))
 
 ;; python mode stuff, if I have it
-;;(load "python-mode")
+(load "python-mode")
 (setq auto-mode-alist
       (append '(
                 ("\\.py\\'" . python-mode)) auto-mode-alist))
@@ -1396,3 +1405,12 @@ after each yank."
 
 
 (global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
+
+;; for shell buffers, truncate them when they get too big
+(add-hook 'comint-output-filter-functions
+                    'comint-truncate-buffer)
+;; variable by which to truncate them: comint-buffer-maximum-size to
+;; set this locally use M-x make-variable-buffer-local, then set the
+;; variable to the size you want for that buffer. Otherwise this is
+;; set in .emacs-custom.el, and is handled by Emacs's customization
+;; interface.
