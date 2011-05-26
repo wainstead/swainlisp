@@ -176,3 +176,24 @@ open buffer, insert its file at point-min"
         )
     )
   )
+
+;; save *compilation* buffer to file
+;; git commit it right after
+
+(defun sw-write-compilation-buffer()
+  "Hook function to write the *compilation* buffer for each compile."
+  (sw-save-buffer-invisibly (get-buffer "*compilation*"))
+  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -m \"saving last compilation\" ?compilation?")
+)
+
+;; every time the "compile" or "recompile" functions are run, write
+;; out the *compilation* buffer's contents and commit it.
+(defadvice compile (before sw-save-last-compilation activate compile)
+  "Every time we compile, save the previous compilation to the
+   ~/.emacs.shellbuffers directory and git commit it."
+  (sw-write-compilation-buffer))
+
+(defadvice recompile (before sw-save-last-compilation activate compile)
+  "Every time we compile, save the previous compilation to the
+   ~/.emacs.shellbuffers directory and git commit it."
+  (sw-write-compilation-buffer))
