@@ -197,3 +197,15 @@ open buffer, insert its file at point-min"
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
   (sw-write-compilation-buffer))
+
+(defadvice erase-buffer (before sw-git-commit-buffers activate compile)
+  "Whenever I hit F3 to clear a buffer, go into the
+   ~/.emacs.shellbuffers directory and git commit all the buffers."
+  (sw-git-commit-buffers))
+
+(defun sw-git-commit-buffers()
+  "Function written to use with erase-buffer as before-advice."
+  (sw-save-shell-buffer-contents)
+  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers due to a call to erase-buffer\"")
+  (message "git commit done via F3's before advice")
+)
