@@ -182,7 +182,7 @@ open buffer, insert its file at point-min"
 
 (defun sw-write-compilation-buffer()
   "Hook function to write the *compilation* buffer for each compile."
-  (sw-save-buffer-invisibly (get-buffer "*compilation*"))
+  (and (get-buffer "*compilation*") (sw-save-buffer-invisibly (get-buffer "*compilation*")))
   (shell-command "cd ~swain/.emacs.shellbuffers; git commit -m \"saving last compilation\" ?compilation?")
 )
 
@@ -198,14 +198,18 @@ open buffer, insert its file at point-min"
    ~/.emacs.shellbuffers directory and git commit it."
   (sw-write-compilation-buffer))
 
-(defadvice erase-buffer (before sw-git-commit-buffers activate compile)
-  "Whenever I hit F3 to clear a buffer, go into the
-   ~/.emacs.shellbuffers directory and git commit all the buffers."
-  (sw-git-commit-buffers))
+;; This turned out to be a not-so-good idea because erase-buffer is
+;; used by a variety of other functions. Otherwise it was a stellar
+;; idea.
+;; (defadvice erase-buffer (before sw-git-commit-buffers activate compile)
+;;   "Whenever I hit F3 to clear a buffer, go into the
+;;    ~/.emacs.shellbuffers directory and git commit all the buffers."
+;;   (sw-git-commit-buffers)
+;;   )
 
 (defun sw-git-commit-buffers()
-  "Function written to use with erase-buffer as before-advice."
+  "git-commit all changed files in ~/.emacs.shellbuffers."
   (sw-save-shell-buffer-contents)
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers due to a call to erase-buffer\"")
+  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers via F3\"")
   (message "git commit done via F3's before advice")
 )
