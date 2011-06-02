@@ -1,9 +1,11 @@
-(defun my-python-mode-hook-func ()
-  "Set up indentation for SSC."
+(defun insert-tabs-hook-func ()
+  "Set up indentation for SSC, which prefers tabs for indentation."
   (setq indent-tabs-mode t)
   (setq tab-width 4)
 )
-(add-hook 'python-mode-hook 'my-python-mode-hook-func)
+(add-hook 'python-mode-hook 'insert-tabs-hook-func)
+(add-hook 'sql-mode-hook 'insert-tabs-hook-func)
+
 
 (setq compile-command "cd ~swain/git/pippin; make nfmc")
 
