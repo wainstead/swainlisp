@@ -424,8 +424,15 @@ them."
 ;; without polluting the kill ring
 ;;(fset 'clr
 ;;   "\C-xh\C-[xdelete-region\C-m")
-(defalias 'clr 'erase-buffer)
-(global-set-key [(f3)] 'erase-buffer)
+;; replacing the defalias with a defun that git-commits the shellbuffers too
+;;(defalias 'clr 'erase-buffer)
+(defun clr ()
+  "git-commit all buffers, then clear the current buffer."
+  (interactive)
+  (sw-git-commit-buffers)
+  (erase-buffer)
+)
+(global-set-key [(f3)] 'clr)
 
 ;; from the O'Reilly book on writing extensions
 ;; C-x b will not switch you to a buffer unless it exists
@@ -1255,6 +1262,12 @@ after each yank."
   (interactive "sPerldoc: ")
   (require 'man)
   (let ((manual-program "perldoc"))
+    (man man-args)))
+
+(defun pydoc (man-args)
+  (interactive "sPydoc: ")
+  (require 'man)
+  (let ((manual-program "pydoc"))
     (man man-args)))
 
 (defun ri (man-args)
