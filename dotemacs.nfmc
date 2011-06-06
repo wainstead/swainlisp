@@ -1,0 +1,34 @@
+
+(setq custom-file "~swain/.elisp/emacs-tongebirge-custom.el")
+
+(when window-system
+  (setq default-frame-alist '((background-color . "#040000")
+                              (foreground-color . "goldenrod")
+                              (cursor-color . "green"))))
+
+
+(load-file "~swain/.elisp/swainlib.el")
+(load-file "~swain/.elisp/ssc.el")
+
+
+
+;; Gonna try living with an iBuffer that no longer removes all other
+;; windows.
+(defun sw-list ()
+  "switch to Ibuffer; this function should be bound to F9"
+  (interactive)
+  (setq buffer (get-buffer "*Ibuffer*"))
+  (if (bufferp buffer)
+      (progn 
+        (switch-to-buffer buffer)
+        (ibuffer-update nil))
+    (ibuffer))
+  ;;(delete-other-windows)
+  )
+
+;; normally M-` brings up the File menu in the minibuffer. Override
+;; that with other-frame so Emacs behaves like other Cocoa apps: M-`
+;; rotates through app windows.
+(global-set-key "\M-`" 'other-frame)
+
+(put 'upcase-region 'disabled nil)
