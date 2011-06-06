@@ -29,11 +29,14 @@
   (interactive)
   (sw-shell "psql")
   (goto-char (point-max))
-  (insert "psql")
-  (comint-send-input)
   (insert "set search_path=nfmc,public;")
-  (comint-send-input)
   )
+
+(defun nfmc-search-path ()
+  "insert the search path string"
+  (interactive)
+  (insert "set search_path=nfmc,public;")
+)
 
 (defun sw-start.dev ()
   "Open a shell buffer, rename it 'start.dev'"
@@ -55,4 +58,92 @@
    )
   (font-lock-mode 1)
   )
+
+
+
+(defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
+(defvar sw-tail-nfmc-alist '(
+                             ("pippin log" . "/tmp/pippin.log")
+                             ;;("nfmc func log" . "/tmp/osc_func.log")
+                             ("error log" . "/opt/local/apache2/logs/error_log")
+                             )
+  "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
+
+(defun sw-tail-nfmc-logs ()
+  "Tail log files in shell buffers. The files to tail, and the names to give
+   to buffers, are in the alist sw-tail-nfmc-alist."
+  (interactive)
+  (sw-tail-logs-meta sw-tail-nfmc-alist sw-tail-nfmc-frame-name)
+  (progn
+    (select-frame-by-name sw-tail-nfmc-frame-name)
+    (sw-fix-logs)
+    (sw-colors "003030")
+    (set-frame-width (selected-frame) 250)
+    (set-frame-height (selected-frame) 84)
+    (enlarge-window -25)
+    (window-configuration-to-register ?2)
+    )
+  )
+
+(defun sw-kill-nfmc-logs ()
+  (interactive)
+  (sw-kill-logs-meta sw-tail-nfmc-alist sw-tail-nfmc-frame-name))
+
+
+
+(defun sw-tail-logs-meta (store-alist store-frame-name)
+  "meta function for opening logs and tailing them in a new frame"
+  ;; if we are on a windowing system like X11, open this in a new frame
+  (if window-system
+    (let ((logs-frame (make-frame)))
+      (select-frame logs-frame)
+      (set-frame-name store-frame-name)))
+
+  (let (pair (file-alist store-alist))
+    (while (consp file-alist) 
+      ;; first time through these are equal so we do not split the buffer
+      (if (not (equal (safe-length file-alist) (safe-length store-alist)))
+          (split-window-vertically))
+      (setq pair (car file-alist))
+      (shell)
+      (rename-buffer (car pair))
+      (goto-char (point-max))
+      (insert (format "tail -f %s" (cdr pair)))
+      (comint-send-input)
+      ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
+      (setq file-alist (cdr file-alist))
+      )
+    (balance-windows)
+    (window-configuration-to-register ?1))
+  )
+ 
+;; undo the work of sw-tail-logs-meta
+(defun sw-kill-logs-meta (store-alist store-frame-name)
+  "Kill the buffers tailing the log files as listed in store-alist."
+  (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
+      (progn
+        (switch-to-buffer (car (car store-alist)))
+        (delete-other-windows)
+        (let ((file-alist store-alist))
+          (while (consp file-alist)
+            (setq pair (car file-alist))
+            (unless (kill-buffer (car pair))
+              (message (format "Couldn't kill the buffer %s." (car pair))))
+            (setq file-alist (cdr file-alist))
+            ))
+        (when window-system
+          (select-frame-by-name store-frame-name)
+          (delete-frame))
+        )
+    ;; else:
+        (message "Log tailing buffers not deleted.")))
+
+(defun sw-fix-logs ()
+  "Colorize the window that tails logs."
+  (interactive)
+  ;;(set-default-font "-adobe-courier-medium-r-normal-*-*-120-*-*-*-*-iso8859-1")
+  (set-background-color "#202020")
+  (set-foreground-color "goldenrod")
+)
+
 
