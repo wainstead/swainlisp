@@ -3,15 +3,22 @@
   (setq indent-tabs-mode t)
   (setq tab-width 4)
 )
+
+;; .html and .template files are usually Cheetah template files
+(add-to-list 'auto-mode-alist '("\\.html$"   . cheetah-mode       ))
+(add-to-list 'auto-mode-alist '("\\.html.template$"   . cheetah-mode       ))
+
 (add-hook 'python-mode-hook 'insert-tabs-hook-func)
 (add-hook 'sql-mode-hook 'insert-tabs-hook-func)
+(add-hook 'cheetah-mode-hook 'insert-tabs-hook-func)
+
 
 
 (setq compile-command "cd ~swain/git/pippin; make nfmc")
 
 (blink-cursor-mode 0)
 (transient-mark-mode t)
-(set-mouse-color "white")
+(set-mouse-color "white") ;; what does this do?
 
 (put 'narrow-to-region 'disabled nil)
 (setq mac-command-modifier 'meta)
@@ -29,14 +36,10 @@
   (interactive)
   (sw-shell "psql")
   (goto-char (point-max))
-  (insert "set search_path=nfmc,public;")
   )
 
-(defun nfmc-search-path ()
-  "insert the search path string"
-  (interactive)
-  (insert "set search_path=nfmc,public;")
-)
+;; store the string for setting the search path in psql in register 's'
+(set-register ?s "set search_path=nfmc,public;")
 
 (defun sw-start.dev ()
   "Open a shell buffer, rename it 'start.dev'"
@@ -145,5 +148,6 @@
   (set-background-color "#202020")
   (set-foreground-color "goldenrod")
 )
+
 
 
