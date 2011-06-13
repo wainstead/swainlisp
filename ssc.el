@@ -31,6 +31,12 @@
   (insert "cd ~/git/pippin")
   (comint-send-input))
 
+(defun sw-console ()
+  "Open a shell buffer, rename it 'console' for the python interpreter"
+  (interactive)
+  (sw-shell "console")
+  )
+
 (defun sw-psql ()
   "Open a shell buffer, rename it 'psql'"
   (interactive)
