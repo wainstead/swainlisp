@@ -851,8 +851,8 @@ class %s extends Exception {
 ;; snappy: macro + keybinding = hooha
 (fset 'next-frickin-tag
       "\C-u\C-x.")
-(global-set-key [\C-pause] 'next-frickin-tag)
-(global-set-key [\M-pause] 'pop-tag-mark)
+(global-set-key [f7] 'next-frickin-tag)
+(global-set-key [\C-f7] 'pop-tag-mark)
 
 
 ;; Send a random line from Zippy to the minibuffer.
@@ -1420,8 +1420,8 @@ after each yank."
 (global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
 
 ;; for shell buffers, truncate them when they get too big
-(add-hook 'comint-output-filter-functions
-                    'comint-truncate-buffer)
+;;(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
+
 ;; variable by which to truncate them: comint-buffer-maximum-size to
 ;; set this locally use M-x make-variable-buffer-local, then set the
 ;; variable to the size you want for that buffer. Otherwise this is
