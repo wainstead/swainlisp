@@ -1,3 +1,6 @@
+(set-register ?s "set search_path=nfmc,public;")
+(global-set-key [(meta ?)] 'other-window)
+
 (defun insert-tabs-hook-func ()
   "Set up indentation for SSC, which prefers tabs for indentation."
   (setq indent-tabs-mode t)
@@ -31,11 +34,23 @@
   (insert "cd ~/git/pippin")
   (comint-send-input))
 
-(defun sw-console ()
-  "Open a shell buffer, rename it 'console' for the python interpreter"
+(defun sw-postgresql ()
+  "Move the psql shell into the postres directory."
   (interactive)
-  (sw-shell "console")
+  (switch-to-buffer "psql")
+  (goto-char (point-max))
+  (insert "cd ~/git/pippin/postgres/")
+  (comint-send-input))
+
+
+
+(defun sw-repl ()
+  "Open a shell buffer, rename it 'repl' for the python interpreter"
+  (interactive)
+  (sw-shell "repl")
   )
+
+(defalias 'sw-console 'sw-repl)
 
 (defun sw-psql ()
   "Open a shell buffer, rename it 'psql'"
@@ -55,6 +70,7 @@
   )
 
 
+;; found this on the net somewhere
 (define-derived-mode cheetah-mode html-mode "Cheetah"
   (make-face 'cheetah-variable-face)
   (font-lock-add-keywords
