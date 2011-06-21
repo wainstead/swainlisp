@@ -42,6 +42,14 @@
   (insert "cd ~/git/pippin/postgres/")
   (comint-send-input))
 
+(defun sw-mods ()
+  "Move the cli shell into the nfmc mods directory."
+  (interactive)
+  (switch-to-buffer "cli")
+  (goto-char (point-max))
+  (insert "cd ~/git/pippin/sites/nfmc-reporting/mods/")
+  (comint-send-input))
+
 
 
 (defun sw-repl ()
