@@ -1,3 +1,4 @@
+
 (set-register ?s "set search_path=nfmc,public;")
 (global-set-key [(meta ?)] 'other-window)
 
@@ -10,6 +11,7 @@
 ;; .html and .template files are usually Cheetah template files
 (add-to-list 'auto-mode-alist '("\\.html$"   . cheetah-mode       ))
 (add-to-list 'auto-mode-alist '("\\.html.template$"   . cheetah-mode       ))
+(add-to-list 'auto-mode-alist '("\\.html.translate$"   . cheetah-mode       ))
 
 (add-hook 'python-mode-hook 'insert-tabs-hook-func)
 (add-hook 'sql-mode-hook 'insert-tabs-hook-func)
@@ -21,7 +23,7 @@
 
 (blink-cursor-mode 0)
 (transient-mark-mode t)
-(set-mouse-color "white") ;; what does this do?
+(set-mouse-color "white") ;; what does this do? Probably an X11 thing.
 
 (put 'narrow-to-region 'disabled nil)
 (setq mac-command-modifier 'meta)
@@ -51,9 +53,8 @@
   (comint-send-input))
 
 
-
 (defun sw-repl ()
-  "Open a shell buffer, rename it 'repl' for the python interpreter"
+  "Open a shell buffer, rename it 'repl' for ipython"
   (interactive)
   (sw-shell "repl")
   )
@@ -181,3 +182,33 @@
 
 
 
+;; todo: after running mergeancestors, or similar, reload all source
+;; files and set the point to where it was.
+
+;; for each python or cheetah or sql buffer:
+;; save-excursion
+;; load-file (current-file)
+;; maybe that's all?
+
+
+(defun sw-reload-files ()
+  "Reload all Python, Cheetah and SQL files; needed after a git
+script has run. Otherwise Emacs keeps asking if I really want to
+edit the file because it changed on disk."
+  (interactive)
+  (let ( (bufflist (buffer-list)) ) 
+    (while bufflist
+      (setq buff (car bufflist))
+      (save-excursion
+        (set-buffer buff)
+        (when (or (string= major-mode "sql-mode")
+                  (string= major-mode "cheetah-mode")
+                  (string= major-mode "python-mode"))
+          (message (format "found a %s buffer" major-mode))
+
+          )
+        (setq bufflist (cdr bufflist)) ; this probably should be done recursively
+        )
+      )
+    )
+  )
