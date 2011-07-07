@@ -17,7 +17,10 @@
 (add-hook 'sql-mode-hook 'insert-tabs-hook-func)
 (add-hook 'cheetah-mode-hook 'insert-tabs-hook-func)
 
-
+;; don't add trailing whitespace
+(add-hook 'python-mode-hook
+		  (lambda ()
+			(setq show-trailing-whitespace t)))
 
 (setq compile-command "cd ~swain/git/pippin; make nfmc")
 
@@ -205,6 +208,7 @@ edit the file because it changed on disk."
                   (string= major-mode "cheetah-mode")
                   (string= major-mode "python-mode"))
           (message (format "found a %s buffer" major-mode))
+          (find-file (buffer-file-name))
 
           )
         (setq bufflist (cdr bufflist)) ; this probably should be done recursively
@@ -212,3 +216,14 @@ edit the file because it changed on disk."
       )
     )
   )
+
+
+(defun sw-lint ()
+  "Run a lint check on the file the current buffer is visiting."
+  (interactive)
+  (let ( (pylint-interpreter "/opt/local/bin/pylint-2.4") ) 
+    (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
+    )
+  )
+
+
