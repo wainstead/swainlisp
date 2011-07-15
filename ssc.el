@@ -1,5 +1,6 @@
 
 (set-register ?s "set search_path=nfmc,public;")
+(set-register ?d "import datasource; con = datasource.quick_setup()")
 (global-set-key [(meta ?)] 'other-window)
 
 (defun insert-tabs-hook-func ()
@@ -219,9 +220,10 @@ edit the file because it changed on disk."
 
 
 (defun sw-lint ()
-  "Run a lint check on the file the current buffer is visiting."
+  "Run a lint check on the file the current buffer is
+   visiting. Thanks to Dale for the python incantation."
   (interactive)
-  (let ( (pylint-interpreter "/opt/local/bin/pylint-2.4") ) 
+  (let ( (pylint-interpreter "/usr/bin/env python -m py_compile") ) 
     (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
     )
   )
