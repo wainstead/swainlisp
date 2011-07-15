@@ -227,5 +227,4 @@ edit the file because it changed on disk."
     (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
     )
   )
-
-
+(global-set-key [(f4)] 'sw-lint)
