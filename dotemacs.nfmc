@@ -1,3 +1,5 @@
+;; don't reload the shell buffers at this juncture
+(setq sw-restore-shell-buffers-flag nil)
 
 (setq custom-file "~swain/.elisp/emacs-tongebirge-custom.el")
 
@@ -32,3 +34,6 @@
 (global-set-key "\M-`" 'other-frame)
 
 (put 'upcase-region 'disabled nil)
+
+;; flush terminal output faster
+(global-set-key [f10] 'comint-delete-output)
