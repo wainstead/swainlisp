@@ -56,6 +56,14 @@
   (insert "cd ~/git/pippin/sites/nfmc-reporting/mods/")
   (comint-send-input))
 
+(defun sw-templates ()
+  "Move the cli shell into the nfmc templates directory."
+  (interactive)
+  (switch-to-buffer "cli")
+  (goto-char (point-max))
+  (insert "cd ~/git/pippin/sites/nfmc-reporting/templates/")
+  (comint-send-input))
+
 
 (defun sw-repl ()
   "Open a shell buffer, rename it 'repl' for ipython"
