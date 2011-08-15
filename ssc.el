@@ -1,6 +1,7 @@
 
 (set-register ?s "set search_path=nfmc,public;")
 (set-register ?d "import datasource; con = datasource.quick_setup()")
+(set-register ?i "cd ~/git/pippin/sites/nfmc-reporting/mods; ipython2.4  -i model.py")
 (global-set-key [(meta ?)] 'other-window)
 
 (defun insert-tabs-hook-func ()
