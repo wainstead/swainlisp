@@ -1,4 +1,4 @@
-;;; pg.lisp -- socket level interface to the PostgreSQL RDBMS for Common Lisp
+;;; PG.LISP -- SOCKET LEVEL INTERFACE TO THE POSTGRESQL RDBMS FOR COMMON LISP
 ;;
 ;; Author: Eric Marsden <emarsden@mail.dotcom.fr>
 ;; Time-stamp: <2001-01-18 emarsden>
