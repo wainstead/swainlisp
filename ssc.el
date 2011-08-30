@@ -240,3 +240,13 @@ edit the file because it changed on disk."
   )
 (global-set-key [(f4)] 'sw-lint)
 
+
+;; copy screencaps to the directory hardwired into
+;; ~swain/bin/mv-screencap.sh
+(defun sw-screencap (new-filename)
+  "Move/rename a screen capture from $HOME/Desktop, taken with
+   Command-Shift-4 or similar."
+  (interactive "sName screen capture: ")
+  (shell-command (format "~swain/bin/mv-screencap.sh %s" new-filename))
+  (insert (format "screencaps/%s.png" new-filename))
+  )
