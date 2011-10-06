@@ -109,12 +109,11 @@
   )
 
 
-
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
                              ("pippin log" . "/tmp/pippin.log")
                              ;;("nfmc func log" . "/tmp/osc_func.log")
-                             ("error log" . "/opt/local/apache2/logs/error_log")
+                             ("error log" . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
 
