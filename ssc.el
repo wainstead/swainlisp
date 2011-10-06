@@ -2,7 +2,7 @@
 (set-register ?d "import datasource; con = datasource.quick_setup()")
 (set-register ?i "cd ~/git/pippin/sites/nfmc-reporting/mods; ipython2.4  -i model.py")
 (set-register ?l "begin; select nfmc.set_current_user_and_ip(1251, '127.0.0.1'); commit;")
-(set-register ?c "^\s-*class \|^\s-*def ")
+(set-register ?c "^\\s-*class \\|^\\s-*def ")
 
 (global-set-key [(meta ?)] 'other-window)
 
