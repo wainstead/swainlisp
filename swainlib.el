@@ -1427,3 +1427,7 @@ after each yank."
 ;; variable to the size you want for that buffer. Otherwise this is
 ;; set in .emacs-custom.el, and is handled by Emacs's customization
 ;; interface.
+
+;; Give diff and patch files a color scheme that works with a black
+;; background. Note the hyphen at the end of the basename: diff-mode-
+(load-file "~swain/.elisp/diff-mode-.el")
