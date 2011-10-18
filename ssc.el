@@ -250,30 +250,3 @@ edit the file because it changed on disk."
   (insert (format "screencaps/%s.png" new-filename))
   )
 
-
-;; handy function for opening a new frame with a different color
-;; scheme for viewing diffs or patch files. Ultimately I should tweak
-;; diff's color scheme.
-
-(defvar sw-diff-or-patch-frame-name "a diff or patch" "Frame name for a white frame with midnightblue text")
-
-(defun sw-diff-or-patch-frame-logs ()
-  "The default colors for a diff or patch in Emacs are too hard
-to read with a black background and light text. While I should
-probably just tweak the color palette for diffs I'll just be lazy
-and create a new frame."
-  (interactive)
-  (progn
-
-    (let ((patch-frame (make-frame)))
-      (select-frame patch-frame)
-      (set-frame-name sw-diff-or-patch-frame-name)
-
-      (select-frame-by-name sw-diff-or-patch-frame-frame-name)
-      (set-background-color "white")
-      (set-foreground-color "midnightblue")
-      (set-frame-width (selected-frame) 140)
-      (set-frame-height (selected-frame) 70)
-      )
-    )
-  )
