@@ -250,3 +250,8 @@ edit the file because it changed on disk."
   (insert (format "screencaps/%s.png" new-filename))
   )
 
+
+;; save point, reload file, jump to point
+(fset 'sw-reload-file
+   [?\C-x ?r ?  ?n ?\C-x ?\C-v return ?\C-x ?r ?j ?n])
+(global-set-key [(f13)] 'sw-reload-file)
