@@ -83,9 +83,10 @@
 (defalias 'sw-console 'sw-repl)
 
 (defun sw-psql ()
-  "Open a shell buffer, rename it 'psql'"
+  "Open a SQLi buffer, rename it 'psql'"
   (interactive)
-  (sw-shell "psql")
+  (sql-postgres)
+  (rename-buffer  "psql")
   (goto-char (point-max))
   )
 
