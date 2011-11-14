@@ -6,6 +6,12 @@
 
 (global-set-key [(meta ?)] 'other-window)
 
+;; set up stuff for sql-postgres
+(setq sql-postgres-program "/usr/local/pgsql/bin/psql")
+(setq sql-user "swain")
+(setq sql-database "nworks")
+(setq sql-server "localhost")
+
 (defun insert-tabs-hook-func ()
   "Set up indentation for SSC, which prefers tabs for indentation."
   (setq indent-tabs-mode t)
