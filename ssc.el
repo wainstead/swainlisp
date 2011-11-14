@@ -75,9 +75,10 @@
 
 
 (defun sw-repl ()
-  "Open a shell buffer, rename it 'repl' for ipython"
+  "Open a py-shell buffer, rename it 'repl' for ipython"
   (interactive)
-  (sw-shell "repl")
+  (py-shell)
+  (rename-buffer "repl")
   )
 
 (defalias 'sw-console 'sw-repl)
