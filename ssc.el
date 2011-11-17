@@ -52,7 +52,7 @@
 (defun sw-postgresql ()
   "Move the psql shell into the postres directory."
   (interactive)
-  (switch-to-buffer "psql")
+  (switch-to-buffer "cli")
   (goto-char (point-max))
   (insert "cd ~/git/pippin/postgres/")
   (comint-send-input))
