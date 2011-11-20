@@ -1,4 +1,4 @@
-;; This was my first attempt at returing point to the prompt in a
+;; This was my first attempt at returning point to the prompt in a
 ;; shell after finding file at point... while it failed, I learned how
 ;; to disable advice in the four lines at the end. You set the flag on
 ;; each piece of advice to disabled, then you call ad-activate to make
