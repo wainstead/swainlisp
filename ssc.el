@@ -12,6 +12,8 @@
 (setq sql-database "nworks")
 (setq sql-server "localhost")
 
+(load-file "~swain/.elisp/ipython.el")
+
 (defun insert-tabs-hook-func ()
   "Set up indentation for SSC, which prefers tabs for indentation."
   (setq indent-tabs-mode t)
