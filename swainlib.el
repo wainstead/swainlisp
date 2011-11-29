@@ -111,6 +111,8 @@
 ;; C-M-f goto closing brace (standing on the opening brace)
 ;; C-M-b goto opening brace (standing on the closing brace)
 
+;; M-x set-goal-column
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
 
 ;;;;;;;;; TODO
