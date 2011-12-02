@@ -1433,3 +1433,12 @@ after each yank."
 ;; Give diff and patch files a color scheme that works with a black
 ;; background. Note the hyphen at the end of the basename: diff-mode-
 (load-file "~swain/.elisp/diff-mode-.el")
+
+;; fix me: should set diff-mode on the buffer if it created it
+(defun sw-git-diff ()
+  "Run the shell command 'git diff' and display the results in a
+   new buffer that's in diff-mode."
+  (interactive)
+  (shell-command "git diff" (get-buffer-create "git diff"))
+  ;;(switch-to-buffer (get-buffer "git diff"))
+)
