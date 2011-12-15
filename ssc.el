@@ -103,6 +103,16 @@
   (goto-char (point-max))
   )
 
+;; Though I have no current use for it, Dale found a Javascript
+;; interpreter that comes with OS X.
+(defun sw-js-repl ()
+  "Open the OS X JavaScript repl tool"
+  (interactive)
+  (sw-shell "javascript repl")
+  (goto-char (point-max))
+  (insert "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc")
+  (comint-send-input)
+)
 
 ;; found this on the net somewhere
 (define-derived-mode cheetah-mode html-mode "Cheetah"
