@@ -120,7 +120,7 @@
   (font-lock-add-keywords
    nil
    '(
-     ("\\(#\\(from\\|else\\|include\\|extends\\|set\\|def\\|import\\|for\\|if\\|end\\|return\\|elif\\)+\\)\\>" 1 font-lock-type-face)
+     ("\\(#\\(from\\|else\\|include\\|extends\\|set\\|def\\|import\\|for\\|if\\|end\\|echo\\|return\\|elif\\)+\\)\\>" 1 font-lock-type-face)
      ("\\(#\\(from\\|for\\|end\\)\\).*\\<\\(for\\|import\\|def\\|if\\|in\\)\\>" 3 font-lock-type-face)
      ("\\(##.*\\)\n" 1 font-lock-comment-face)
      ("\\(\\$\\(?:\\sw\\|}\\|{\\|\\s_\\)+\\)" 1 font-lock-variable-name-face))
