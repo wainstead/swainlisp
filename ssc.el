@@ -52,7 +52,7 @@
   (comint-send-input))
 
 (defun sw-postgresql ()
-  "Move the psql shell into the postres directory."
+  "Move the cli shell into the postres directory."
   (interactive)
   (switch-to-buffer "cli")
   (goto-char (point-max))
@@ -92,6 +92,14 @@
   (rename-buffer  "psql")
   (goto-char (point-max))
   )
+
+(defun sw-nose ()
+  "Open a new bash shell, put it in the ~/git/pippin dir for nose tests."
+  (interactive)
+  (sw-shell "nosetests")
+  (insert "cd ~/git/pippin")
+  (comint-send-input)
+)
 
 ;; store the string for setting the search path in psql in register 's'
 (set-register ?s "set search_path=nfmc,public;")
