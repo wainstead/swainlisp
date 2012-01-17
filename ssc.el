@@ -261,8 +261,11 @@ edit the file because it changed on disk."
   "Run a lint check on the file the current buffer is
    visiting. Thanks to Dale for the python incantation."
   (interactive)
-  (let ( (pylint-interpreter "/usr/bin/env python -m py_compile") ) 
-    (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
+  (if buffer-file-name
+      (let ( (pylint-interpreter "/usr/bin/env python -m py_compile") ) 
+        (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
+        )
+    (message "Buffer not visiting a file.")
     )
   )
 (global-set-key [(f4)] 'sw-lint)
