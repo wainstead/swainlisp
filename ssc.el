@@ -93,6 +93,11 @@
   (goto-char (point-max))
   )
 
+;; I should write something that takes an alist of shell name:
+;; starting directory, and iterates over the alist creating shell
+;; buffers. It would reduce redundant code. This alist would be
+;; project-specific; if it's SSC, for example, it's all the logs I
+;; want for that versus Waverous.
 (defun sw-nose ()
   "Open a new bash shell, put it in the ~/git/pippin dir for nose tests."
   (interactive)
@@ -139,8 +144,10 @@
 
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
+                             ("start.dev" . nil)
                              ("pippin log" . "/tmp/pippin.log")
-                             ;;("nfmc func log" . "/tmp/osc_func.log")
+                             ("laborer log" . "/tmp/nfmc-laborer.log")
+                             ;;("swallower log" . "/tmp/nfmc-csv-swallower.log")
                              ("error log" . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
@@ -184,7 +191,11 @@
       (shell)
       (rename-buffer (car pair))
       (goto-char (point-max))
-      (insert (format "tail -f %s" (cdr pair)))
+      (if (cdr pair)
+          ;; 'nil' indicates "don't tail any log"
+          ;; Future project: pass in a function to do anything
+          (insert (format "tail -f %s" (cdr pair)))
+      )
       (comint-send-input)
       ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
       (setq file-alist (cdr file-alist))
