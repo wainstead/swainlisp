@@ -194,7 +194,7 @@
       (if (cdr pair)
           ;; 'nil' indicates "don't tail any log"
           ;; Future project: pass in a function to do anything
-          (insert (format "tail -f %s" (cdr pair)))
+          (insert (format "~/bin/waittail %s" (cdr pair)))
       )
       (comint-send-input)
       ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
