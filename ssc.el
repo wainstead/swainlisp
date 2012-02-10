@@ -1,3 +1,13 @@
+;; The following copied from:
+;; http://orgmode.org/manual/Activation.html#Activation
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; recommended global key bindings for org mode
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+;; save commonly needed strings in registers
 (set-register ?s "set search_path=nfmc,public;")
 (set-register ?d "import datasource; con = datasource.quick_setup()")
 (set-register ?i "cd ~/git/pippin/sites/nfmc-reporting/mods; ipython2.4  -i model.py")
@@ -109,12 +119,13 @@
 ;; store the string for setting the search path in psql in register 's'
 (set-register ?s "set search_path=nfmc,public;")
 
-(defun sw-start.dev ()
-  "Open a shell buffer, rename it 'start.dev'"
-  (interactive)
-  (sw-shell "start.dev")
-  (goto-char (point-max))
-  )
+;; not running start.dev in Emacs anymore... 
+;; (defun sw-start.dev ()
+;;   "Open a shell buffer, rename it 'start.dev'"
+;;   (interactive)
+;;   (sw-shell "start.dev")
+;;   (goto-char (point-max))
+;;   )
 
 ;; Though I have no current use for it, Dale found a Javascript
 ;; interpreter that comes with OS X.
@@ -144,11 +155,10 @@
 
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
-                             ("start.dev" . nil)
-                             ("pippin log" . "/tmp/pippin.log")
-                             ("laborer log" . "/tmp/nfmc-laborer.log")
-                             ;;("swallower log" . "/tmp/nfmc-csv-swallower.log")
-                             ("error log" . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
+                             ("pippin log"    . "/tmp/pippin.log")
+                             ("laborer log"   . "/tmp/nfmc-laborer.log")
+                             ("swallower log" . "/tmp/nfmc-csv-swallower.log")
+                             ("error log"     . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
 
