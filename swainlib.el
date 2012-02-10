@@ -113,6 +113,8 @@
 
 ;; M-x set-goal-column
 
+;; (global-set-key (kbd "<f2> w") 'keyboard-quit)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
 
 ;;;;;;;;; TODO
