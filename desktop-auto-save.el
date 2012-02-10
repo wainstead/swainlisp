@@ -208,8 +208,10 @@ open buffer, insert its file at point-min"
 ;;   )
 
 (defun sw-git-commit-buffers()
-  "git-commit all changed files in ~/.emacs.shellbuffers."
+  "Save the contents of all shell buffers to their files and then
+   git-commit those files in ~/.emacs.shellbuffers."
   (sw-save-shell-buffer-contents)
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers via F3\"")
-  (message "git commit done via F3's before advice")
+  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
+
+(add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
