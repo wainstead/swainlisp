@@ -213,5 +213,5 @@ open buffer, insert its file at point-min"
   (sw-save-shell-buffer-contents)
   (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
-
+;; when qutting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
