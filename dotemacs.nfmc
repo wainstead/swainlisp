@@ -9,6 +9,10 @@
                               (cursor-color . "green"))))
 
 
+;; load a newer version of org-mode
+(setq load-path (cons "~/org/org-7.8.03/lisp" load-path))
+(setq load-path (cons "~/org/org-7.8.03/contrib/lisp" load-path))
+
 (load-file "~swain/.elisp/swainlib.el")
 (load-file "~swain/.elisp/ssc.el")
 
@@ -37,3 +41,10 @@
 
 ;; flush terminal output faster
 (global-set-key [f10] 'comint-delete-output)
+(put 'set-goal-column 'disabled nil)
+(put 'scroll-left 'disabled nil)
+
+
+(setq org-agenda-files (list "~/.elisp/emacs.org"
+                             "~/notebooks/developer-notes/swain/notes/undouploads.org" 
+                             ))
