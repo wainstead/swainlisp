@@ -1,0 +1,66 @@
+* Items to work on at a later date vis Emacs
+** TODO Try eshell for tailing log files instead of bash
+** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
+** TODO Get the layout of the frame holding the log buffers right, on startup
+** TODO There are two versions of sw-tail-logs-meta now, consolidate
+** TODO Rewrite sw-tail-logs-meta to take a function argument
+Currently, the alist passed to this function provides strings that
+become the argument to 'tail -f'. This is not flexible enough. There
+is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
+** TODO ipython in Emacs is broken
+*** TODO The command history gets "globalized" somehow, and sql statements appear in the histories of psql, cli, etc
+*** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
+*** TODO Sometimes a weird error about 'olors' shows upp
+** TODO Write a proper Cheetah mode maybe
+** TODO Bug: sw-tail-nfmc-logs only opens three buffers in the new frame but it does start four.
+** TODO Use one of the Git modes to speed up work...
+Find a way to do "git log (current buffer)" since that's broken in
+Emacs. The main problem is using Git means I need to reload the files,
+and currently I hit F13 to run a macro I wrote to get around this problem.
+** TODO Still not using flymake and bretheren for on-the-fly syntax checking
+** TODO Save the shell buffer, not just its contents
+desktop-auto-save can save the plain text of the buffer and that's
+fine, but Miles Bader clued me to a way to actually save the contents
+of the buffer (via buffer-string) to a file... when Emacs starts up a
+buffer, then, like "cli," it could "reconstitute" the original buffer
+contents. This means the kill ring, command history, location of the
+prompts and so on would all work again between invocations of the
+buffer.
+** TODO Get *compilation* buffer to stay put somewhere
+It would be nice to have this buffer in its own frame somewhere, and
+when I run F5 compilation can be viewed in that buffer it that
+frame... unfortunately a new buffer always opens in the active frame.
+** TODO Finish Dismiss all "popups"
+This makes all buffers whose names start with an asterisk to
+vanish... like *Occur*, *Help* and so on.
+
+
+* Items from my old TODO list in swainlib.el:
+;;;;;;;;; TODO
+
+;; a command that uses a regular expression to comment out all
+;; matching lines. Should use the commenting convention of the current
+;; mode (possibly: use cursor movement commands this way: match
+;; line. Move cursor to beginning of statement. Set mark. Move cursor
+;; to end of statement. Comment region.
+
+;; When I use F8 to find file at point, first put the cursor back to
+;; point max before switching to the new file.
+
+;; I still need lisp to self-truncate a buffer. That is, when program
+;; output in shell mode is excessive, turn off font lock mode and keep
+;; the buffer size under a certain limit.
+
+;; M-x comint-truncate-buffer This command truncates the shell buffer
+;; to a certain maximum number of lines, specified by the variable
+;; comint-buffer-maximum-size. Here's how to do this automatically
+;; each time you get output from the subshell:
+
+;;               (add-hook 'comint-output-filter-functions
+;;                         'comint-truncate-buffer)
+
+
+;; for desktop-auto-save, defvar a flag variable t or null that tells
+;; us whether we've already written out a file. If it's null, test to
+;; see if the file is there; if it is, prompt the user yes or no if we
+;; can overwrite it.
