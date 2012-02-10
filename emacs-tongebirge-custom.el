@@ -3,11 +3,11 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(Info-additional-directory-list (quote ("/usr/share/info")))
  '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
  '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
  '(indent-tabs-mode nil)
  '(line-number-display-limit nil)
+ '(org-agenda-files (quote ("~/notebooks/developer-notes/swain/notes/undouploads.org")))
  '(scroll-conservatively 1))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
