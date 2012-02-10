@@ -117,39 +117,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
 
-;;;;;;;;; TODO
-
-;; a command that uses a regular expression to comment out all
-;; matching lines. Should use the commenting convention of the current
-;; mode (possibly: use cursor movement commands this way: match
-;; line. Move cursor to beginning of statement. Set mark. Move cursor
-;; to end of statement. Comment region.
-
-;; When I use F8 to find file at point, first put the cursor back to
-;; point max before switching to the new file.
-
-;; I still need lisp to self-truncate a buffer. That is, when program
-;; output in shell mode is excessive, turn off font lock mode and keep
-;; the buffer size under a certain limit.
-
-;; M-x comint-truncate-buffer This command truncates the shell buffer
-;; to a certain maximum number of lines, specified by the variable
-;; comint-buffer-maximum-size. Here's how to do this automatically
-;; each time you get output from the subshell:
-
-;;               (add-hook 'comint-output-filter-functions
-;;                         'comint-truncate-buffer)
-
-
-;; for desktop-auto-save, defvar a flag variable t or null that tells
-;; us whether we've already written out a file. If it's null, test to
-;; see if the file is there; if it is, prompt the user yes or no if we
-;; can overwrite it.
-
-
-
-;; END CHEAT SHEET ETC.
-
 
 
 (when window-system
