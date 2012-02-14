@@ -30,6 +30,10 @@ buffer.
 It would be nice to have this buffer in its own frame somewhere, and
 when I run F5 compilation can be viewed in that buffer it that
 frame... unfortunately a new buffer always opens in the active frame.
+Probably: when tapping "f5" the following should happen:
+*** raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
+*** start compilation
+*** (other-frame) to return control to where I was
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
