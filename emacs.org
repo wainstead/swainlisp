@@ -12,6 +12,7 @@ is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
 *** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
 *** TODO Sometimes a weird error about 'olors' shows upp
 ** TODO Write a proper Cheetah mode maybe
+** TODO psql is not being saved to .emacs.shellbuffers.
 ** TODO Bug: sw-tail-nfmc-logs only opens three buffers in the new frame but it does start four.
 ** TODO Use one of the Git modes to speed up work...
 Find a way to do "git log (current buffer)" since that's broken in
