@@ -6,6 +6,8 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+;; add timestamp to DONE items in a todo list
+(setq org-log-done 'time)
 
 ;; save commonly needed strings in registers
 (set-register ?s "set search_path=nfmc,public;")
