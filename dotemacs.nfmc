@@ -13,6 +13,12 @@
 (setq load-path (cons "~/org/org-7.8.03/lisp" load-path))
 (setq load-path (cons "~/org/org-7.8.03/contrib/lisp" load-path))
 
+;; load a newer version of python-mode
+(add-to-list 'load-path "~/toolbox/external_packages/python-mode.el-6.0.4/") 
+(setq py-install-directory "~/toolbox/external_packages/python-mode.el-6.0.4/")
+(require 'python-mode)
+
+
 (load-file "~swain/.elisp/swainlib.el")
 (load-file "~swain/.elisp/ssc.el")
 
