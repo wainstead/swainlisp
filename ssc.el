@@ -294,6 +294,25 @@ edit the file because it changed on disk."
 (global-set-key [(f4)] 'sw-lint)
 
 
+;; Two convenience functions for running git diff and putting the
+;; results in a special window.
+(defun sw-git-diff ()
+  "Run git diff, output to new buffer"
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*git diff*"))
+  (diff-mode)
+  (shell-command "cd ~swain/git/pippin; git diff" "*git diff*")
+  )
+
+(defun sw-git-diff-master ()
+  "Run git diff master HEAD, output to new buffer"
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*git diff master*"))
+  (shell-command "cd ~swain/git/pippin; git diff master HEAD" "*git diff master*")
+  (diff-mode)
+  )
+
+
 ;; copy screencaps to the directory hardwired into
 ;; ~swain/bin/mv-screencap.sh
 (defun sw-screencap (new-filename)
