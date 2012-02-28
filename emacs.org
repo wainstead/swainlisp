@@ -1,5 +1,6 @@
 * Items to work on at a later date vis Emacs
 ** TODO Try eshell for tailing log files instead of bash
+** TODO When I hit compile, focus should return to the current buffer.
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
 ** TODO Get the layout of the frame holding the log buffers right, on startup
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
@@ -27,14 +28,6 @@ buffer, then, like "cli," it could "reconstitute" the original buffer
 contents. This means the kill ring, command history, location of the
 prompts and so on would all work again between invocations of the
 buffer.
-** TODO Get *compilation* buffer to stay put somewhere
-It would be nice to have this buffer in its own frame somewhere, and
-when I run F5 compilation can be viewed in that buffer it that
-frame... unfortunately a new buffer always opens in the active frame.
-Probably: when tapping "f5" the following should happen:
-*** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
-*** start compilation
-*** (other-frame) to return control to where I was
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
@@ -86,3 +79,14 @@ start.dev).
 ;; us whether we've already written out a file. If it's null, test to
 ;; see if the file is there; if it is, prompt the user yes or no if we
 ;; can overwrite it.
+
+* Done
+** DONE Get *compilation* buffer to stay put somewhere
+   CLOSED: [2012-02-28 Tue 12:33]
+It would be nice to have this buffer in its own frame somewhere, and
+when I run F5 compilation can be viewed in that buffer it that
+frame... unfortunately a new buffer always opens in the active frame.
+Probably: when tapping "f5" the following should happen:
+*** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
+*** start compilation
+
