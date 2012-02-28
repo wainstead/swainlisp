@@ -191,7 +191,9 @@ open buffer, insert its file at point-min"
 (defadvice compile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
-  (sw-write-compilation-buffer))
+  (sw-write-compilation-buffer)
+  (switch-to-buffer-other-frame "*compilation*")
+)
 
 (defadvice recompile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
