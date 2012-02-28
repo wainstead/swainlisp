@@ -32,13 +32,30 @@ It would be nice to have this buffer in its own frame somewhere, and
 when I run F5 compilation can be viewed in that buffer it that
 frame... unfortunately a new buffer always opens in the active frame.
 Probably: when tapping "f5" the following should happen:
-*** raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
+*** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
 *** start compilation
 *** (other-frame) to return control to where I was
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
 
+** Revisit sw-tail-logs-meta
+Passing in a filename to tail is not flexible enough; the spawned
+shell should be able to do anything... it might not, in the future, be
+tailing a log.
+
+(This entry also included:
+
+  "In this case start.dev shouldn't be run automatically, though I think
+  the reason was it might already be running; hmm. start.dev should be
+  spawned in such a way that when the parent shell goes away
+  (i.e. quitting Emacs) it can be reclaimed when the shell start.dev
+  starts again, like doing a screen -r.
+
+" 
+
+But I've largely solved this by using GNU screen and Terminal to run
+start.dev).
 
 * Items from my old TODO list in swainlib.el:
 ;;;;;;;;; TODO
