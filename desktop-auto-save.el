@@ -198,7 +198,9 @@ open buffer, insert its file at point-min"
 (defadvice recompile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
-  (sw-write-compilation-buffer))
+  (sw-write-compilation-buffer)
+  (switch-to-buffer-other-frame "*compilation*")
+)
 
 ;; This turned out to be a not-so-good idea because erase-buffer is
 ;; used by a variety of other functions. Otherwise it was a stellar
