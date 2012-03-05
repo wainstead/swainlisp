@@ -10,11 +10,12 @@
 (setq org-log-done 'time)
 
 ;; save commonly needed strings in registers
-(set-register ?s "set search_path=nfmc,public;")
+(set-register ?s "\\i /Users/swain/.psql_connect")
 (set-register ?d "import datasource; con = datasource.quick_setup(site='nfmc')")
 (set-register ?i "cd ~/git/pippin/sites/nfmc-reporting/mods; ipython2.4  -i model.py")
 (set-register ?l "begin; select nfmc.set_current_user_and_ip(1251, '127.0.0.1'); commit;")
 (set-register ?c "^\\s-*class \\|^\\s-*def ")
+(set-register ?p "SELECT * FROM pg_stat_activity;")
 
 (global-set-key [(meta ?)] 'other-window)
 
