@@ -1,11 +1,11 @@
 * Items to work on at a later date vis Emacs
 ** TODO Try eshell for tailing log files instead of bash
 ** TODO When I hit compile, focus should return to the current buffer.
+Compilation now happens in its own frame but that frame retains
+focus... even more annoying, switching focus means the cursor stops
+moving and output rolls off the bottom where I can't see it anymore.
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
-** TODO Get the layout of the frame holding the log buffers right, on startup
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
-** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
-** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
 ** TODO Rewrite sw-tail-logs-meta to take a function argument
 Currently, the alist passed to this function provides strings that
 become the argument to 'tail -f'. This is not flexible enough. There
@@ -16,7 +16,6 @@ is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
 *** TODO Sometimes a weird error about 'olors' shows upp
 ** TODO Write a proper Cheetah mode maybe
 ** TODO psql is not being saved to .emacs.shellbuffers.
-** TODO Bug: sw-tail-nfmc-logs only opens three buffers in the new frame but it does start four.
 ** TODO Use one of the Git modes to speed up work...
 Find a way to do "git log (current buffer)" since that's broken in
 Emacs. The main problem is using Git means I need to reload the files,
@@ -52,6 +51,11 @@ tailing a log.
 But I've largely solved this by using GNU screen and Terminal to run
 start.dev).
 
+
+* Bugs
+** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
+
 * Items from my old TODO list in swainlib.el:
 ;;;;;;;;; TODO
 
@@ -81,6 +85,7 @@ start.dev).
 ;; us whether we've already written out a file. If it's null, test to
 ;; see if the file is there; if it is, prompt the user yes or no if we
 ;; can overwrite it.
+
 
 * Done
 ** DONE Get *compilation* buffer to stay put somewhere
