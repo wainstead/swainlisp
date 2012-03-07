@@ -162,6 +162,7 @@
                              ("laborer log"   . "/tmp/nfmc-laborer.log")
                              ("swallower log" . "/tmp/nfmc-csv-swallower.log")
                              ("error log"     . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
+                             ("nfmc access log"    . "/opt/local/apache2/logs/nfmc-reporting_access_log")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
 
@@ -174,8 +175,6 @@
     (select-frame-by-name sw-tail-nfmc-frame-name)
     (sw-fix-logs)
     (sw-colors "003030")
-    (set-frame-width (selected-frame) 250)
-    (set-frame-height (selected-frame) 84)
     (enlarge-window -25)
     (window-configuration-to-register ?2)
     )
@@ -193,6 +192,8 @@
   (if window-system
     (let ((logs-frame (make-frame)))
       (select-frame logs-frame)
+      (set-frame-width (selected-frame) 250)
+      (set-frame-height (selected-frame) 84)
       (set-frame-name store-frame-name)))
 
   (let (pair (file-alist store-alist))
@@ -222,6 +223,7 @@
   "Kill the buffers tailing the log files as listed in store-alist."
   (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
       (progn
+        ;; FIXME: Should fail gracefully if the buffer doesn't exist anymore
         (switch-to-buffer (car (car store-alist)))
         (delete-other-windows)
         (let ((file-alist store-alist))
