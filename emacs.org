@@ -4,6 +4,8 @@
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
 ** TODO Get the layout of the frame holding the log buffers right, on startup
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
+** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
 ** TODO Rewrite sw-tail-logs-meta to take a function argument
 Currently, the alist passed to this function provides strings that
 become the argument to 'tail -f'. This is not flexible enough. There
