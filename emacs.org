@@ -86,6 +86,13 @@ start.dev).
 ;; see if the file is there; if it is, prompt the user yes or no if we
 ;; can overwrite it.
 
+** Emacs Lisp version of AUTOLOAD?
+Metaprogramming challenge: passing additional path info as part
+of the function call... similar to Perl's AUTOLOAD
+functionality. If there is no Lisp function
+matching "sw-templates/grantee," for example, the function name
+should be parsed to find the base function (sw-templates) and
+append the rest of the path info ("grantee") to the string.
 
 * Done
 ** DONE Get *compilation* buffer to stay put somewhere
