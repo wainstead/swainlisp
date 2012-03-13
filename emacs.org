@@ -33,7 +33,7 @@ buffer.
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
 
-** Revisit sw-tail-logs-meta
+** TODO Revisit sw-tail-logs-meta
 Passing in a filename to tail is not flexible enough; the spawned
 shell should be able to do anything... it might not, in the future, be
 tailing a log.
@@ -50,6 +50,14 @@ tailing a log.
 
 But I've largely solved this by using GNU screen and Terminal to run
 start.dev).
+
+** TODO Emacs Lisp version of AUTOLOAD?
+Metaprogramming challenge: passing additional path info as part
+of the function call... similar to Perl's AUTOLOAD
+functionality. If there is no Lisp function
+matching "sw-templates/grantee," for example, the function name
+should be parsed to find the base function (sw-templates) and
+append the rest of the path info ("grantee") to the string.
 
 
 * Bugs
@@ -86,13 +94,6 @@ start.dev).
 ;; see if the file is there; if it is, prompt the user yes or no if we
 ;; can overwrite it.
 
-** Emacs Lisp version of AUTOLOAD?
-Metaprogramming challenge: passing additional path info as part
-of the function call... similar to Perl's AUTOLOAD
-functionality. If there is no Lisp function
-matching "sw-templates/grantee," for example, the function name
-should be parsed to find the base function (sw-templates) and
-append the rest of the path info ("grantee") to the string.
 
 * Done
 ** DONE Get *compilation* buffer to stay put somewhere
