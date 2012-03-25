@@ -2,6 +2,9 @@
 (setq custom-file "~/.elisp/emacs-klingklang-custom.el")
 (load custom-file)
 
+;; disable the graphical toolbar (i.e. the "print" icon and friends)
+(tool-bar-mode -1)
+
 (defun sw-waverous ()
   "go forth and be unsteady"
   (interactive)
@@ -41,13 +44,13 @@
 
 
 ;; mozrepl stuff, for shelling into firefox
-(add-to-list 'load-path "/home/swain/public_html/projects/mozrepl/chrome/content")
+;; (add-to-list 'load-path "/home/swain/public_html/projects/mozrepl/chrome/content")
 
-(autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
+;; (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
 
-(add-hook 'espresso-mode-hook 'espresso-custom-setup)
-(defun espresso-custom-setup ()
-  (moz-minor-mode 1))
+;; (add-hook 'espresso-mode-hook 'espresso-custom-setup)
+;; (defun espresso-custom-setup ()
+;;   (moz-minor-mode 1))
 
 
 ;; every time you open a Javascript file, you will now
