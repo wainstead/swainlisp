@@ -24,7 +24,7 @@
 
 
 ;; default compile command for compiling waverous lambdamoo
-(setq compile-command "make CFLAGS='-g -m32 -Wall -DEXPAT_XML'")
+(setq compile-command "make CFLAGS='-g -m32 -Wall'")
 
 
 (defun moo-connect ()
