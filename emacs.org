@@ -60,6 +60,8 @@ way of fontifying a buffer... that way I can add the file to the list
 for that major mode and every time I reload the file it's
 automagically highlighted. Might work for tailing log files too;
 perhaps I really want a minor mode.
+** TODO See the comment block on top of sw-highlight-stuff
+Saving the settings of hi-lock for a given buffer
 ** TODO Emacs Lisp version of AUTOLOAD?
 Metaprogramming challenge: passing additional path info as part
 of the function call... similar to Perl's AUTOLOAD
