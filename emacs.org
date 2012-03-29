@@ -51,6 +51,15 @@ tailing a log.
 But I've largely solved this by using GNU screen and Terminal to run
 start.dev).
 
+** TODO Create minor mode to highlight things in the file?
+From commit 47ec8fad6153043e32a0b16aa6945f3023d21892:
+Devised a couple of functions to eliminate the repetitive task of
+applying a set of calls to hi-lock-face-buffer every time I reload a
+file. I should learn to do on-the-fly major modes, perhaps, or some
+way of fontifying a buffer... that way I can add the file to the list
+for that major mode and every time I reload the file it's
+automagically highlighted. Might work for tailing log files too;
+perhaps I really want a minor mode.
 ** TODO Emacs Lisp version of AUTOLOAD?
 Metaprogramming challenge: passing additional path info as part
 of the function call... similar to Perl's AUTOLOAD
