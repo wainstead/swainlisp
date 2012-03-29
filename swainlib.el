@@ -1411,3 +1411,26 @@ after each yank."
   (shell-command "git diff" (get-buffer-create "git diff"))
   ;;(switch-to-buffer (get-buffer "git diff"))
 )
+
+(defun sw-highlight-stuff ()
+  "Pass an alist to the recursive function sw-apply-hs-regexps to
+   highlight stuff in the current buffer."
+  (interactive)
+  (sw-apply-hs-regexps '(
+                         ("EXCEPTION:" . "hi-red-b")
+                         ("WARNING:" . "hi-yellow")
+                         ("---> Report ran successfully." . "hi-green-b")
+                         ))
+  )
+
+(defun sw-apply-hs-regexps (sw-hi-alist)
+  "Given an alist of key:regexp, value:color recurse through the
+alist and use hi-lock-face-buffer to activate each in the current
+buffer."
+  (if sw-hi-alist
+      (progn
+        (hi-lock-face-buffer (car (car sw-hi-alist)) (cdr (car sw-hi-alist)))
+        (sw-apply-hs-regexps (cdr sw-hi-alist))
+        )
+    )
+  )
