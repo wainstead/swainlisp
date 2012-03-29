@@ -1412,9 +1412,17 @@ after each yank."
   ;;(switch-to-buffer (get-buffer "git diff"))
 )
 
+;; What would also be useful: a function to pull out and list all the
+;; currently active highlights in a given buffer. hi-lock probably has
+;; a variable (maybe even an alist) storing this information. That way
+;; I can iteratively highlight a buffer and when I've reached a point
+;; of highest usefulness pull it all out... maybe even store it in a
+;; register or a global so reloading the file just automagically does
+;; the right thing.
 (defun sw-highlight-stuff ()
   "Pass an alist to the recursive function sw-apply-hs-regexps to
-   highlight stuff in the current buffer."
+   highlight stuff in the current buffer. This function is the UI
+   to the recursive function sw-apply-hs-regexps."
   (interactive)
   (sw-apply-hs-regexps '(
                          ("EXCEPTION:" . "hi-red-b")
@@ -1424,11 +1432,15 @@ after each yank."
   )
 
 (defun sw-apply-hs-regexps (sw-hi-alist)
-  "Given an alist of key:regexp, value:color recurse through the
-alist and use hi-lock-face-buffer to activate each in the current
-buffer."
+  "Recurse through an alist of (regexp . color) and use
+hi-lock-face-buffer to activate each in the current buffer."
   (if sw-hi-alist
       (progn
+        ;; first unhighlight it, in case it was already done; this
+        ;; happens sometimes when Emacs asks us to reload a file
+        ;; because it changed on disc. hi-lock-unface-buffer just
+        ;; returns 'nil' if it wasn't faced already.
+        (hi-lock-unface-buffer (car (car sw-hi-alist)))
         (hi-lock-face-buffer (car (car sw-hi-alist)) (cdr (car sw-hi-alist)))
         (sw-apply-hs-regexps (cdr sw-hi-alist))
         )
