@@ -29,6 +29,7 @@ buffer, then, like "cli," it could "reconstitute" the original buffer
 contents. This means the kill ring, command history, location of the
 prompts and so on would all work again between invocations of the
 buffer.
+This might help: http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
@@ -70,6 +71,8 @@ matching "sw-templates/grantee," for example, the function name
 should be parsed to find the base function (sw-templates) and
 append the rest of the path info ("grantee") to the string.
 
+** TODO Revisit calling Applescript from Emacs
+Update the file; see if anyone else has written anything
 
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
