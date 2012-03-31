@@ -22,6 +22,7 @@
 
 ;; .html and .template files are usually Cheetah template files
 (add-to-list 'auto-mode-alist '("\\.html$"   . cheetah-mode       ))
+(add-to-list 'auto-mode-alist '("\\.tmpl$"   . cheetah-mode       ))
 (add-to-list 'auto-mode-alist '("\\.html.template$"   . cheetah-mode       ))
 (add-to-list 'auto-mode-alist '("\\.html.translate$"   . cheetah-mode       ))
 
