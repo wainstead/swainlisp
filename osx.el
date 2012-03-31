@@ -1,4 +1,4 @@
-;; a new command using the do-'applescript function
+;; a new command using the do-applescript function
 ;; TODO: add list of Mac apps that user can interate over via M-p, M-n
 (defun sw-switch (app)
   "Switch to app specified by user"
