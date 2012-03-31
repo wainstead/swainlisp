@@ -113,40 +113,9 @@
 
 ;; M-x set-goal-column
 
+;; (global-set-key (kbd "<f2> w") 'keyboard-quit)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
-
-;;;;;;;;; TODO
-
-;; a command that uses a regular expression to comment out all
-;; matching lines. Should use the commenting convention of the current
-;; mode (possibly: use cursor movement commands this way: match
-;; line. Move cursor to beginning of statement. Set mark. Move cursor
-;; to end of statement. Comment region.
-
-;; When I use F8 to find file at point, first put the cursor back to
-;; point max before switching to the new file.
-
-;; I still need lisp to self-truncate a buffer. That is, when program
-;; output in shell mode is excessive, turn off font lock mode and keep
-;; the buffer size under a certain limit.
-
-;; M-x comint-truncate-buffer This command truncates the shell buffer
-;; to a certain maximum number of lines, specified by the variable
-;; comint-buffer-maximum-size. Here's how to do this automatically
-;; each time you get output from the subshell:
-
-;;               (add-hook 'comint-output-filter-functions
-;;                         'comint-truncate-buffer)
-
-
-;; for desktop-auto-save, defvar a flag variable t or null that tells
-;; us whether we've already written out a file. If it's null, test to
-;; see if the file is there; if it is, prompt the user yes or no if we
-;; can overwrite it.
-
-
-
-;; END CHEAT SHEET ETC.
 
 
 
@@ -1433,3 +1402,35 @@ after each yank."
 ;; Give diff and patch files a color scheme that works with a black
 ;; background. Note the hyphen at the end of the basename: diff-mode-
 (load-file "~swain/.elisp/diff-mode-.el")
+
+;; fix me: should set diff-mode on the buffer if it created it
+(defun sw-git-diff ()
+  "Run the shell command 'git diff' and display the results in a
+   new buffer that's in diff-mode."
+  (interactive)
+  (shell-command "git diff" (get-buffer-create "git diff"))
+  ;;(switch-to-buffer (get-buffer "git diff"))
+)
+
+(defun sw-highlight-stuff ()
+  "Pass an alist to the recursive function sw-apply-hs-regexps to
+   highlight stuff in the current buffer."
+  (interactive)
+  (sw-apply-hs-regexps '(
+                         ("EXCEPTION:" . "hi-red-b")
+                         ("WARNING:" . "hi-yellow")
+                         ("---> Report ran successfully." . "hi-green-b")
+                         ))
+  )
+
+(defun sw-apply-hs-regexps (sw-hi-alist)
+  "Given an alist of key:regexp, value:color recurse through the
+alist and use hi-lock-face-buffer to activate each in the current
+buffer."
+  (if sw-hi-alist
+      (progn
+        (hi-lock-face-buffer (car (car sw-hi-alist)) (cdr (car sw-hi-alist)))
+        (sw-apply-hs-regexps (cdr sw-hi-alist))
+        )
+    )
+  )
