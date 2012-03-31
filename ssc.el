@@ -1,8 +1,21 @@
-(set-register ?s "set search_path=nfmc,public;")
-(set-register ?d "import datasource; con = datasource.quick_setup()")
+;; The following copied from:
+;; http://orgmode.org/manual/Activation.html#Activation
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; recommended global key bindings for org mode
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+;; add timestamp to DONE items in a todo list
+(setq org-log-done 'time)
+
+;; save commonly needed strings in registers
+(set-register ?s "\\i /Users/swain/.psql_connect")
+(set-register ?d "import datasource; con = datasource.quick_setup(site='nfmc')")
 (set-register ?i "cd ~/git/pippin/sites/nfmc-reporting/mods; ipython2.4  -i model.py")
 (set-register ?l "begin; select nfmc.set_current_user_and_ip(1251, '127.0.0.1'); commit;")
 (set-register ?c "^\\s-*class \\|^\\s-*def ")
+(set-register ?p "SELECT * FROM pg_stat_activity;")
 
 (global-set-key [(meta ?)] 'other-window)
 
@@ -53,7 +66,7 @@
   (comint-send-input))
 
 (defun sw-postgresql ()
-  "Move the psql shell into the postres directory."
+  "Move the cli shell into the postres directory."
   (interactive)
   (switch-to-buffer "cli")
   (goto-char (point-max))
@@ -94,16 +107,40 @@
   (goto-char (point-max))
   )
 
+;; I should write something that takes an alist of shell name:
+;; starting directory, and iterates over the alist creating shell
+;; buffers. It would reduce redundant code. This alist would be
+;; project-specific; if it's SSC, for example, it's all the logs I
+;; want for that versus Waverous.
+(defun sw-nose ()
+  "Open a new bash shell, put it in the ~/git/pippin dir for nose tests."
+  (interactive)
+  (sw-shell "nosetests")
+  (insert "cd ~/git/pippin")
+  (comint-send-input)
+)
+
 ;; store the string for setting the search path in psql in register 's'
 (set-register ?s "set search_path=nfmc,public;")
 
-(defun sw-start.dev ()
-  "Open a shell buffer, rename it 'start.dev'"
-  (interactive)
-  (sw-shell "start.dev")
-  (goto-char (point-max))
-  )
+;; not running start.dev in Emacs anymore... 
+;; (defun sw-start.dev ()
+;;   "Open a shell buffer, rename it 'start.dev'"
+;;   (interactive)
+;;   (sw-shell "start.dev")
+;;   (goto-char (point-max))
+;;   )
 
+;; Though I have no current use for it, Dale found a Javascript
+;; interpreter that comes with OS X.
+(defun sw-js-repl ()
+  "Open the OS X JavaScript repl tool"
+  (interactive)
+  (sw-shell "javascript repl")
+  (goto-char (point-max))
+  (insert "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc")
+  (comint-send-input)
+)
 
 ;; found this on the net somewhere
 (define-derived-mode cheetah-mode html-mode "Cheetah"
@@ -111,7 +148,7 @@
   (font-lock-add-keywords
    nil
    '(
-     ("\\(#\\(from\\|else\\|include\\|extends\\|set\\|def\\|import\\|for\\|if\\|end\\|return\\|elif\\)+\\)\\>" 1 font-lock-type-face)
+     ("\\(#\\(from\\|else\\|include\\|extends\\|set\\|def\\|import\\|for\\|if\\|end\\|echo\\|return\\|silent\\|elif\\)+\\)\\>" 1 font-lock-type-face)
      ("\\(#\\(from\\|for\\|end\\)\\).*\\<\\(for\\|import\\|def\\|if\\|in\\)\\>" 3 font-lock-type-face)
      ("\\(##.*\\)\n" 1 font-lock-comment-face)
      ("\\(\\$\\(?:\\sw\\|}\\|{\\|\\s_\\)+\\)" 1 font-lock-variable-name-face))
@@ -122,9 +159,11 @@
 
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
-                             ("pippin log" . "/tmp/pippin.log")
-                             ;;("nfmc func log" . "/tmp/osc_func.log")
-                             ("error log" . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
+                             ("pippin log"    . "/tmp/pippin.log")
+                             ("laborer log"   . "/tmp/nfmc-laborer.log")
+                             ("swallower log" . "/tmp/nfmc-csv-swallower.log")
+                             ("error log"     . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
+                             ("nfmc access log"    . "/opt/local/apache2/logs/nfmc-reporting_access_log")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
 
@@ -137,8 +176,6 @@
     (select-frame-by-name sw-tail-nfmc-frame-name)
     (sw-fix-logs)
     (sw-colors "003030")
-    (set-frame-width (selected-frame) 250)
-    (set-frame-height (selected-frame) 84)
     (enlarge-window -25)
     (window-configuration-to-register ?2)
     )
@@ -156,6 +193,8 @@
   (if window-system
     (let ((logs-frame (make-frame)))
       (select-frame logs-frame)
+      (set-frame-width (selected-frame) 250)
+      (set-frame-height (selected-frame) 84)
       (set-frame-name store-frame-name)))
 
   (let (pair (file-alist store-alist))
@@ -167,7 +206,11 @@
       (shell)
       (rename-buffer (car pair))
       (goto-char (point-max))
-      (insert (format "tail -f %s" (cdr pair)))
+      (if (cdr pair)
+          ;; 'nil' indicates "don't tail any log"
+          ;; Future project: pass in a function to do anything
+          (insert (format "~/bin/waittail %s" (cdr pair)))
+      )
       (comint-send-input)
       ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
       (setq file-alist (cdr file-alist))
@@ -181,6 +224,7 @@
   "Kill the buffers tailing the log files as listed in store-alist."
   (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
       (progn
+        ;; FIXME: Should fail gracefully if the buffer doesn't exist anymore
         (switch-to-buffer (car (car store-alist)))
         (delete-other-windows)
         (let ((file-alist store-alist))
@@ -244,11 +288,33 @@ edit the file because it changed on disk."
   "Run a lint check on the file the current buffer is
    visiting. Thanks to Dale for the python incantation."
   (interactive)
-  (let ( (pylint-interpreter "/usr/bin/env python -m py_compile") ) 
-    (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
+  (if buffer-file-name
+      (let ( (pylint-interpreter "/usr/bin/env python -m py_compile") ) 
+        (shell-command (format "%s %s" pylint-interpreter (buffer-file-name))) 
+        )
+    (message "Buffer not visiting a file.")
     )
   )
 (global-set-key [(f4)] 'sw-lint)
+
+
+;; Two convenience functions for running git diff and putting the
+;; results in a special window.
+(defun sw-git-diff ()
+  "Run git diff, output to new buffer"
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*git diff*"))
+  (diff-mode)
+  (shell-command "cd ~swain/git/pippin; git diff" "*git diff*")
+  )
+
+(defun sw-git-diff-master ()
+  "Run git diff master HEAD, output to new buffer"
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*git diff master*"))
+  (shell-command "cd ~swain/git/pippin; git diff master HEAD" "*git diff master*")
+  (diff-mode)
+  )
 
 
 ;; copy screencaps to the directory hardwired into
