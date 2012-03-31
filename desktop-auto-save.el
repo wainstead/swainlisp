@@ -191,12 +191,16 @@ open buffer, insert its file at point-min"
 (defadvice compile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
-  (sw-write-compilation-buffer))
+  (sw-write-compilation-buffer)
+  (switch-to-buffer-other-frame "*compilation*")
+)
 
 (defadvice recompile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
-  (sw-write-compilation-buffer))
+  (sw-write-compilation-buffer)
+  (switch-to-buffer-other-frame "*compilation*")
+)
 
 ;; This turned out to be a not-so-good idea because erase-buffer is
 ;; used by a variety of other functions. Otherwise it was a stellar
@@ -208,8 +212,10 @@ open buffer, insert its file at point-min"
 ;;   )
 
 (defun sw-git-commit-buffers()
-  "git-commit all changed files in ~/.emacs.shellbuffers."
+  "Save the contents of all shell buffers to their files and then
+   git-commit those files in ~/.emacs.shellbuffers."
   (sw-save-shell-buffer-contents)
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers via F3\"")
-  (message "git commit done via F3's before advice")
+  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
+;; when qutting Emacs save and commit the shell buffers
+(add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
