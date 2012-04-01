@@ -1,4 +1,4 @@
-(setq custom-file "~/.elisp/emacs-kristalle-custom.el")
+(setq custom-file "~/.elisp/emacs-harmonika-custom.el")
 (load custom-file)
 
 
