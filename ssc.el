@@ -299,24 +299,38 @@ edit the file because it changed on disk."
 
 ;; Two convenience functions for running git diff and putting the
 ;; results in a special window.
-(defun sw-git-diff ()
-  "Run git diff, output to new buffer"
-  (interactive)
-  (switch-to-buffer (get-buffer-create "*git diff*"))
+(defun sw-git-diff-meta (output-buffer-name git-command)
+  "Run git-command as a shell command; output to
+   output-buffer-name."
+  (switch-to-buffer (get-buffer-create output-buffer-name))
   (diff-mode)
-  (shell-command "cd ~swain/git/pippin; git diff" "*git diff*")
+  (shell-command git-command output-buffer-name)
   (hi-lock-unface-buffer "^diff.*")
   (hi-lock-face-buffer "^diff.*" "hi-green")
+  (toggle-read-only)
+)
+(defun sw-git-diff ()
+  "Run git diff, output to new buffer"
+  (interactive) 
+  (sw-git-diff-meta "*git diff*" "cd ~swain/git/pippin; git diff")
+  ;; (switch-to-buffer (get-buffer-create "*git diff*"))
+  ;; (diff-mode)
+  ;; (shell-command "cd ~swain/git/pippin; git diff" "*git diff*")
+  ;; (hi-lock-unface-buffer "^diff.*")
+  ;; (hi-lock-face-buffer "^diff.*" "hi-green")
+  ;; (toggle-read-only)
   )
 
 (defun sw-git-diff-master ()
   "Run git diff master HEAD, output to new buffer"
   (interactive)
-  (switch-to-buffer (get-buffer-create "*git diff master*"))
-  (shell-command "cd ~swain/git/pippin; git diff master HEAD" "*git diff master*")
-  (diff-mode)
-  (hi-lock-unface-buffer "^diff.*")
-  (hi-lock-face-buffer "^diff.*" "hi-green")
+  (sw-git-diff-meta "*git diff master*" "cd ~swain/git/pippin; git diff master HEAD")
+  ;; (switch-to-buffer (get-buffer-create "*git diff master*"))
+  ;; (shell-command "cd ~swain/git/pippin; git diff master HEAD" "*git diff master*")
+  ;; (diff-mode)
+  ;; (hi-lock-unface-buffer "^diff.*")
+  ;; (hi-lock-face-buffer "^diff.*" "hi-green")
+  ;; (toggle-read-only)
   )
 
 
