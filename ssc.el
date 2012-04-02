@@ -305,6 +305,8 @@ edit the file because it changed on disk."
   (switch-to-buffer (get-buffer-create "*git diff*"))
   (diff-mode)
   (shell-command "cd ~swain/git/pippin; git diff" "*git diff*")
+  (hi-lock-unface-buffer "^diff.*")
+  (hi-lock-face-buffer "^diff.*" "hi-green")
   )
 
 (defun sw-git-diff-master ()
