@@ -119,3 +119,4 @@ Probably: when tapping "f5" the following should happen:
 *** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
 *** start compilation
 
+#+STARTUP: content
