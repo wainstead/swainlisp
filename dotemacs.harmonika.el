@@ -2,7 +2,7 @@
 (load custom-file)
 
 
-(setq mac-allow-anti-aliasing nil)
+;;(setq mac-allow-anti-aliasing nil)
 
 ;; this is the local file.
 (when window-system
