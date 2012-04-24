@@ -69,7 +69,7 @@
   (interactive)
   (switch-to-buffer "cli")
   (goto-char (point-max))
-  (insert "cd ~/git/pippin/postgres/")
+  (insert "cd ~/git/pippin/postgres/nfmc/")
   (comint-send-input))
 
 (defun sw-mods ()
