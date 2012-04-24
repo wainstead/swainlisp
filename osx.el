@@ -1,4 +1,4 @@
-;; a new command using the do-'applescript function
+;; a new command using the do-applescript function
 ;; TODO: add list of Mac apps that user can interate over via M-p, M-n
 (defun sw-switch (app)
   "Switch to app specified by user"
@@ -10,64 +10,11 @@ end tell
 " app))
   (do-applescript apscript))
 
+;; Functions for browsing URL at point have been dropped; use M-x
+;; browse-url instead. SW March 2012
 
-;; use AppleScript to tell Mozilla to open URL at point
-;; some code borrowed from browse-url-mozilla
-(defun sw-mozilla-browse-url (url &optional new-window)
-  "Open the url at or around point"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (while (string-match "[,)]" url)
-    (setq url (replace-match
-               (format "%%%x" (string-to-char (match-string 0 url))) t t url)))
-  (setq apscript (format "
-tell application \"Finder\"
-   tell application \"Mozilla\"
-      activate
-      Get URL \"%s\"
-   end tell
-end tell
-" url))
-  (do-applescript apscript))
-
-;; use AppleScript to tell Firefox to open URL at point
-;; some code borrowed from browse-url-mozilla
-(defun sw-firefox-browse-url (url &optional new-window)
-  "Open the url at or around point"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (while (string-match "[,)]" url)
-    (setq url (replace-match
-               (format "%%%x" (string-to-char (match-string 0 url))) t t url)))
-  (setq apscript (format "
-tell application \"Finder\"
-   tell application \"Firefox\"
-      activate
-      Get URL \"%s\"
-   end tell
-end tell
-" url))
-  (do-applescript apscript))
-
-
-;; use AppleScript to tell Safari to open URL at point
-;; some code borrowed from browse-url-mozilla
-
-(defun sw-safari-browse-url (url &optional new-window)
-  "Open the url at or around point"
-  (interactive (browse-url-interactive-arg "URL: "))
-  (while (string-match "[,)]" url)
-    (setq url (replace-match
-               (format "%%%x" (string-to-char (match-string 0 url))) t t url)))
-  (setq apscript (format "
-tell application \"Safari\"
-	activate
-	set URL of the first document to \"%s\"
-end tell
-" url))
-  (do-applescript apscript))
-
-(global-set-key [f10] `sw-safari-browse-url)
-
-
+;; known bug: Safari won't open this file (the one you are reading
+;; right now)
 (defun sw-open-buffer-file-in-safari ()
   "Open the file in current buffer in Safari"
   (interactive)
