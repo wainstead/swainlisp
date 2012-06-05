@@ -1,4 +1,4 @@
-* Items to work on at a later date vis Emacs
+* Items to work on at a later date viz Emacs
 ** TODO Try eshell for tailing log files instead of bash
 ** TODO When I hit compile, focus should return to the current buffer.
 Compilation now happens in its own frame but that frame retains
