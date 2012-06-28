@@ -1,6 +1,8 @@
 ;; don't reload the shell buffers at this juncture
 (setq sw-restore-shell-buffers-flag nil)
 
+(tool-bar-mode -1)
+
 (setq custom-file "~swain/.elisp/emacs-tongebirge-custom.el")
 
 (when window-system
@@ -14,9 +16,9 @@
 (setq load-path (cons "~/org/org-7.8.03/contrib/lisp" load-path))
 
 ;; load a newer version of python-mode
-(add-to-list 'load-path "~/toolbox/external_packages/python-mode.el-6.0.4/") 
-(setq py-install-directory "~/toolbox/external_packages/python-mode.el-6.0.4/")
-(require 'python-mode)
+;; (add-to-list 'load-path "~/toolbox/external_packages/python-mode.el-6.0.4/") 
+;; (setq py-install-directory "~/toolbox/external_packages/python-mode.el-6.0.4/")
+;; (require 'python-mode)
 
 
 (load-file "~swain/.elisp/swainlib.el")
@@ -52,5 +54,9 @@
 
 
 (setq org-agenda-files (list "~/.elisp/emacs.org"
-                             "~/notebooks/developer-notes/swain/notes/undouploads.org" 
+                             "~/notebooks/developer-notes/swain/notes/uup2.org"
                              ))
+
+;; attempt to get Emacs's "M-x compile" to work with the newly merged
+;; in "unification" branch, 2/23/2012
+(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; echo $PYTHONPATH"))
