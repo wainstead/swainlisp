@@ -128,3 +128,8 @@
 ;; (setq sql-database "bandspace")
 ;; (setq sql-server "localhost")
 (put 'upcase-region 'disabled nil)
+
+;; For SSC, I like compilation in a separate frame. Not so much for
+;; Waverous.
+(ad-unadvise 'compile)
+(ad-unadvise 'recompile)
