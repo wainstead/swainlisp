@@ -1,4 +1,4 @@
-* Items to work on at a later date vis Emacs
+* Items to work on at a later date viz Emacs
 ** TODO Try eshell for tailing log files instead of bash
 ** TODO When I hit compile, focus should return to the current buffer.
 Compilation now happens in its own frame but that frame retains
@@ -29,6 +29,7 @@ buffer, then, like "cli," it could "reconstitute" the original buffer
 contents. This means the kill ring, command history, location of the
 prompts and so on would all work again between invocations of the
 buffer.
+This might help: http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
@@ -60,6 +61,8 @@ way of fontifying a buffer... that way I can add the file to the list
 for that major mode and every time I reload the file it's
 automagically highlighted. Might work for tailing log files too;
 perhaps I really want a minor mode.
+** TODO See the comment block on top of sw-highlight-stuff
+Saving the settings of hi-lock for a given buffer
 ** TODO Emacs Lisp version of AUTOLOAD?
 Metaprogramming challenge: passing additional path info as part
 of the function call... similar to Perl's AUTOLOAD
@@ -68,6 +71,8 @@ matching "sw-templates/grantee," for example, the function name
 should be parsed to find the base function (sw-templates) and
 append the rest of the path info ("grantee") to the string.
 
+** TODO Revisit calling Applescript from Emacs
+Update the file; see if anyone else has written anything
 
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
@@ -114,3 +119,4 @@ Probably: when tapping "f5" the following should happen:
 *** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
 *** start compilation
 
+#+STARTUP: content
