@@ -1,6 +1,6 @@
 (setq custom-file "~/.elisp/emacs-harmonika-custom.el")
 (load custom-file)
-
+(tool-bar-mode -1)
 
 ;;(setq mac-allow-anti-aliasing nil)
 
