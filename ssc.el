@@ -306,31 +306,6 @@ edit the file because it changed on disk."
 (global-set-key [(f4)] 'sw-lint)
 
 
-;; One function and two convenience commands for running git diff and
-;; putting the results in a special window.
-(defun sw-git-diff-meta (output-buffer-name git-command)
-  "Run git-command as a shell command; output to
-   output-buffer-name."
-  (switch-to-buffer (get-buffer-create output-buffer-name))
-  (diff-mode)
-  (shell-command git-command output-buffer-name)
-  (hi-lock-unface-buffer "^diff.*")
-  (hi-lock-face-buffer "^diff.*" "hi-green")
-  (toggle-read-only)
-)
-(defun sw-git-diff ()
-  "Run git diff, output to new buffer"
-  (interactive) 
-  (sw-git-diff-meta "*git diff*" "cd ~swain/git/pippin; git diff")
-  )
-
-(defun sw-git-diff-master ()
-  "Run git diff master HEAD, output to new buffer"
-  (interactive)
-  (sw-git-diff-meta "*git diff master*" "cd ~swain/git/pippin; git diff master HEAD")
-  )
-
-
 ;; copy screencaps to the directory hardwired into
 ;; ~swain/bin/mv-screencap.sh
 (defun sw-screencap (new-filename)

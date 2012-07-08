@@ -1403,14 +1403,29 @@ after each yank."
 ;; background. Note the hyphen at the end of the basename: diff-mode-
 (load-file "~swain/.elisp/diff-mode-.el")
 
-;; fix me: should set diff-mode on the buffer if it created it
-(defun sw-git-diff ()
-  "Run the shell command 'git diff' and display the results in a
-   new buffer that's in diff-mode."
-  (interactive)
-  (shell-command "git diff" (get-buffer-create "git diff"))
-  ;;(switch-to-buffer (get-buffer "git diff"))
+;; One function and two convenience commands for running git diff and
+;; putting the results in a special window.
+(defun sw-git-diff-meta (output-buffer-name git-command)
+  "Run git-command as a shell command; output to
+   output-buffer-name."
+  (switch-to-buffer (get-buffer-create output-buffer-name))
+  (diff-mode)
+  (shell-command git-command output-buffer-name)
+  (hi-lock-unface-buffer "^diff.*")
+  (hi-lock-face-buffer "^diff.*" "hi-green")
+  (toggle-read-only)
 )
+(defun sw-git-diff ()
+  "Run git diff, output to new buffer"
+  (interactive) 
+  (sw-git-diff-meta "*git diff*" "git diff")
+  )
+
+(defun sw-git-diff-master ()
+  "Run git diff master HEAD, output to new buffer"
+  (interactive)
+  (sw-git-diff-meta "*git diff master*" "git diff master HEAD")
+  )
 
 ;; What would also be useful: a function to pull out and list all the
 ;; currently active highlights in a given buffer. hi-lock probably has
