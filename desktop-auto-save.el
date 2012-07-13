@@ -192,6 +192,8 @@ open buffer, insert its file at point-min"
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
   (sw-write-compilation-buffer)
+  ;; FIXME: test to see if we are already in the *compilation* buffer,
+  ;; otherwise Emacs opens a new frame, which is nonoptimal.
   (switch-to-buffer-other-frame "*compilation*")
 )
 
