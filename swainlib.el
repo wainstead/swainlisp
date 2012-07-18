@@ -164,15 +164,6 @@
 ;; always use font-lock-mode in modes that support it
 (global-font-lock-mode t)
 
-;; hi-lock ships with emacs 21; older versions need p-whim-lock. Note
-;; that hi-lock is more featureful.
-(if window-system
-    (progn
-      (global-set-key "\C-xwi" 'hi-lock-find-patterns)
-      (global-set-key "\C-xwh" 'hi-lock-face-buffer)
-      (global-set-key "\C-xwr" 'hi-lock-unface-buffer)
-      (global-set-key "\C-xwb" 'hi-lock-write-interactive-patterns)))
-
 
 ;; hideshow for programming
 ;;(load-library "hideshow")
