@@ -538,16 +538,12 @@ them."
 (add-to-list 'auto-mode-alist '("\\.vps$"     . python-mode     ))
 (add-to-list 'auto-mode-alist '("\\.tt2$"     . html-mode       ))
 (add-to-list 'auto-mode-alist '("\\.xsd$"     . sgml-mode       ))
-(add-to-list 'auto-mode-alist '("\\.js$"      . javascript-mode ))
+(add-to-list 'auto-mode-alist '("\\.js$"      . js-mode ))
 (add-to-list 'auto-mode-alist '("\\.xpi$"     . archive-mode    ))
 (add-to-list 'auto-mode-alist '("\\.rb$"      . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.tpl$"     . php-mode        ))
-
-;;(autoload 'javascript-mode "javascript-mode" "JavaScript mode" t)
-
-;;(load-library "props-mode")
 
 ;; thanks Jeff Dairiki for this hook
 (defun my-php-mode-hook-func ()
@@ -559,19 +555,6 @@ them."
 
 (add-hook 'php-mode-hook 'my-php-mode-hook-func)
 
-                                        ;(put 'narrow-to-region 'disabled nil)
-
-;; (defun find-pbms ()
-;;    "Do a regexp search backwords for \"error\" and \"exception\""
-;;    (interactive)
-;;    (re-search-backward "error\\|exception"))
-
-;;(global-set-key [f12] 'find-pbms)
-;;(global-set-key [f12] 'comment-region)
-;;(global-set-key [(control f12)] 'uncomment-region)
-;; convenience                                                                                                           
-;;(global-set-key [f12] 'enlarge-window)
-;;(global-set-key [(control f12)] 'shrink-window)
 (global-set-key [f12] 'toggle-truncate-lines)
 
 
@@ -665,22 +648,6 @@ already.  Give error if buffer is not associated with a file."
 
 (fset 'reformat-code
       [?\C-x ?h ?\C-u ?\M-| ?p ?e ?r ?l ?  ?- ?n ?p ?e ?  ?' ?s ?/ ?^ ?[ ?  ?\\ ?t ?] ?+ ?/ ?/ ?' return ?\C-x ?h ?\C-\M-\\])
-
-
-;; gunk for the emacs java ide
-;; (add-to-list 'load-path "~swain/.elisp/eieio-0.17beta3")
-
-;; (add-to-list 'load-path "~swain/.elisp/semantic-1.4beta13")
-;; (setq semantic-load-turn-everything-on t)
-;; (require 'semantic-load)
-
-;; (add-to-list 'load-path (expand-file-name "~swain/.elisp/jde/lisp"))
-
-(fset 'go-base
-      [?c ?d ?  ?~ ?/ ?b ?l ?u ?e ?w ?i ?r ?e ?/ ?b ?a ?s ?e return])
-
-(fset 'go-p
-      [?c ?d ?  ?~ ?/ ?b ?l ?u ?e ?w ?i ?r ?e ?/ ?p ?n ?c ?p ?o ?r ?t return])
 
 
 (defun sw-fb ()
