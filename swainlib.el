@@ -174,9 +174,6 @@
 ;; ibuffer
 (load-library "ibuffer")
 
-;; ruby
-(load-library "ruby-mode")
-
 ;; fix isearch so we can use backspace instead of delete
 (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
 
