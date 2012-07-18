@@ -548,7 +548,6 @@ them."
 ;;(autoload 'javascript-mode "javascript-mode" "JavaScript mode" t)
 
 ;;(load-library "props-mode")
-(load-library "php-mode")
 
 ;; thanks Jeff Dairiki for this hook
 (defun my-php-mode-hook-func ()
