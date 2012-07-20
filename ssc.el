@@ -89,6 +89,14 @@
   (insert "cd ~/git/pippin/sites/nfmc-reporting/mods/nfmcreporting/")
   (comint-send-input))
 
+(defun sw-mods/tests ()
+  "Move the cli shell into the mods/tests directory."
+  (interactive)
+  (switch-to-buffer "cli")
+  (goto-char (point-max))
+  (insert "cd ~/git/pippin/sites/nfmc-reporting/mods/tests/")
+  (comint-send-input))
+
 (defun sw-templates ()
   "Move the cli shell into the nfmc templates directory."
   (interactive)
