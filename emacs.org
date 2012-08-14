@@ -1,9 +1,5 @@
 * Items to work on at a later date viz Emacs
 ** TODO Try eshell for tailing log files instead of bash
-** TODO When I hit compile, focus should return to the current buffer.
-Compilation now happens in its own frame but that frame retains
-focus... even more annoying, switching focus means the cursor stops
-moving and output rolls off the bottom where I can't see it anymore.
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
 ** TODO Rewrite sw-tail-logs-meta to take a function argument
@@ -127,3 +123,8 @@ Probably: when tapping "f5" the following should happen:
 *** start compilation
 
 #+STARTUP: content
+** DONE When I hit compile, focus should return to the current buffer.
+   CLOSED: [2012-08-14 Tue 09:41]
+Compilation now happens in its own frame but that frame retains
+focus... even more annoying, switching focus means the cursor stops
+moving and output rolls off the bottom where I can't see it anymore.
