@@ -74,6 +74,13 @@ append the rest of the path info ("grantee") to the string.
 ** TODO Revisit calling Applescript from Emacs
 Update the file; see if anyone else has written anything
 
+** TODO The compilation frame should choose random light and dark colors every time
+This should be fairly trivial:
+
+(switch-to-frame)
+(set-foreground-color-randomly)
+(set-background-color-randomly)
+
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
 ** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
