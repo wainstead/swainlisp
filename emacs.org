@@ -70,6 +70,18 @@ append the rest of the path info ("grantee") to the string.
 ** TODO Revisit calling Applescript from Emacs
 Update the file; see if anyone else has written anything
 
+** TODO Tweak the randomized colors for *compilation*
+If the color returned is above or below certain threshold, we need to modify it somehow. Or even better: the two numbers have to be N apart, regardless.
+
+For example:
+
+0 and 9 are ok
+6 and 15 are ok
+7 and 15 are not, if our separation is 9
+
+So the commonality here lies in the "separation" number. And we don't want black or white, so some subtlety is required to modfiy the numbers.
+
+Brute force: keep calling (random) until we get a number in the range we like. This would be recursive so it wouldn't be hard to write.
 
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
