@@ -70,12 +70,6 @@ append the rest of the path info ("grantee") to the string.
 ** TODO Revisit calling Applescript from Emacs
 Update the file; see if anyone else has written anything
 
-** TODO The compilation frame should choose random light and dark colors every time
-This should be fairly trivial:
-
-(switch-to-frame)
-(set-foreground-color-randomly)
-(set-background-color-randomly)
 
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
@@ -128,3 +122,10 @@ Probably: when tapping "f5" the following should happen:
 Compilation now happens in its own frame but that frame retains
 focus... even more annoying, switching focus means the cursor stops
 moving and output rolls off the bottom where I can't see it anymore.
+** DONE The compilation frame should choose random light and dark colors every time
+   CLOSED: [2012-08-14 Tue 10:48]
+This should be fairly trivial:
+
+(switch-to-frame)
+(set-foreground-color-randomly)
+(set-background-color-randomly)
