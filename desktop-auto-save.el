@@ -194,6 +194,7 @@ open buffer, insert its file at point-min"
   ;; if we are in the frame holding the compilation buffer, don't switch frames.
   (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
   (sw-write-compilation-buffer)
+  (sw-randomize-frame-colors)
 )
 
 
@@ -201,8 +202,9 @@ open buffer, insert its file at point-min"
 (defadvice recompile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
+  (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
   (sw-write-compilation-buffer)
-  (switch-to-buffer-other-frame "*compilation*")
+  (sw-randomize-frame-colors)
 )
 
 ;; This turned out to be a not-so-good idea because erase-buffer is
@@ -222,3 +224,20 @@ open buffer, insert its file at point-min"
 )
 ;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
+
+;; choose random colors every time we compile, just for fun
+(defun sw-make-random-hex-color-string ()
+  "Return a string in the form of #FFFFFF. Choose the number for
+   FFFFFF randomly using Emacs Lisp's builtin function (random)."
+  ;; seed our random number generator: current datetime plus Emacs's
+  ;; process ID
+  (random t)
+  (format "#%X" (random #xFFFFFF))
+  )
+(defun sw-randomize-frame-colors ()
+  "Change foreground and background colors of the current frame to
+random colors."
+  (interactive)
+  (set-foreground-color (sw-make-random-hex-color-string))
+  (set-background-color (sw-make-random-hex-color-string))
+  )
