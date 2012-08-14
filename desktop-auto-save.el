@@ -191,11 +191,12 @@ open buffer, insert its file at point-min"
 (defadvice compile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
    ~/.emacs.shellbuffers directory and git commit it."
+  ;; if we are in the frame holding the compilation buffer, don't switch frames.
+  (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
   (sw-write-compilation-buffer)
-  ;; FIXME: test to see if we are already in the *compilation* buffer,
-  ;; otherwise Emacs opens a new frame, which is nonoptimal.
-  (switch-to-buffer-other-frame "*compilation*")
 )
+
+
 
 (defadvice recompile (before sw-save-last-compilation activate compile)
   "Every time we compile, save the previous compilation to the
@@ -219,5 +220,5 @@ open buffer, insert its file at point-min"
   (sw-save-shell-buffer-contents)
   (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
-;; when qutting Emacs save and commit the shell buffers
+;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
