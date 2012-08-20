@@ -232,12 +232,20 @@ open buffer, insert its file at point-min"
   ;; seed our random number generator: current datetime plus Emacs's
   ;; process ID
   (random t)
-  (format "#%X" (random #xFFFFFF))
+  (format "#%06x" (random #xffffff))
   )
+
 (defun sw-randomize-frame-colors ()
   "Change foreground and background colors of the current frame to
 random colors."
   (interactive)
-  (set-foreground-color (sw-make-random-hex-color-string))
-  (set-background-color (sw-make-random-hex-color-string))
+  (let 
+      (
+       (fg-color (sw-make-random-hex-color-string)) 
+       (bg-color (sw-make-random-hex-color-string))
+       (color-distance #x3fffff)
+       )
+    (set-foreground-color fg-color)
+    (set-background-color bg-color)
+    )
   )
