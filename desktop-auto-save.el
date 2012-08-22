@@ -1,6 +1,6 @@
 ;; Copyright 2005 Steve Wainstead (swain@panix.com)
 
-;; This file is not currently part of GNU Emacs.
+;; This file is NOT part of GNU Emacs.
 
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -13,10 +13,20 @@
 ;; General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with this program ; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
+;; along with this program.  If not, see
+;; <http://www.gnu.org/licenses/>.
 
+
+;; ABOUT:
+
+;; desktop-auto-save extends the functionality of Emacs's feature of
+;; saving your "desktop" (that is, the list of files you have
+;; open). It adds the feature of saving the contents of shell buffers
+;; to files whenever the desktop is saved.
+
+;; Additionally if you store all the files in a directory and turn
+;; that directory into a git repository, desktop-auto-save commits
+;; those files when you quit Emacs.
 
 ;; put these in your .emacs file or similar.
 
@@ -33,7 +43,7 @@
   "Added to auto-save-hook so the desktop is not lost."
   (desktop-save "~/")
   (sw-save-shell-buffer-contents)
-  (message "Wrote desktop.")
+  ;;(message "Wrote desktop.")
   )
 
 (add-hook 'auto-save-hook 'desktop-auto-save t)
@@ -97,7 +107,8 @@ the shell tries to execute the contents of the file.")
   "Make a buffer file name from the buffer name passed in."
   "For example: pass in 'cli' and it returns '~swain/.emacs.shellbuffers/cli'"
   (interactive "sname: ")
-  (message (concat sw-buffer-file-name-prefix buffname))
+  ;;(message (concat sw-buffer-file-name-prefix buffname))
+  (concat sw-buffer-file-name-prefix buffname)
   )
 
 ;; so far, no go (no va) FIXME
@@ -118,6 +129,17 @@ the shell tries to execute the contents of the file.")
   )
 
 
+;; The idea here is to "restore" a shell buffer's contents. For
+;; example: you have a shell buffer named "foo." The contents of the
+;; shell buffer "foo" should be saved when you quit Emacs (saving the
+;; contents of all shell buffers is the whole point of this Emacs Lisp
+;; file). When you again create a new shell buffer named "foo" the
+;; contents of the previous incarnation of "foo" should be loaded into
+;; the "foo" shell buffer at the top. Unfortunately it just inserts
+;; the text from the previous shell buffer; a future hack will be to
+;; insert not the text, but the actual Emacs lisp code (see
+;; "buffer-string") representing the shell buffer as it existed
+;; previously, including the command history.
 (defun sw-insert-saved-buffer-contents (sw-buff-name)
   (message "Inserting auto-desktop-save data...")
   (goto-char (point-min))
@@ -127,6 +149,8 @@ the shell tries to execute the contents of the file.")
   )
 
 
+;; Rather than using version control like git or svn, rename the shell
+;; buffer contents file with a date (currently unused)
 (defun sw-backup-saved-buffer-contents (sw-buff-name)
   "Make a backup copy of the shell buffer auto save file"
   (message (format "Backing up %s shell buffer contents..." sw-buff-name))
@@ -135,31 +159,28 @@ the shell tries to execute the contents of the file.")
    (concat sw-buffer-file-name-prefix sw-buff-name "." (format-time-string "-%Y-%m-%d")))
 )
 
-(defun sw-forcibly-insert-buffer ()
-  "yay"
-  (interactive)
-  (sw-insert-saved-buffer-contents (buffer-name))
-)
 
-;; as of april 2009, here's the way to do it; relies on our ability to
+;; deprecated
+;; As of april 2009, here's the way to do it; relies on our ability to
 ;; svn revert the shellbuffer files. You have "within the hour" to
 ;; restore the shell buffer contents before the cron job commits them
 ;; to the local svn repository. After that, you'll have to manually
 ;; retrieve the version you want.
-(defun sw-restore-shellbuffers-contents ()
-  "do an svn revert on the shell buffers directory, then for each
-open buffer, insert its file at point-min"
-  (interactive)
-  (shell-command "svn revert ~swain/.emacs.shellbuffers/*")
-  ;; now recurse, since they are reverted. Don't want to revert every
-  ;; time.
-  (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
+;; (defun sw-restore-shellbuffers-contents ()
+;;   "do an svn revert on the shell buffers directory, then for each
+;; open buffer, insert its file at point-min"
+;;   (interactive)
+;;   (shell-command "svn revert ~swain/.emacs.shellbuffers/*")
+;;   ;; now recurse, since they are reverted. Don't want to revert every
+;;   ;; time.
+;;   (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
 
-(defun sw-restore-recent-shellbuffers-contents ()
-  "don't do an svn revert on the shell buffers directory, then for each
-open buffer, insert its file at point-min"
-  (interactive)
-  (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
+;; deprecated
+;; (defun sw-restore-recent-shellbuffers-contents ()
+;;   "Don't do an svn revert on the shell buffers directory, then for each
+;; open buffer, insert its file at point-min"
+;;   (interactive)
+;;   (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
 
 ;; recursive function called by sw-restore-shellbuffers-contents
 (defun sw-insert-previous-shellbuffer-contents (shell-buffer-list)
@@ -177,45 +198,6 @@ open buffer, insert its file at point-min"
     )
   )
 
-;; save *compilation* buffer to file
-;; git commit it right after
-
-(defun sw-write-compilation-buffer()
-  "Hook function to write the *compilation* buffer for each compile."
-  (and (get-buffer "*compilation*") (sw-save-buffer-invisibly (get-buffer "*compilation*")))
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -m \"saving last compilation\" ?compilation?")
-)
-
-;; every time the "compile" or "recompile" functions are run, write
-;; out the *compilation* buffer's contents and commit it.
-(defadvice compile (before sw-save-last-compilation activate compile)
-  "Every time we compile, save the previous compilation to the
-   ~/.emacs.shellbuffers directory and git commit it."
-  ;; if we are in the frame holding the compilation buffer, don't switch frames.
-  (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
-  (sw-write-compilation-buffer)
-  (sw-randomize-frame-colors)
-)
-
-
-
-(defadvice recompile (before sw-save-last-compilation activate compile)
-  "Every time we compile, save the previous compilation to the
-   ~/.emacs.shellbuffers directory and git commit it."
-  (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
-  (sw-write-compilation-buffer)
-  (sw-randomize-frame-colors)
-)
-
-;; This turned out to be a not-so-good idea because erase-buffer is
-;; used by a variety of other functions. Otherwise it was a stellar
-;; idea.
-;; (defadvice erase-buffer (before sw-git-commit-buffers activate compile)
-;;   "Whenever I hit F3 to clear a buffer, go into the
-;;    ~/.emacs.shellbuffers directory and git commit all the buffers."
-;;   (sw-git-commit-buffers)
-;;   )
-
 (defun sw-git-commit-buffers()
   "Save the contents of all shell buffers to their files and then
    git-commit those files in ~/.emacs.shellbuffers."
@@ -224,28 +206,3 @@ open buffer, insert its file at point-min"
 )
 ;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
-
-;; choose random colors every time we compile, just for fun
-(defun sw-make-random-hex-color-string ()
-  "Return a string in the form of #FFFFFF. Choose the number for
-   FFFFFF randomly using Emacs Lisp's builtin function (random)."
-  ;; seed our random number generator: current datetime plus Emacs's
-  ;; process ID
-  (random t)
-  (format "#%06x" (random #xffffff))
-  )
-
-(defun sw-randomize-frame-colors ()
-  "Change foreground and background colors of the current frame to
-random colors."
-  (interactive)
-  (let 
-      (
-       (fg-color (sw-make-random-hex-color-string)) 
-       (bg-color (sw-make-random-hex-color-string))
-       (color-distance #x3fffff)
-       )
-    (set-foreground-color fg-color)
-    (set-background-color bg-color)
-    )
-  )
