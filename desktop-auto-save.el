@@ -51,10 +51,12 @@
 
 
 (defvar sw-restore-shell-buffers-flag t
-  "If t, shell buffer contents are inserted from the previous session.
-if available.  (This is the default). If nil, previous shell buffer
-contents are not restored.  This is necessary on some systems where
-the shell tries to execute the contents of the file.")
+  "If t, shell buffer contents are inserted from the previous session,
+if available.  (This is the default). If nil, previous shell
+buffer contents are not restored.  On some systems (or some
+versions of systems? Or Emacs?) the shell tries to execute the
+contents of the file after insertion, with disasterous
+consequences.")
 
 
 ;; For all shell buffers, save their contents to individual files. The
@@ -100,15 +102,16 @@ the shell tries to execute the contents of the file.")
   (set-buffer buffer)
   (let ( (coding-system-for-write 'no-conversion) ) 
     ;; (write-region (point-min) (point-max) (concat sw-buffer-file-name-prefix (buffer-name buffer) (format-time-string "-%Y-%m-%d"))))
-    (write-region (point-min) (point-max) (sw-saved-buffer-filename (buffer-name buffer))))
+    (write-region (point-min) (point-max) (sw-make-buffer-filename buffer)))
   )
 
-(defun sw-saved-buffer-filename (buffname)
-  "Make a buffer file name from the buffer name passed in."
-  "For example: pass in 'cli' and it returns '~swain/.emacs.shellbuffers/cli'"
-  (interactive "sname: ")
+(defun sw-make-buffer-filename (buffer)
+  "Make a buffer file name string from the buffer name passed in
+by prefixing the string passed in with the contents of the
+variable sw-buffer-file-name-prefix. For example: pass in 'cli'
+and it returns '~swain/.emacs.shellbuffers/cli'"
   ;;(message (concat sw-buffer-file-name-prefix buffname))
-  (concat sw-buffer-file-name-prefix buffname)
+  (concat sw-buffer-file-name-prefix (buffer-name buffer)
   )
 
 ;; so far, no go (no va) FIXME
