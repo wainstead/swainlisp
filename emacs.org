@@ -11,7 +11,8 @@ is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
 *** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
 *** TODO Sometimes a weird error about 'olors' shows upp
 ** TODO Write a proper Cheetah mode maybe
-** TODO psql is not being saved to .emacs.shellbuffers.
+** DONE psql is not being saved to .emacs.shellbuffers.
+   CLOSED: [2012-08-22 Wed 09:54]
 ** TODO Use one of the Git modes to speed up work...
 Find a way to do "git log (current buffer)" since that's broken in
 Emacs. The main problem is using Git means I need to reload the files,
@@ -25,7 +26,27 @@ buffer, then, like "cli," it could "reconstitute" the original buffer
 contents. This means the kill ring, command history, location of the
 prompts and so on would all work again between invocations of the
 buffer.
-This might help: http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
+This might help:
+http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
+Also just discovered this, for write-region:
+
+write-region is an interactive built-in function in `fileio.c'.
+
+(write-region START END FILENAME &optional APPEND VISIT LOCKNAME
+MUSTBENEW)
+
+Write current region into specified file.
+When called from a program, requires three arguments:
+START, END and FILENAME.  START and END are normally buffer positions
+specifying the part of the buffer to write.
+If START is nil, that means to use the entire buffer contents.
+If START is a string, then output that string to the file
+instead of any buffer contents; END is ignored.
+
+So if I use buffer-string as the first argument to write-region I
+should get what I am after.
+
+
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
