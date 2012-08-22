@@ -68,7 +68,7 @@ the shell tries to execute the contents of the file.")
            (setq buff (car bufflist))
            (save-excursion
              (set-buffer buff)
-             (when (string= major-mode "shell-mode")
+             (when (or (string= major-mode "shell-mode") (string= (buffer-name) "psql"))
                ;;(message (format "it's a shell: %s" (buffer-name buff)))
                ;; if this buffer's contents have not been reloaded...
 
