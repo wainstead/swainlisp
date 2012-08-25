@@ -111,7 +111,7 @@ by prefixing the string passed in with the contents of the
 variable sw-buffer-file-name-prefix. For example: pass in 'cli'
 and it returns '~swain/.emacs.shellbuffers/cli'"
   ;;(message (concat sw-buffer-file-name-prefix buffname))
-  (concat sw-buffer-file-name-prefix (buffer-name buffer)
+  (concat sw-buffer-file-name-prefix (buffer-name buffer))
   )
 
 ;; so far, no go (no va) FIXME
@@ -209,3 +209,4 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
 )
 ;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
+
