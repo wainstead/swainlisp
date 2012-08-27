@@ -23,6 +23,7 @@
 
 (load-file "~swain/.elisp/swainlib.el")
 (load-file "~swain/.elisp/ssc.el")
+(load-file "~swain/.elisp/compilation-buffer-extras.el")
 
 
 
