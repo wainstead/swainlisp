@@ -123,7 +123,7 @@
   ;; make pretty
   (defvar default-frame-alist '((background-color . "#040000")
                                 (foreground-color . "goldenrod")
-                                (cursor-color     . "green")))
+                                (cursor-color     . "red")))
   "Default colors for Emacs.")
 
 ;; default mode gunk
