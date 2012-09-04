@@ -176,7 +176,7 @@
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
                              ("pippin log"    . "/tmp/pippin.log")
-                             ("laborer log"   . "/tmp/nfmc-laborer.log")
+                             ("elsewhere log"   . "/tmp/nfmc-laborer.log")
                              ("swallower log" . "/tmp/nfmc-csv-swallower.log")
                              ("error log"     . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
                              ("nfmc access log"    . "/opt/local/apache2/logs/nfmc-reporting_access_log")
