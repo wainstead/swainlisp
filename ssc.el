@@ -323,7 +323,7 @@ edit the file because it changed on disk."
   (diff-mode)
   (shell-command git-command output-buffer-name)
   (hi-lock-unface-buffer "^diff.*")
-  (hi-lock-face-buffer "^diff.*" "hi-green")
+  (hi-lock-face-buffer "^diff.*" "hi-yellow")
   (toggle-read-only)
 )
 (defun sw-git-diff ()
