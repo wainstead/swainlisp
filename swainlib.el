@@ -308,39 +308,6 @@
 ;; bind goto-line to a key
 (global-set-key "\M-n" 'goto-line)
 
-;; open a command line interface for the long haul
-;;(fset 'sw-cli
-;;   "\C-[xshell\C-m\C-[xrename-buffer\C-mcli\C-m\C-xh\C-w\C-m")
-
-(defun sw-cli ()
-  "Open a shell buffer and name it \"cli\""
-  (interactive)
-  (sw-shell "cli")
-  )
-
-
-(defun sw-root ()
-  "A named shell buffer for doing root stuff."
-  (interactive)
-  (sw-shell "root")
-  )
-
-(defun sw-www ()
-  "Now my EMOTIONAL RESOURCES are heavily committed to 23% of the
- SMELTING and REFINING industry of the state of NEVADA!!"
-  (interactive)
-  (sw-shell "www")
-  )
-
-(defun sw-sql ()
-  "Open a shell buffer, rename it 'sql'"
-  (interactive)
-  (sw-shell "sql")
-  (abbrev-mode t)
-  (read-abbrev-file "~swain/.abbrev_defs")
-  )
-
-
 (defun sw-shell (sw-buff-name)
   "Basically, a wrapper for M-x shell. Prompt for shell buffer name, and
 if there are autosaved contents from a previous incarnation, insert
@@ -363,20 +330,32 @@ them."
     )
   )
 
-
-(defun sw-init-shell (buffer-name command-string)
-  "Initialize buffer buffer-name with command string command-string."
+(defun sw-cli ()
+  "Open a shell buffer and name it \"cli\""
   (interactive)
-  (switch-to-buffer (get-buffer buffer-name))
-  (goto-char (point-max))                                                                                                                         
-  (insert command-string)
-  (comint-send-input)
-)
+  (sw-shell "cli")
+  )
 
 
-;; open a shell to tail a log or other
-(fset 'sw-tail
-      "\C-[xshell\C-m\C-[xrename-buffer\C-mtail\C-m\C-xh\C-w\C-m")
+(defun sw-root ()
+  "A named shell buffer for doing root stuff."
+  (interactive)
+  (sw-shell "root")
+  )
+
+(defun sw-sql ()
+  "Open a shell buffer, rename it 'sql'"
+  (interactive)
+  (sw-shell "sql")
+  (abbrev-mode t)
+  (read-abbrev-file "~swain/.abbrev_defs")
+  )
+
+(defun sw-tail ()
+  "Open a shell buffer, rename it 'tail' for tailing files"
+  (interactive)
+  (sw-shell "tail")
+  )
 
 
 ;; create an easier way to erase a whole buffer,
@@ -385,6 +364,7 @@ them."
 ;;   "\C-xh\C-[xdelete-region\C-m")
 ;; replacing the defalias with a defun that git-commits the shellbuffers too
 ;;(defalias 'clr 'erase-buffer)
+
 (defun clr ()
   "git-commit all buffers, then clear the current buffer."
   (interactive)
