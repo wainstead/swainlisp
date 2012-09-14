@@ -172,14 +172,14 @@
   (font-lock-mode 1)
   )
 
-
 (defvar sw-tail-nfmc-frame-name "nfmc logs" "Frame name for the nfmc logs")
 (defvar sw-tail-nfmc-alist '(
-                             ("pippin log"    . "/tmp/pippin.log")
+                             ("pippin log"      . "/tmp/pippin.log")
                              ("elsewhere log"   . "/tmp/nfmc-laborer.log")
-                             ("swallower log" . "/tmp/nfmc-csv-swallower.log")
-                             ("error log"     . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
-                             ("nfmc access log"    . "/opt/local/apache2/logs/nfmc-reporting_access_log")
+                             ("swallower log"   . "/tmp/nfmc-csv-swallower.log")
+                             ("error log"       . "/opt/local/apache2/logs/error_log | egrep -v '^Normal|^Finished'")
+                             ("nfmc error log"  . "/opt/local/apache2/logs/nfmc-reporting_error_log | egrep -v '^Normal|^Finished'")
+                             ("nfmc access log" . "/opt/local/apache2/logs/nfmc-reporting_access_log")
                              )
   "List of nfmc log files with names for buffers. Used by sw-tail-nfmc-logs and sw-kill-nfmc-logs.")
 
@@ -200,71 +200,6 @@
 (defun sw-kill-nfmc-logs ()
   (interactive)
   (sw-kill-logs-meta sw-tail-nfmc-alist sw-tail-nfmc-frame-name))
-
-
-
-(defun sw-tail-logs-meta (store-alist store-frame-name)
-  "meta function for opening logs and tailing them in a new frame"
-  ;; if we are on a windowing system like X11, open this in a new frame
-  (if window-system
-    (let ((logs-frame (make-frame)))
-      (select-frame logs-frame)
-      (set-frame-width (selected-frame) 250)
-      (set-frame-height (selected-frame) 84)
-      (set-frame-name store-frame-name)))
-
-  (let (pair (file-alist store-alist))
-    (while (consp file-alist) 
-      ;; first time through these are equal so we do not split the buffer
-      (if (not (equal (safe-length file-alist) (safe-length store-alist)))
-          (split-window-vertically))
-      (setq pair (car file-alist))
-      (shell)
-      (rename-buffer (car pair))
-      (goto-char (point-max))
-      (if (cdr pair)
-          ;; 'nil' indicates "don't tail any log"
-          ;; Future project: pass in a function to do anything
-          (insert (format "~/bin/waittail %s" (cdr pair)))
-      )
-      (comint-send-input)
-      ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
-      (setq file-alist (cdr file-alist))
-      )
-    (balance-windows)
-    (window-configuration-to-register ?1))
-  )
- 
-;; undo the work of sw-tail-logs-meta
-(defun sw-kill-logs-meta (store-alist store-frame-name)
-  "Kill the buffers tailing the log files as listed in store-alist."
-  (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
-      (progn
-        ;; FIXME: Should fail gracefully if the buffer doesn't exist anymore
-        (switch-to-buffer (car (car store-alist)))
-        (delete-other-windows)
-        (let ((file-alist store-alist))
-          (while (consp file-alist)
-            (setq pair (car file-alist))
-            (unless (kill-buffer (car pair))
-              (message (format "Couldn't kill the buffer %s." (car pair))))
-            (setq file-alist (cdr file-alist))
-            ))
-        (when window-system
-          (select-frame-by-name store-frame-name)
-          (delete-frame))
-        )
-    ;; else:
-        (message "Log tailing buffers not deleted.")))
-
-(defun sw-fix-logs ()
-  "Colorize the window that tails logs."
-  (interactive)
-  ;;(set-default-font "-adobe-courier-medium-r-normal-*-*-120-*-*-*-*-iso8859-1")
-  (set-background-color "#202020")
-  (set-foreground-color "goldenrod")
-)
-
 
 
 ;; todo: after running mergeancestors, or similar, reload all source
