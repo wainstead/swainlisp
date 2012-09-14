@@ -164,14 +164,12 @@
 ;; always use font-lock-mode in modes that support it
 (global-font-lock-mode t)
 
+;; load the desktop on startup (from ~/)
+(desktop-load-default)
+;; automatically save the desktop on exit.
+(setq desktop-enable t)
+(load-file "~swain/.elisp/desktop-auto-save.el")
 
-;; hideshow for programming
-;;(load-library "hideshow")
-;;(add-hook 'java-mode-hook 'hs-minor-mode)
-;;(add-hook 'perl-mode-hook 'hs-minor-mode)
-;;(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-
-;; ibuffer
 (load-library "ibuffer")
 
 ;; fix isearch so we can use backspace instead of delete
@@ -396,7 +394,6 @@ them."
 ;; set M-a to the above function
 (global-set-key "\M-a" 'sw-qs)
 
-
 ;; insert a javadoc comment
 (fset 'insert-javadoc
       [?/ ?* ?* return ?* return ?* ?/ up ? ])
@@ -429,15 +426,6 @@ them."
   (insert (format-time-string "TO_DATE('%c', 'Dy Mon DD HH24:MI:SS YYYY')" (current-time))))
 
 
-;; this is for interop jobs: see the ID in the log, run this in sqlplus
-;; (defun interop-query (id)
-;;   "Insert a SQL query that returns the status from an interop run"
-;;   (interactive "sEnter the job ID: ")
-;;   (insert (format "SELECT name, percent_complete, error_description, debug_text, status, description FROM interop_job, interop_status,interop_type WHERE interop_job.interop_status_id=interop_status.interop_status_id AND interop_status.interop_type_id=interop_type.interop_type_id AND interop_job_id='%s';" id)))
-
-(global-set-key [\C-print] 'interop-query)
-
-
 ;; allow sw-qs to work with java mode too
 (add-hook 'java-mode-hook
           (lambda ()
@@ -449,20 +437,6 @@ them."
             (define-key compilation-mode-map "n" 'next-line)
             (define-key compilation-mode-map "p" 'previous-line)))
 
-
-;; Create a function sw-vi-j that does what J does in vi
-(defun sw-vi-j ()
-  "Join the current line to the next line (like J in vi)"
-  (interactive)
-  (delete-indentation (prefix-numeric-value t)))
-
-(global-set-key "\C-x\C-j" `sw-vi-j)
-
-;; load the desktop on startup (from ~/)
-(desktop-load-default)
-;; automatically save the desktop on exit.
-(setq desktop-enable t)
-(load-file "~swain/.elisp/desktop-auto-save.el")
 
 ;;(desktop-read) ;; you can do this manually
 
