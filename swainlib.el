@@ -167,7 +167,7 @@
 ;; automatically save the desktop on exit.
 (setq desktop-enable t)
 (load-file "~swain/.elisp/desktop-auto-save.el")
-
+(load-file "~swain/.elisp/tail-logs.el")
 (load-library "ibuffer")
 
 ;; fix isearch so we can use backspace instead of delete
@@ -761,77 +761,6 @@ the kill ring."
   (interactive)
   (delete-char (- (point-max) (point)) t))
 
-
-;; use defun globally; setq this in the local .emacs file in your home dir
-(defvar sw-tail-file-alist '(
-                             ("apache access log" . "/usr/local/apache/logs/access_log")
-                             ("apache error log" . "/usr/local/apache/logs/error_log")
-                             )
-  "List of log files with names for buffers. Used by sw-tail-logs and sw-kill-logs.")
-
-
-(defun sw-tail-logs ()
-  "Tail log files in shell buffers. The files to tail, and the names to give
-   to buffers, are in the alist sw-tail-file-alist."
-  (interactive)
-  ;; if we are on a windowing system like X11, open this in a new frame
-  (if window-system
-      (let ((logs-frame (make-frame)))
-        (select-frame logs-frame)
-        (set-frame-name "logs")
-        (if (functionp 'sw-fix-logs)
-            (progn
-              (sw-fix-logs)
-              (sw-colors "303030")
-              (set-frame-width (selected-frame) 250)
-              (set-frame-height (selected-frame) 84)
-              (enlarge-window -25)
-              )
-          )
-        )
-    )
-    
-  (let (pair (file-alist sw-tail-file-alist))
-    (while (consp file-alist) 
-      ;; first time through these are equal so we do not split the buffer
-      (if (not (equal (safe-length file-alist) (safe-length sw-tail-file-alist)))
-          (split-window-vertically))
-      (setq pair (car file-alist))
-      (shell)
-      (rename-buffer (car pair))
-      (goto-char (point-max))
-      (insert (format "tail -f `ls -t %s* | head -1`" (cdr pair)))
-      (comint-send-input)
-      ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
-      (setq file-alist (cdr file-alist))
-      )
-    ;(balance-windows)
-    (window-configuration-to-register ?1))
-  )
- 
-;; undo the work of sw-tail-logs
-(defun sw-kill-logs ()
-  "Kill the buffers tailing the log files as listed in sw-tail-file-alist."
-  (interactive)
-  (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
-      (progn
-        (switch-to-buffer (car (car sw-tail-file-alist)))
-        (delete-other-windows)
-        (let ((file-alist sw-tail-file-alist))
-          (while (consp file-alist)
-            (setq pair (car file-alist))
-            (unless (kill-buffer (car pair))
-              (message (format "Couldn't kill the buffer %s." (car pair))))
-            (setq file-alist (cdr file-alist))
-            ))
-        (when window-system
-          (select-frame-by-name "logs")
-          (delete-frame))
-        )
-    ;; else:
-    (message "Log tailing buffers not deleted.")))
-
-
 ;; needs work. should use commenting style of current major mode.
 
 ;; optimization: use (if) on (null current-prefix-arg) and assign a
@@ -874,78 +803,6 @@ the kill ring."
     (message (format "Teach me how to re-replace from ^ with '%s' and '%s'" sw-comment-pattern sw-comment-chars))
     )
   )
-
-
-;; iterate over the log buffers
-(defvar sw-log-counter (safe-length sw-tail-file-alist) 
-  "A counter that is used to help iterate over the log buffers.")
-(defvar sw-next-log-number 0
-  "Will be set to the position of the next log buffer to view.")
-
-(defun sw-next-log ()
-  "Display the next log in the log frame."
-  (interactive)
-  (let (buffer)  
-    (setq sw-log-counter (+ 1 sw-log-counter))
-    ;;(message (format "counter: %d" sw-log-counter))
-    (setq sw-next-log-number (% sw-log-counter (safe-length sw-tail-file-alist)))
-    ;;(message (format "next: %d" sw-next-log-number))
-    (setq buffer (nth sw-next-log-number sw-tail-file-alist))
-    (message (format "buffer: %s" (car buffer)))
-    (select-frame-by-name "logs") ;; bug: does not give the window focus in X11.app
-    ;;(select-frame-set-input-focus (selected-frame)) ;; didn't work, bug in X11.app
-    (delete-other-windows)
-    (switch-to-buffer (get-buffer (car buffer)))
-    )
-  )
-
-;; first version of a command that simulates next-error for Occur mode.
-;; FIXME: it's brittle
-(defun sw-next-occurrence ()
-  "move to the next line in the *Occur* buffer and go to it"
-  (interactive "*")
-  ;;(switch-to-buffer (get-buffer "*Occur*"))
-  (other-window 1)
-  (occur-next)
-  (occur-mode-goto-occurrence)
-  )
-
-(global-set-key [(meta insert)] 'sw-next-occurrence)
-
-;; use man to read perldocs FIXME: man can't find standard module
-;; perldocs. If command fails run the perldoc command instead.
-;;(defalias 'perldoc 'man)
-
-;; Nov 13, 2007: hey, this isn't in use yet! It's hardwired into sw-shell.
-
-;; (defun sw-restore-shell-buffer (buffer-name)
-;;   "Prompt user for the name of a past shell buffer; create a new one,
-;; and insert the old contents from the desktop-auto-save version."
-;;   (interactive "sName of the buffer to restore: ")
-;;   (shell)
-;;   (goto-char (point-min))
-;;   (insert-file (concat sw-buffer-file-name-prefix buffer-name))
-;;   (goto-char (point-max))
-;;   (comint-interrupt-subjob)
-;;   (rename-buffer buffer-name)
-;;   )
-
-;; processing mysteriously stops here. this is a marker.
-
-(defvar sw-record-separator ","
-  "Regular expression that matches the record separator for a given line."
-  )
-
-(defun sw-forward-next-record (&optional n)
-  "Move forward to the next instance of the record separator sw-record-separator."
-  (interactive "P")
-  (let ( (sentence-end sw-record-separator) )
-    (message (concat "sentence-end is now:" sentence-end))
-    (forward-sentence n)
-    )
-  )
-
-
 
 (defun sw-unix-to-human ()
   "Convert the Unix timestamp at point to human readable form."
