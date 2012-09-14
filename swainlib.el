@@ -388,10 +388,6 @@ them."
 ;; I'm tired of C-x C-b opening that buffer...
 (global-set-key "\C-x\C-b" 'switch-to-buffer)
 
-;; obsolete, finally wrote it in lisp
-;;(fset 'quickswitch
-;;   "\C-[xswitch-to-buffer\C-m\C-m")
-
 (defun sw-qs () 
   "quickly switch between buffers"
   (interactive)
@@ -411,21 +407,13 @@ them."
 ;; yank from same
 (global-set-key [\C-f7] 'clipboard-yank)
 
-;; jump to the shell command output
-(fset 'show-output
-      [?\C-x ?b ?* ?S ?h ?e ?l ?l ?  ?C ?o ?m ?m ?a ?n ?d tab return])
-
-
-
 ;; Here's a command to insert a new log entry in the format I made up
-(defun start-new-log-entry ()
+(defun sw-start-new-log-entry ()
   "Insert a row of hash marks and then the date in swain format"
   (interactive)
   (goto-char (point-max))
   (insert "\n\n\n#########################################################################\n")
   (insert (format-time-string "%y%m%d %c\n\n" (current-time))))
-
-(defalias 'sw-start-new-log-entry 'start-new-log-entry)
 
 ;; Insert the date and time in a sortable way 
 (defun sw-insert-date ()
