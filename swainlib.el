@@ -355,14 +355,6 @@ them."
   (sw-shell "tail")
   )
 
-
-;; create an easier way to erase a whole buffer,
-;; without polluting the kill ring
-;;(fset 'clr
-;;   "\C-xh\C-[xdelete-region\C-m")
-;; replacing the defalias with a defun that git-commits the shellbuffers too
-;;(defalias 'clr 'erase-buffer)
-
 (defun clr ()
   "git-commit all buffers, then clear the current buffer."
   (interactive)
@@ -398,12 +390,6 @@ them."
 (fset 'insert-javadoc
       [?/ ?* ?* return ?* return ?* ?/ up ? ])
 
-;; copy region to the X clipboard
-(global-set-key [f7] 'clipboard-kill-ring-save)
-
-;; yank from same
-(global-set-key [\C-f7] 'clipboard-yank)
-
 ;; Here's a command to insert a new log entry in the format I made up
 (defun sw-start-new-log-entry ()
   "Insert a row of hash marks and then the date in swain format"
@@ -437,28 +423,12 @@ them."
             (define-key compilation-mode-map "n" 'next-line)
             (define-key compilation-mode-map "p" 'previous-line)))
 
-
-;;(desktop-read) ;; you can do this manually
-
-;; ;; set n and p for the misbehaved apropos mode:
-;; (defun fix-apropos ()
-;;  "Bind n and p in apropos mode buffers to next-line and previous-line"
-;;  (interactive)
-;;  (define-key apropos-mode-map "n" 'next-line)
-;;  (define-key apropos-mode-map "p" 'previous-line))
-
-;; ;; thanks to Samuel Padgett <samuel.padgett@gte.net>
-;; (eval-after-load "apropos"
-;;   '(progn
-;;      (define-key apropos-mode-map "n" 'next-line)
-;;      (define-key apropos-mode-map "p" 'previous-line)))
-
 ;; double space the lines of a region, useful for grep output etc.
 (fset 'double-space-region
       [?\C-u ?\M-| ?s ?e ?d ?  ?G return])
 
-                                        ; fix the fookin bookmark mode. is there any consistency in the emacs world?
-                                        ; tested, seems to work OK.
+; fix the fookin bookmark mode. is there any consistency in the emacs world?
+; tested, seems to work OK.
 (eval-after-load "bookmark"
   '(progn
      (define-key bookmark-bmenu-mode-map "
@@ -497,17 +467,26 @@ them."
 
 (add-hook 'php-mode-hook 'my-php-mode-hook-func)
 
-(global-set-key [f12] 'toggle-truncate-lines)
-
-
 ;; I don't remember adding this or why.
 (put 'downcase-region 'disabled nil)
 
+;; Function keys
+(global-set-key [f12] 'toggle-truncate-lines)
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
 (global-set-key [f11] 'highlight-regexp)
 (global-set-key [\C-f11] 'unhighlight-regexp)
 
 (global-set-key [f6] `toggle-buffer-full-filename)
+
+;; copy region to the X clipboard
+;;(global-set-key [f7] 'clipboard-kill-ring-save)
+;; yank from same
+;;(global-set-key [\C-f7] 'clipboard-yank)
+;; snappy: macro + keybinding = hooha
+(fset 'next-frickin-tag
+      "\C-u\C-x.")
+(global-set-key [f7] 'next-frickin-tag)
+
 (global-set-key [pause] `delete-other-windows)
 (global-set-key [print] `other-window)
 
@@ -713,14 +692,6 @@ class %s extends Exception {
             (end-of-line))
         (widen))
     (end-of-line)))
-
-
-;; snappy: macro + keybinding = hooha
-(fset 'next-frickin-tag
-      "\C-u\C-x.")
-(global-set-key [f7] 'next-frickin-tag)
-(global-set-key [\C-f7] 'pop-tag-mark)
-
 
 ;; Send a random line from Zippy to the minibuffer.
 (defun yow-ovrwt ()
