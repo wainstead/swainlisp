@@ -210,12 +210,21 @@
 ;; gnus config
 (setq gnus-select-method '(nntp "news.panix.com"))
 
+;; get the speedbar... or not...
+(unless window-system
+  ;;(speedbar) ;; we just never use it. alas.
+  ;; else
+  (menu-bar-mode nil))
 
-;; newer version after rebinding C-x C-b to switch-to-buffer from 
-;; list-buffers
-;;(fset 'swlist
-;; "\C-x1\C-[xlist-buffers\C-m\C-x0\C-[xlist-buffers\C-m")
-
+;; check the man page for the 'date' command to format the day/time
+;; differently..
+(defun sw-display-seconds-in-status-bar ()
+  "Make the clock display the seconds so I know when cron is going to run..."
+  (interactive)
+  (setq display-time-interval 1)
+  (setq display-time-format "%c")
+  (display-time)
+  )
 
 ;; scroll one line at a time
 
@@ -525,12 +534,6 @@ already.  Give error if buffer is not associated with a file."
 ;; remap C-x # to C-x c, which is more mnumonic, and easier on the carpals.
 (global-set-key "\C-xc" 'server-edit)
 
-;; get the speedbar
-(unless window-system
-  ;;(speedbar) ;; we just never use it. alas.
-  ;; else
-  (menu-bar-mode nil))
-
 (fset 'reformat-code
       [?\C-x ?h ?\C-u ?\M-| ?p ?e ?r ?l ?  ?- ?n ?p ?e ?  ?' ?s ?/ ?^ ?[ ?  ?\\ ?t ?] ?+ ?/ ?/ ?' return ?\C-x ?h ?\C-\M-\\])
 
@@ -584,31 +587,6 @@ class %s extends Exception {
 
 (global-set-key [(control ?0)] 'unexpand-abbrev)
 
-;; Define convenient 'find' commands to use with grep-find. Prompt
-;; for the pattern. One for java files, one for jsp files.
-
-;; (defun gf-java (pattern)
-;; "Search bluewire dir for java files containing REGXP; this is defined in .emacs"
-;; (interactive "sEnter search string: ")
-;; ;; save the current working directory for this buffer
-;; ;; using cd commands resets default-directory apparently
-;; (setq current-dir default-directory)
-;; (cd "/home/swain/projects/bluewire/base")
-;; (grep-find 
-;;  (concat "find . -type f -name \*java -print0 | xargs -0 -e grep -n -e " pattern))
-;; ;; go back to the right working dir
-;; (cd-absolute current-dir))
-
-;; (defun gf-jsp (pattern)
-;; "Search bluewire dir for jsp files containing REGXP; this is defined in .emacs"
-;; (interactive "sEnter search string: ")
-;; (setq current-dir default-directory)
-;; (cd "/home/swain/projects/bluewire")
-;; (grep-find 
-;;  (concat "find . -type f -name \*jsp -print0 | xargs -0 -e grep -n -e " pattern))
-;;  (cd-absolute current-dir))
-
-
 (defun gf-php (pattern)
   "Search store project for PHP files containing REGXP"
   (interactive "sEnter search string: ")
@@ -621,13 +599,6 @@ class %s extends Exception {
 
   ;; go back to the right working dir
   (cd-absolute current-dir))
-
-
-
-;;(autoload 'w3m "w3m" "Interface for w3m on Emacs." t)
-;;(autoload 'w3m-find-file "w3m" "w3m interface function for local file." t)
-;;(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-
 
 ;; found this on http://www.emacswiki.org/cgi-bin/wiki.pl?HtmlEndOfLine
 (defun html-end-of-line ()
@@ -803,30 +774,6 @@ class %s extends Exception {
 the kill ring."
   (interactive)
   (delete-char (- (point-max) (point)) t))
-
-
-
-
-(defun sw-tail-f ()
-  "Tail a log file. Hooha."
-  (interactive)
-  (shell)
-  (switch-to-buffer "*shell*")
-  (rename-buffer "tail -f")
-  (goto-char (point-max))
-  (insert "tail -f /usr/local/resin/log/error.log")
-  (comint-send-input))
-
-(defun sw-ls-logs ()
-  "ls -lt on all log dirs, put prompt at bottom of buffer"
-  (interactive)
-  (goto-char (point-max))
-  (insert "ls -tl /opt/evw/logs; ls -lt /usr/local/resin/log; ls -lt /usr/local/apache/logs")
-  (comint-send-input))
-;; note this doesn't work; it executes before the shell is done with its work.
-;; Who says Emacs is slow?
-;;  (comint-show-maximum-output))
-
 
 
 ;; use defun globally; setq this in the local .emacs file in your home dir
@@ -1087,7 +1034,7 @@ after each yank."
 (set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
 
 
-(defun sw-lint ()
+(defun sw-php-lint ()
   "Run a lint check on the file the current buffer is visiting."
   (interactive)
   (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
@@ -1123,28 +1070,14 @@ after each yank."
   ;;(add-hook 'comint-output-filter-functions (lambda (string) (when (string-match pattern string) (message response))))
 )
 
-;; example of calling a lambda-created func
-;; (defun caller (myfunc)
-;;   "call the function which be lambda"
-;;   (funcall myfunc)
-;;   )
-
-;; (defun passit ()
-;;   "call caller and get results."
-;;   (interactive)
-;;   (caller (lambda () (message "You are a big sailor boy!")))
-;;   )
-
-
-
 (add-hook 'comint-output-filter-functions 'swain-watch-for-stuff)
 
 (fset 'sw-php-lint-check-on-buffer
       [?\C-x ?h ?\M-| ?p ?h ?p ?  ?- ?l return])
 
-
 ;; stolen from:
 ;; http://www.splode.com/~friedman/software/emacs-lisp/src/buffer-fns.el
+;; this is a utility function used elsewherei
 (defun apply-on-rectangle-region-points (fun beg end &rest args)
   "Like `apply-on-rectangle', but pass points in the buffer instead of columns."
   (apply-on-rectangle
@@ -1195,17 +1128,6 @@ after each yank."
 
 (fset 'sw-xml-format-region
    [?\C-u ?\M-| ?x ?m ?l ?l ?i ?n ?g backspace ?t ?  ?- ?- ?f ?o ?r ?m ?a ?t ?  ?- ?- ?n ?o ?a ?r backspace backspace ?w ?a ?r ?n ?i ?n ?g ?  ?- return])
-
-;; check the man page for the 'date' command to format the day/time
-;; differently..
-(defun sw-display-seconds-in-status-bar ()
-  "Make the clock display the seconds so I know when cron is going to run..."
-  (interactive)
-  (setq display-time-interval 1)
-  (setq display-time-format "%c")
-  (display-time)
-  )
-
 
 ;; for shell buffers, truncate them when they get too big
 ;;(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
