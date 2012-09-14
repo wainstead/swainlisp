@@ -503,39 +503,7 @@ them."
  '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
  '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
 
-;; found on gnu.emacs.help; toggle the filename in the status bar to full
-;; pathname and back.
-
-;; (defun toggle-buffer-full-filename ()
-;;   "Toggle the buffer's name between just the filename and the file's full path.
-;; Preserve any <number> suffix that the buffer name may have already.  Give error
-;; if buffer is not associated with a file."
-;;   (interactive)
-;;   (let* ((full-filename (buffer-file-name))
-;;          (just-filename (file-name-nondirectory full-filename))
-;;          (buff-name (buffer-name))
-;;          (buffer-index
-;;           (if (string-match "<[0-9]+>$" buff-name)
-;;               (match-string 0 buff-name)
-;;             "")))
-;;     (rename-buffer
-;;      (cond ((string= buff-name (concat just-filename buffer-index))
-;;             (concat full-filename buffer-index))
-;;            (t
-;;             (concat just-filename buffer-index))))))
-
-;; reply posted to above, thanks to groups.google.com. Does not
-;; preserve user-selected buffer names.
-
-;; fix: instead of calculating the buffer short filename, store the
-;; value in a buffer local variable wiith make-variable-buffer-local
-;; like so: 
-;; (defvar sw-buffer-name nil buffer-name)
-;; (make-variable-buffer-local 'sw-buffer-name)
-;; we need to add a hook to rename-buffer so that if it's visiting a
-;; file, the buffer name is stashed in sw-buffer-name. Or, we just store
-;; it when we call toggle-buf..name. Easier.
-
+;; found via groups.google.com, somehow
 (defun toggle-buffer-full-filename ()
   "Toggle the buffer's name between just the filename and the file's full path.
 Preserve any <number> suffix that the buffer name may have
