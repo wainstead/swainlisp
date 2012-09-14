@@ -152,8 +152,6 @@
 (blink-cursor-mode -1)
 ;;(tool-bar-mode -1)
 ;;    (tooltip-mode -1)
-(global-set-key [home] 'beginning-of-buffer)
-(global-set-key [end] 'end-of-buffer)
 ;;)
 
 ;; allow ansi colors in shell mode, i.e. let ls --color=yes work right
@@ -283,14 +281,6 @@
   (delete-region wipe-window-top wipe-window-bot)
   (kill-line))
 
-
-(global-set-key [f5] 'compile)
-
-;; find file at point bound to \C-f8
-;; now bound to f8 too
-(global-set-key [f8] 'find-file-at-point)
-
-
 ;; Note that (interactive) can take arguments specifying the format
 ;; expected; the variables are specified in the function definition
 ;; line (sw-replace).
@@ -361,7 +351,6 @@ them."
   (sw-git-commit-buffers)
   (erase-buffer)
 )
-(global-set-key [(f3)] 'clr)
 
 ;; from the O'Reilly book on writing extensions
 ;; C-x b will not switch you to a buffer unless it exists
@@ -471,13 +460,11 @@ them."
 (put 'downcase-region 'disabled nil)
 
 ;; Function keys
-(global-set-key [f12] 'toggle-truncate-lines)
-;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
-(global-set-key [f11] 'highlight-regexp)
-(global-set-key [\C-f11] 'unhighlight-regexp)
-
+(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
+(global-set-key [(f3)] 'clr)
+(global-set-key [(f4)] 'next-error)
+(global-set-key [f5] 'compile)
 (global-set-key [f6] `toggle-buffer-full-filename)
-
 ;; copy region to the X clipboard
 ;;(global-set-key [f7] 'clipboard-kill-ring-save)
 ;; yank from same
@@ -486,10 +473,19 @@ them."
 (fset 'next-frickin-tag
       "\C-u\C-x.")
 (global-set-key [f7] 'next-frickin-tag)
-
+(global-set-key [f8] 'find-file-at-point)
+(global-set-key [f9] `sw-list)
+(global-set-key [(control f9)] 'sw-next-log)
+;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
+(global-set-key [f11] 'highlight-regexp)
+(global-set-key [\C-f11] 'unhighlight-regexp)
+(global-set-key [f12] 'toggle-truncate-lines)
+(global-set-key [f13] `hs-hide-level)
+(global-set-key [(control f13)] `hs-show-all)
+(global-set-key [home] 'beginning-of-buffer)
+(global-set-key [end] 'end-of-buffer)
 (global-set-key [pause] `delete-other-windows)
 (global-set-key [print] `other-window)
-
 (global-set-key "\C-c\C-g" 'font-lock-fontify-buffer)
 
 ;; larnep asked for this, so it is here. All tabs are spaces.
@@ -619,8 +615,6 @@ class %s extends Exception {
 
 
 (global-set-key [(control ?0)] 'unexpand-abbrev)
-(global-set-key [(f4)] 'next-error)
-
 
 ;; Define convenient 'find' commands to use with grep-find. Prompt
 ;; for the pattern. One for java files, one for jsp files.
@@ -760,10 +754,6 @@ class %s extends Exception {
 ;; load this library for the functions that use browse-url-interactive-arg
 ;;(load-library "browse-url")
 
-
-(global-set-key [f13] `hs-hide-level)
-(global-set-key [(control f13)] `hs-show-all)
-
 ;; use compile to check the perl file in the current buffer
 (defun sw-perl-wc ()
   (interactive)
@@ -790,9 +780,6 @@ class %s extends Exception {
         (ibuffer-update nil))
     (ibuffer))
   (delete-other-windows))
-
-
-(global-set-key [f9] `sw-list)
 
 ;; move my shell buffer "buffername" to the dir the file is in. if not
 ;; visiting file make named shell buffer
@@ -1010,9 +997,6 @@ the kill ring."
     (switch-to-buffer (get-buffer (car buffer)))
     )
   )
-
-(global-set-key [(control f9)] 'sw-next-log)
-
 
 ;; first version of a command that simulates next-error for Occur mode.
 ;; FIXME: it's brittle
@@ -1254,8 +1238,6 @@ after each yank."
   (display-time)
   )
 
-
-(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
 
 ;; for shell buffers, truncate them when they get too big
 ;;(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
