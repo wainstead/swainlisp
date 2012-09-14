@@ -1,18 +1,25 @@
 * Items to work on at a later date viz Emacs
 ** TODO Try eshell for tailing log files instead of bash
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
+Sadly that post was deleted for being in the wrong category, of all things.
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
 ** TODO Rewrite sw-tail-logs-meta to take a function argument
 Currently, the alist passed to this function provides strings that
 become the argument to 'tail -f'. This is not flexible enough. There
 is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
+
+I think my thinking on this was running something like my alias
+"tailpg":
+
+tailpg='tail -f /tmp/postgres_out.log | perl -ne '\''s/\t/ /g; print'\'''
+
+Or maybe not? start.dev? At any rate, the code is messy and
+duplicated. Not sure why.
+
 ** TODO ipython in Emacs is broken
 *** TODO The command history gets "globalized" somehow, and sql statements appear in the histories of psql, cli, etc
 *** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
 *** TODO Sometimes a weird error about 'olors' shows upp
-** TODO Write a proper Cheetah mode maybe
-** DONE psql is not being saved to .emacs.shellbuffers.
-   CLOSED: [2012-08-22 Wed 09:54]
 ** TODO Use one of the Git modes to speed up work...
 Find a way to do "git log (current buffer)" since that's broken in
 Emacs. The main problem is using Git means I need to reload the files,
@@ -23,9 +30,12 @@ desktop-auto-save can save the plain text of the buffer and that's
 fine, but Miles Bader clued me to a way to actually save the contents
 of the buffer (via buffer-string) to a file... when Emacs starts up a
 buffer, then, like "cli," it could "reconstitute" the original buffer
-contents. This means the kill ring, command history, location of the
+contents. 
+
+I doubt this means the kill ring, command history, location of the
 prompts and so on would all work again between invocations of the
-buffer.
+buffer, but one thing at a time.
+
 This might help:
 http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
 Also just discovered this, for write-region:
@@ -46,6 +56,21 @@ instead of any buffer contents; END is ignored.
 So if I use buffer-string as the first argument to write-region I
 should get what I am after.
 
+I just came across this:
+
+(defun sw-init-shell (buffer-name command-string)
+  "Initialize buffer buffer-name with command string command-string."
+  (interactive)
+  (switch-to-buffer (get-buffer buffer-name))
+  (goto-char (point-max))                                                                                                                         
+  (insert command-string)
+  (comint-send-input)
+)
+
+It's currently unused, but it makes me think the desire to pass args
+to a shell is more general than I thought.. when I do sw-nose I get a
+bash shell buffer that cd's to ~/bin/pippin... this is kinda the same
+thing as tailing a log file or whatever. Hmm.
 
 ** TODO Finish Dismiss all "popups"
 This makes all buffers whose names start with an asterisk to
@@ -104,6 +129,11 @@ So the commonality here lies in the "separation" number. And we don't want black
 
 Brute force: keep calling (random) until we get a number in the range we like. This would be recursive so it wouldn't be hard to write.
 
+** TODO Move shell buffer functions into a new file
+sw-git-commit-buffer and brethren have probably outgrown
+desktop-auto-save... or have they? Uncertain.
+** TODO sw-comment-lines: comment lines matching regexp
+This is unfinished, sitting in swainlib.el
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
 ** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
@@ -162,3 +192,9 @@ This should be fairly trivial:
 (switch-to-frame)
 (set-foreground-color-randomly)
 (set-background-color-randomly)
+** DONE Write a proper Cheetah mode maybe
+   CLOSED: [2012-08-30 Thu 20:43]
+This wasn't necessary.
+http://advogato.org/person/wainstead/diary/98.html
+** DONE psql is not being saved to .emacs.shellbuffers.
+   CLOSED: [2012-08-22 Wed 09:54]
