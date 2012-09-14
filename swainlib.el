@@ -226,6 +226,22 @@
   (display-time)
   )
 
+;; larnep asked for this, so it is here. All tabs are spaces.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+ ;; Your init file should contain only one such instance.
+ '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
+ '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
+ '(indent-tabs-mode nil)
+ '(line-number-display-limit nil)
+ '(scroll-conservatively 1))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+ ;; Your init file should contain only one such instance.
+ '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
+ '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
+
+
 ;; scroll one line at a time
 
 (defun sw-scroll-up-n (&optional n)
@@ -497,21 +513,6 @@ them."
 (global-set-key [print] `other-window)
 (global-set-key "\C-c\C-g" 'font-lock-fontify-buffer)
 
-;; larnep asked for this, so it is here. All tabs are spaces.
-(custom-set-variables
- ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
- '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
- '(indent-tabs-mode nil)
- '(line-number-display-limit nil)
- '(scroll-conservatively 1))
-(custom-set-faces
- ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
- '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
-
 ;; found via groups.google.com, somehow
 (defun toggle-buffer-full-filename ()
   "Toggle the buffer's name between just the filename and the file's full path.
@@ -545,13 +546,11 @@ already.  Give error if buffer is not associated with a file."
     ;; change the string here to the path off your $HOME
     (setq projectdir (concat projectdir "/projects/bluewire"))
     (insert
-     (format "/** 
- *
- */
+     (format "/** \n *\n */
 " 
-             ;; calculate the filename's path: full pathname minus projectdir
-             (substring (buffer-file-name) 
-                        (+ 1 (length projectdir)))))))
+;; calculate the filename's path: full pathname minus projectdir
+(substring (buffer-file-name) (+ 1 (length projectdir))))))
+)
 
 ;; looks ugly, but generates a simple Exception class definition
 (defun sw-except (name)
@@ -586,19 +585,6 @@ class %s extends Exception {
 
 
 (global-set-key [(control ?0)] 'unexpand-abbrev)
-
-(defun gf-php (pattern)
-  "Search store project for PHP files containing REGXP"
-  (interactive "sEnter search string: ")
-  ;; save the current working directory for this buffer
-  ;; using cd commands resets default-directory apparently
-  (setq current-dir default-directory)
-  (cd "/home/swain/public_html/projects/ampiradev/gallery-sc/public_html")
-  (grep-find 
-   (concat "find . \\( -name \\*.php -o -name \\*.inc \\) -print0 | xargs -0 -e grep -n -e " pattern))
-
-  ;; go back to the right working dir
-  (cd-absolute current-dir))
 
 ;; found this on http://www.emacswiki.org/cgi-bin/wiki.pl?HtmlEndOfLine
 (defun html-end-of-line ()
@@ -1030,9 +1016,6 @@ after each yank."
   (interactive "sPattern: ")
   (shell-command-on-region (point-min) (point-max) (format "grep -v '%s'" pattern) 1 1 "*error crap*")
   )
-
-(set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
-
 
 (defun sw-php-lint ()
   "Run a lint check on the file the current buffer is visiting."
