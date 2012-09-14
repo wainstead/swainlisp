@@ -1039,3 +1039,7 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
 
   ;; go back to the right working dir
   (cd-absolute current-dir))
+
+(set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
+
+
