@@ -1,5 +1,19 @@
 * Items to work on at a later date viz Emacs
 ** TODO Try eshell for tailing log files instead of bash
+** TODO Write a command to display database table info
+I worked out how to get ctags to index plpgsql stored procedures; I
+then thought about how to get more info about a database table while
+reading code.
+psql nworks -c '\dd nfmc.grantee_grant_information'
+psql nworks -c '\d nfmc.grantee_grant_information'
+
+The first prints out comments on the table; the second prints out all
+information on the table. (Dunno why the latter doesn't render
+comments. Might be a way, haven't investigated).
+
+Then: while reading model.py, place cursor on a table name, execute
+this new command I write and the above shell calls are displayed.
+
 ** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
 Sadly that post was deleted for being in the wrong category, of all things.
 ** TODO There are two versions of sw-tail-logs-meta now, consolidate
