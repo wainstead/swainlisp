@@ -1,3 +1,20 @@
+(defun sw-pp ()
+  "Make iTunes either pause or play"
+  (interactive)
+  (setq apscript "
+tell application \"iTunes\"
+	if player state is paused then
+		play
+	else
+		pause
+	end if
+end tell
+"
+        )
+  (do-applescript apscript)
+  )
+
+
 ;; a new command using the do-applescript function
 ;; TODO: add list of Mac apps that user can interate over via M-p, M-n
 (defun sw-switch (app)
@@ -41,38 +58,3 @@ end tell
 
 (global-set-key [(control f10)] 'sw-open-buffer-file-in-safari)
 
-
-
-
-;; new fun do-applescript functions. Problem: the char Â is the Apple
-;; line return thingie, Emacs chokes on it
-
-(defvar sw-last-applescript nil
-  "Stores the last Applescript command executed from Emacs.")
-
-(defvar sw-applescript-buffer-name "*AppleScript output*"
-  "Name for the buffer to display AppleScript output.")
-
-(defun sw-applescript-run-buffer ()
-  "Execute the whole buffer as an Applescript"
-  (interactive)
-  (setq sw-last-applescript (buffer-string))
-  (sw-run-and-display-applescript (buffer-string)))
-
-(defun sw-applescript-run-region ()
-  "Execute the region as an Applescript"
-  (interactive)
-  (let ((region (buffer-substring (region-beginning) (region-end))))
-    (setq sw-last-applescript region)
-    (sw-run-and-display-applescript region)))
-
-(defun sw-run-last-applescript ()
-  "Run the last Applescript command again"
-  (interactive)
-  (sw-run-and-display-applescript sw-last-applescript))
-
-(defun sw-run-and-display-applescript (code)
-  "Switch to the AppleScript buffer, erase it, run the code and display the results."
-  (switch-to-buffer (get-buffer-create sw-applescript-buffer-name))
-  (erase-buffer)
-  (insert (do-applescript code)))
