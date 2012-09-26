@@ -289,3 +289,4 @@ edit the file because it changed on disk."
 (fset 'sw-reload-file
    [?\C-x ?r ?  ?n ?\C-x ?\C-v return ?\C-x ?r ?j ?n])
 (global-set-key [(f13)] 'sw-reload-file)
+(global-set-key [(f15)] 'sw-randomize-frame-colors)
