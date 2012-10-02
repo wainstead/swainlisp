@@ -21,7 +21,7 @@
 
 ;; set up stuff for sql-postgres
 (setq sql-postgres-program "/usr/local/pgsql/bin/psql")
-(setq sql-user "swain")
+(setq sql-user "social")
 (setq sql-database "nworks")
 (setq sql-server "localhost")
 
