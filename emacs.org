@@ -1,4 +1,8 @@
 * Items to work on at a later date viz Emacs
+** TODO sw-cli should switch-to-window
+I don't know if that's an actual function; but if cli is visible in
+the frame, sw-cli should not switch the current window to that buffer
+but instead give focus to the window holding the cli buffer.
 ** TODO Try eshell for tailing log files instead of bash
 ** TODO Write a command to display database table info
 I worked out how to get ctags to index plpgsql stored procedures; I
