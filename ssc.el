@@ -97,6 +97,15 @@
   (insert "cd ~/git/pippin/sites/nfmc-reporting/mods/tests/")
   (comint-send-input))
 
+;; kinda dumb but I like that I can use periods in function names
+(defun sw-mods/.. ()
+  "Move the cli shell into the mods/.. directory."
+  (interactive)
+  (switch-to-buffer "cli")
+  (goto-char (point-max))
+  (insert "cd ~/git/pippin/sites/nfmc-reporting/")
+  (comint-send-input))
+
 (defun sw-templates ()
   "Move the cli shell into the nfmc templates directory."
   (interactive)
@@ -290,3 +299,4 @@ edit the file because it changed on disk."
    [?\C-x ?r ?  ?n ?\C-x ?\C-v return ?\C-x ?r ?j ?n])
 (global-set-key [(f13)] 'sw-reload-file)
 (global-set-key [(f15)] 'sw-randomize-frame-colors)
+
