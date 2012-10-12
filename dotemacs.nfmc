@@ -24,7 +24,7 @@
 (load-file "~swain/.elisp/swainlib.el")
 (load-file "~swain/.elisp/ssc.el")
 (load-file "~swain/.elisp/compilation-buffer-extras.el")
-
+(load-file "~swain/.elisp/osx.el")
 
 
 ;; Gonna try living with an iBuffer that no longer removes all other
@@ -55,7 +55,7 @@
 
 
 (setq org-agenda-files (list "~/.elisp/emacs.org"
-                             "~/notebooks/developer-notes/swain/notes/uup2.org"
+                             "~/notebooks/developer-notes/swain/todo-lists/todo.org"
                              ))
 
 ;; attempt to get Emacs's "M-x compile" to work with the newly merged
