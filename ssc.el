@@ -279,7 +279,7 @@ edit the file because it changed on disk."
 (defun sw-git-diff-master ()
   "Run git diff master HEAD, output to new buffer"
   (interactive)
-  (sw-git-diff-meta "*git diff master*" "cd ~swain/git/pippin; git diff master HEAD")
+  (sw-git-diff-meta "*git diff master*" "cd ~swain/git/pippin; git diff origin/master HEAD")
   )
 
 
