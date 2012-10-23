@@ -1,4 +1,7 @@
 * Items to work on at a later date viz Emacs
+** TODO Bug: sw-tail-nfmc-logs tries to start new frame+buffers
+This function should detect if the frame already exists and, if so,
+switch to that frame.
 ** TODO sw-cli should switch-to-window
 I don't know if that's an actual function; but if cli is visible in
 the frame, sw-cli should not switch the current window to that buffer
