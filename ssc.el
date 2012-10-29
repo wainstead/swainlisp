@@ -132,6 +132,17 @@
   (goto-char (point-max))
   )
 
+;; temp mail server for those situations where there's no network
+(defun sw-mailserver ()
+  "Run Python's smtpd in a buffer to receive emails, dump to stdout.
+Stop the server by running:
+sudo kill -3 $(ps auxwww | grep DebuggingServer | grep root | awk '{print $2}')"
+  (interactive)
+  (sw-shell "mailserver")
+  (insert "sudo python -m smtpd -n -c DebuggingServer localhost:25")
+  (comint-send-input)
+  )
+
 ;; I should write something that takes an alist of shell name:
 ;; starting directory, and iterates over the alist creating shell
 ;; buffers. It would reduce redundant code. This alist would be
@@ -300,3 +311,15 @@ edit the file because it changed on disk."
 (global-set-key [(f13)] 'sw-reload-file)
 (global-set-key [(f15)] 'sw-randomize-frame-colors)
 
+;; run the dbUpdates file for me. Spare me the delay in finding and
+;; typing out the file name.
+(defun ssc-run-dbupdates ()
+  "Switch to buffer 'psql', execute the dbUpdates file from the
+command line there."
+  (interactive)
+  (switch-to-buffer (get-buffer "psql"))
+  (goto-line (point-max))
+  (insert "\\i ")
+  (shell-command "cd ~swain/git/pippin/postgres/nfmc; ls dbUpdates.*.sql" t)
+  (comint-send-input)
+  )
