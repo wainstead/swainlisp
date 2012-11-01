@@ -60,4 +60,4 @@
 
 ;; attempt to get Emacs's "M-x compile" to work with the newly merged
 ;; in "unification" branch, 2/23/2012
-(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; echo $PYTHONPATH"))
+(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; echo -n $PYTHONPATH"))
