@@ -44,6 +44,7 @@
 (add-hook 'cheetah-mode-hook    'insert-tabs-hook-func)
 (add-hook 'diff-mode-hook       'insert-tabs-hook-func)
 (add-hook 'javascript-mode-hook 'insert-tabs-hook-func)
+(add-hook 'text-mode-hook       'insert-tabs-hook-func)
 
 ;; don't add trailing whitespace
 (add-hook 'python-mode-hook
