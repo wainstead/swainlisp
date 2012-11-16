@@ -158,7 +158,11 @@ This is unfinished, sitting in swainlib.el
 * Bugs
 ** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
 ** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
-
+This lies in sw-kill-logs-meta, in tail-logs.el. I don't see a way yet
+via comint-mode to just kill the buffer and avoid the prompt but there
+is most likely some way to do it. comint-interrupt-subjob will at
+least kill the 'tail' command running in the window but I need a way
+to off the shell itself. Or terminate-with-prejudice.
 * Items from my old TODO list in swainlib.el:
 ;;;;;;;;; TODO
 
