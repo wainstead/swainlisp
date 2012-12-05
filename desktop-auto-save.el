@@ -205,7 +205,7 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
   "Save the contents of all shell buffers to their files and then
    git-commit those files in ~/.emacs.shellbuffers."
   (sw-save-shell-buffer-contents)
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
+  (async-shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
 ;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)
