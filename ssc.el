@@ -328,3 +328,10 @@ command line there."
   (shell-command "cd ~swain/git/pippin/postgres/nfmc; ls dbUpdates.*.sql" t)
   (comint-send-input)
   )
+
+(defun ssc-eviscerate ()
+  "Eviscerate the database. Warning: will hang if ipython has a
+transaction going."
+  (interactive)
+  (shell-command "cd ~/git/pippin/sites/nfmc-reporting/mods; python eviscerate.py")
+  )
