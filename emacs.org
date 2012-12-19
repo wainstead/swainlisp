@@ -1,13 +1,12 @@
-* Items to work on at a later date viz Emacs
-** TODO Bug: sw-tail-nfmc-logs tries to start new frame+buffers
-This function should detect if the frame already exists and, if so,
-switch to that frame.
-** TODO sw-cli should switch-to-window
-I don't know if that's an actual function; but if cli is visible in
-the frame, sw-cli should not switch the current window to that buffer
-but instead give focus to the window holding the cli buffer.
-** TODO Try eshell for tailing log files instead of bash
-** TODO Write a command to display database table info
+* Tasks
+** TODO :undone: sw-comment-lines: comment lines matching regexp
+This is unfinished, sitting in swainlib.el
+** TODO :undone: Finish Dismiss all "popups"
+This makes all buffers whose names start with an asterisk to
+vanish... like *Occur*, *Help* and so on.
+
+** TODO :new: Try eshell for tailing log files instead of bash
+** TODO :new: Write a command to display database table info
 I worked out how to get ctags to index plpgsql stored procedures; I
 then thought about how to get more info about a database table while
 reading code.
@@ -21,10 +20,17 @@ comments. Might be a way, haven't investigated).
 Then: while reading model.py, place cursor on a table name, execute
 this new command I write and the above shell calls are displayed.
 
-** TODO Try the Emacs command that watches a file for updates (found via stackoverflow I think)
+** TODO :new: Try the Emacs command that watches a file for updates (found via stackoverflow I think)
 Sadly that post was deleted for being in the wrong category, of all things.
-** TODO There are two versions of sw-tail-logs-meta now, consolidate
-** TODO Rewrite sw-tail-logs-meta to take a function argument
+** TODO :new: Use one of the Git modes to speed up work...
+Find a way to do "git log (current buffer)" since that's broken in
+Emacs. The main problem is using Git means I need to reload the files,
+and currently I hit F13 to run a macro I wrote to get around this problem.
+** TODO :new: Still not using flymake and bretheren for on-the-fly syntax checking
+** TODO :new: See the comment block on top of sw-highlight-stuff
+Saving the settings of hi-lock for a given buffer
+** TODO :refactor: There are two versions of sw-tail-logs-meta now, consolidate
+** TODO :refactor: Rewrite sw-tail-logs-meta to take a function argument
 Currently, the alist passed to this function provides strings that
 become the argument to 'tail -f'. This is not flexible enough. There
 is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
@@ -37,16 +43,28 @@ tailpg='tail -f /tmp/postgres_out.log | perl -ne '\''s/\t/ /g; print'\'''
 Or maybe not? start.dev? At any rate, the code is messy and
 duplicated. Not sure why.
 
-** TODO ipython in Emacs is broken
-*** TODO The command history gets "globalized" somehow, and sql statements appear in the histories of psql, cli, etc
-*** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
-*** TODO Sometimes a weird error about 'olors' shows upp
-** TODO Use one of the Git modes to speed up work...
-Find a way to do "git log (current buffer)" since that's broken in
-Emacs. The main problem is using Git means I need to reload the files,
-and currently I hit F13 to run a macro I wrote to get around this problem.
-** TODO Still not using flymake and bretheren for on-the-fly syntax checking
-** TODO Save the shell buffer, not just its contents
+*** TODO Revisit sw-tail-logs-meta
+Passing in a filename to tail is not flexible enough; the spawned
+shell should be able to do anything... it might not, in the future, be
+tailing a log.
+
+(This entry also included:
+
+  "In this case start.dev shouldn't be run automatically, though I think
+  the reason was it might already be running; hmm. start.dev should be
+  spawned in such a way that when the parent shell goes away
+  (i.e. quitting Emacs) it can be reclaimed when the shell start.dev
+  starts again, like doing a screen -r.
+
+" 
+
+But I've largely solved this by using GNU screen and Terminal to run
+start.dev).
+
+** TODO :refactor: Move shell buffer functions into a new file
+sw-git-commit-buffer and brethren have probably outgrown
+desktop-auto-save... or have they? Uncertain.
+** TODO :enhancement: Save the shell buffer, not just its contents
 desktop-auto-save can save the plain text of the buffer and that's
 fine, but Miles Bader clued me to a way to actually save the contents
 of the buffer (via buffer-string) to a file... when Emacs starts up a
@@ -93,29 +111,17 @@ to a shell is more general than I thought.. when I do sw-nose I get a
 bash shell buffer that cd's to ~/bin/pippin... this is kinda the same
 thing as tailing a log file or whatever. Hmm.
 
-** TODO Finish Dismiss all "popups"
-This makes all buffers whose names start with an asterisk to
-vanish... like *Occur*, *Help* and so on.
+** TODO :enhancement: Update sw-start-new-log-entry to add correct amount of whitespace
+It's always been random how much whitespace separates the start of a
+new entry.
+** TODO :enhancement: sw-cli should switch-to-window
+I don't know if that's an actual function; but if cli is visible in
+the frame, sw-cli should not switch the current window to that buffer
+but instead give focus to the window holding the cli buffer.
+** TODO :enhancement: Revisit calling Applescript from Emacs
+Update the file; see if anyone else has written anything
 
-** TODO Revisit sw-tail-logs-meta
-Passing in a filename to tail is not flexible enough; the spawned
-shell should be able to do anything... it might not, in the future, be
-tailing a log.
-
-(This entry also included:
-
-  "In this case start.dev shouldn't be run automatically, though I think
-  the reason was it might already be running; hmm. start.dev should be
-  spawned in such a way that when the parent shell goes away
-  (i.e. quitting Emacs) it can be reclaimed when the shell start.dev
-  starts again, like doing a screen -r.
-
-" 
-
-But I've largely solved this by using GNU screen and Terminal to run
-start.dev).
-
-** TODO Create minor mode to highlight things in the file?
+** TODO :experiment: Create minor mode to highlight things in the file?
 From commit 47ec8fad6153043e32a0b16aa6945f3023d21892:
 Devised a couple of functions to eliminate the repetitive task of
 applying a set of calls to hi-lock-face-buffer every time I reload a
@@ -124,9 +130,7 @@ way of fontifying a buffer... that way I can add the file to the list
 for that major mode and every time I reload the file it's
 automagically highlighted. Might work for tailing log files too;
 perhaps I really want a minor mode.
-** TODO See the comment block on top of sw-highlight-stuff
-Saving the settings of hi-lock for a given buffer
-** TODO Emacs Lisp version of AUTOLOAD?
+** TODO :experiment: Emacs Lisp version of AUTOLOAD?
 Metaprogramming challenge: passing additional path info as part
 of the function call... similar to Perl's AUTOLOAD
 functionality. If there is no Lisp function
@@ -134,10 +138,22 @@ matching "sw-templates/grantee," for example, the function name
 should be parsed to find the base function (sw-templates) and
 append the rest of the path info ("grantee") to the string.
 
-** TODO Revisit calling Applescript from Emacs
-Update the file; see if anyone else has written anything
-
-** TODO Tweak the randomized colors for *compilation*
+* Bugs
+** TODO :bug: ipython in Emacs is broken
+*** TODO The command history gets "globalized" somehow, and sql statements appear in the histories of psql, cli, etc
+*** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
+*** TODO Sometimes a weird error about 'olors' shows upp
+** TODO :bug: sw-tail-nfmc-logs tries to start new frame+buffers
+This function should detect if the frame already exists and, if so,
+switch to that frame.
+** TODO :bug: Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+** TODO :bug: Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
+This lies in sw-kill-logs-meta, in tail-logs.el. I don't see a way yet
+via comint-mode to just kill the buffer and avoid the prompt but there
+is most likely some way to do it. comint-interrupt-subjob will at
+least kill the 'tail' command running in the window but I need a way
+to off the shell itself. Or terminate-with-prejudice.
+** TODO :bug: Tweak the randomized colors for *compilation*
 If the color returned is above or below certain threshold, we need to modify it somehow. Or even better: the two numbers have to be N apart, regardless.
 
 For example:
@@ -150,19 +166,6 @@ So the commonality here lies in the "separation" number. And we don't want black
 
 Brute force: keep calling (random) until we get a number in the range we like. This would be recursive so it wouldn't be hard to write.
 
-** TODO Move shell buffer functions into a new file
-sw-git-commit-buffer and brethren have probably outgrown
-desktop-auto-save... or have they? Uncertain.
-** TODO sw-comment-lines: comment lines matching regexp
-This is unfinished, sitting in swainlib.el
-* Bugs
-** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
-** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
-This lies in sw-kill-logs-meta, in tail-logs.el. I don't see a way yet
-via comint-mode to just kill the buffer and avoid the prompt but there
-is most likely some way to do it. comint-interrupt-subjob will at
-least kill the 'tail' command running in the window but I need a way
-to off the shell itself. Or terminate-with-prejudice.
 * Items from my old TODO list in swainlib.el:
 ;;;;;;;;; TODO
 
