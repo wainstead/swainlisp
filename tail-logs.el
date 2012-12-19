@@ -40,6 +40,7 @@
   (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
       (progn
         ;; FIXME: Should fail gracefully if the buffer doesn't exist anymore
+        ;; FIXME: probaly should use recursion instead of a 'while' loop
         (switch-to-buffer (car (car ssc-alist)))
         (delete-other-windows)
         (let ((file-alist ssc-alist))
