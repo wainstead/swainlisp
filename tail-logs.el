@@ -1,6 +1,8 @@
 ;; The "meta" functions came later... see comment staring with "This
 ;; first block..."
 
+;; a copy of waittail is at the end of this file
+
 (defun sw-tail-logs-meta (ssc-alist ssc-frame-name)
   "meta function for opening logs and tailing them in a new frame"
   ;; if we are on a windowing system like X11, open this in a new frame
@@ -141,3 +143,30 @@
     (message "Log tailing buffers not deleted.")))
 
 
+;; "waittail" - a shell script that sleep-waits until a log file
+;; appears, then replaces itself by calling exec with the tail command
+
+;; #!/bin/bash
+
+;; # Given a log file which may or may not exist, sleep-wait until the
+;; # log file exists. Once it shows up, run "exec tail -f logfile."
+
+;; # The purpose is to have a script that can run in one of my Emacs
+;; # shellbuffers that's meant to tail a log file, but when Emacs starts
+;; # the log file doesn't exist yet.
+
+;; if test -z "$1"
+;; then
+;;   echo "No command-line arguments."
+;;   echo "Usage: $0 <log file to tail>"
+;;   exit 1
+;; else
+;;   echo "Looking to tail '$1'..."
+;; fi
+
+;; while [ ! -f $1 ];
+;; do
+;;     sleep 1
+;; done
+
+;; exec /usr/bin/tail -f $1
