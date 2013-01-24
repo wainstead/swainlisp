@@ -89,6 +89,17 @@
 ;   (kill-buffer "tail")
 ; )
 
+(defun sw-just-make-a-frame (commands-alist tail-frame-name)
+  "meta function for opening logs and tailing them in a new frame"
+  ;; if we are on a windowing system like X11, open this in a new frame
+  (if window-system
+    (let ((logs-frame (make-frame)))
+      (select-frame logs-frame)
+      (set-frame-width (selected-frame) 250)
+      (set-frame-height (selected-frame) 84)
+      (set-frame-name tail-frame-name)))
+  )
+
 (defun sw-frame-only ()
   (interactive)
   (sw-just-make-a-frame sw-tail-nfmc-alist sw-tail-nfmc-frame-name)
@@ -109,17 +120,6 @@
 
 ;; the problem with this approach is that the buffer is in fundamental mode
 (and (start-process "pippin log" "pippin log" "waittail" "/tmp/pippin.log") (switch-to-buffer "pippin log"))
-
-(defun sw-just-make-a-frame (commands-alist tail-frame-name)
-  "meta function for opening logs and tailing them in a new frame"
-  ;; if we are on a windowing system like X11, open this in a new frame
-  (if window-system
-    (let ((logs-frame (make-frame)))
-      (select-frame logs-frame)
-      (set-frame-width (selected-frame) 250)
-      (set-frame-height (selected-frame) 84)
-      (set-frame-name tail-frame-name)))
-  )
 
 (defun sw-tail-nfmc-logs ()
   "Tail log files in shell buffers. The files to tail, and the names to give
