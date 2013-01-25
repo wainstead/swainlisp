@@ -1,3 +1,9 @@
+;; BUG: something about the ascii coloring mode throws errors like
+;; this:
+;; error in process filter: ansi-color-apply-on-region: Invalid search bound (wrong side of point)
+;; error in process filter: Invalid search bound (wrong side of point)
+
+
 ;; This largely now works, but the formatting of the new frame is all
 ;; whack. There might be some disadvantage to using
 ;; async-shell-command instead of bash, ultimately; like sending
