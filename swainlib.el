@@ -322,8 +322,8 @@
 (global-set-key "\M-n" 'goto-line)
 
 (defun sw-shell (sw-buff-name)
-  "Basically, a wrapper for M-x shell. Prompt for shell buffer name, and
-if there are autosaved contents from a previous incarnation, insert
+  "A wrapper for M-x shell. Prompt for shell buffer name, and if
+there are autosaved contents from a previous incarnation, insert
 them."
   (interactive "sBuffer name: ")
   (let ( (the-buffer (get-buffer sw-buff-name)) )
