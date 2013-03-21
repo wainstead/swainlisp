@@ -1,9 +1,9 @@
 ;; The "meta" functions came later... see comment staring with "This
 ;; first block..."
 
-;; a copy of waittail is at the end of this file
+;; a copy of the shell script "waittail" is at the end of this file
 
-(defun sw-tail-logs-meta (ssc-alist ssc-frame-name)
+(defun sw-tail-logs-meta (commands-alist tail-frame-name)
   "meta function for opening logs and tailing them in a new frame"
   ;; if we are on a windowing system like X11, open this in a new frame
   (if window-system
@@ -11,12 +11,12 @@
       (select-frame logs-frame)
       (set-frame-width (selected-frame) 250)
       (set-frame-height (selected-frame) 84)
-      (set-frame-name ssc-frame-name)))
+      (set-frame-name tail-frame-name)))
 
-  (let (pair (file-alist ssc-alist))
+  (let (pair (file-alist commands-alist))
     (while (consp file-alist) 
       ;; first time through these are equal so we do not split the buffer
-      (if (not (equal (safe-length file-alist) (safe-length ssc-alist)))
+      (if (not (equal (safe-length file-alist) (safe-length commands-alist)))
           (split-window-vertically))
       (setq pair (car file-alist))
       (shell)
@@ -35,17 +35,19 @@
     (balance-windows)
     (window-configuration-to-register ?1))
   )
- 
+
+
+
 ;; undo the work of sw-tail-logs-meta
-(defun sw-kill-logs-meta (ssc-alist ssc-frame-name)
-  "Kill the buffers tailing the log files as listed in ssc-alist."
+(defun sw-kill-logs-meta (commands-alist tail-frame-name)
+  "Kill the buffers tailing the log files as listed in commands-alist."
   (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
       (progn
         ;; FIXME: Should fail gracefully if the buffer doesn't exist anymore
-        ;; FIXME: probaly should use recursion instead of a 'while' loop
-        (switch-to-buffer (car (car ssc-alist)))
+        ;; FIXME: probably should use recursion instead of a 'while' loop
+        (switch-to-buffer (car (car commands-alist)))
         (delete-other-windows)
-        (let ((file-alist ssc-alist))
+        (let ((file-alist commands-alist))
           (while (consp file-alist)
             (setq pair (car file-alist))
             (unless (kill-buffer (car pair))
@@ -53,13 +55,13 @@
             (setq file-alist (cdr file-alist))
             ))
         (when window-system
-          (select-frame-by-name ssc-frame-name)
+          (select-frame-by-name tail-frame-name)
           (delete-frame))
         )
     ;; else:
         (message "Log tailing buffers not deleted.")))
 
-(defun sw-fix-logs ()
+(defun sw-color-logs ()
   "Colorize the window that tails logs."
   (interactive)
   ;;(set-default-font "-adobe-courier-medium-r-normal-*-*-120-*-*-*-*-iso8859-1")
@@ -72,6 +74,13 @@
 ;; started down the road of tailing log files in Emacs. Later I wrote
 ;; sw-tail-logs-meta to accomodate opening multiple frames with
 ;; different sets of logs being tailed; this I did for MyPhotoAlbum.
+
+;; That is, I wrote Emacs Lisp commands that encapsulated the
+;; arguments to open and tail a set of log files depending on whether
+;; I was working on the shopping cart, the dev server, the "gift shop"
+;; and so on. As I write today I only have one set of logs I ever tail
+;; for work so the "meta" quality of sw-tail-logs-meta isn't so meta
+;; anymore.
 
 ;; use defun globally; setq this in the local .emacs file in your home dir
 (defvar sw-tail-file-alist '(
@@ -90,9 +99,9 @@
       (let ((logs-frame (make-frame)))
         (select-frame logs-frame)
         (set-frame-name "logs")
-        (if (functionp 'sw-fix-logs)
+        (if (functionp 'sw-color-logs)
             (progn
-              (sw-fix-logs)
+              (sw-color-logs)
               (sw-colors "303030")
               (set-frame-width (selected-frame) 250)
               (set-frame-height (selected-frame) 84)
