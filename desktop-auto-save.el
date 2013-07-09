@@ -204,6 +204,7 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
 (defun sw-git-commit-buffers()
   "Save the contents of all shell buffers to their files and then
    git-commit those files in ~/.emacs.shellbuffers."
+  (interactive)
   (sw-save-shell-buffer-contents)
   (async-shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
