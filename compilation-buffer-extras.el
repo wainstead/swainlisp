@@ -75,7 +75,15 @@ random colors."
        (bg-color (sw-make-random-hex-color-string))
        (color-distance #x3fffff)
        )
-    (set-foreground-color fg-color)
-    (set-background-color bg-color)
+    ;; only proceed if we got different numbers. If they are the same
+    ;; I think it crashes Emacs. See
+    ;; http://lists.gnu.org/archive/html/bug-gnu-emacs/2013-06/msg00869.html
+    (if (not (eq fg-color bg-color))
+        (progn
+          (set-foreground-color fg-color)
+          (set-background-color bg-color))
+      ;; else
+          (message "Not changing colors, they were the same"))
     )
   )
+
