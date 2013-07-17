@@ -80,6 +80,7 @@ random colors."
     ;; http://lists.gnu.org/archive/html/bug-gnu-emacs/2013-06/msg00869.html
     (if (not (eq fg-color bg-color))
         (progn
+          (message (format "Using fg %s bg %s" fg-color bg-color))
           (set-foreground-color fg-color)
           (set-background-color bg-color))
       ;; else
