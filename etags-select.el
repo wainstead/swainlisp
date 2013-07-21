@@ -233,9 +233,23 @@ to do."
   (interactive)
   (setq etags-select-source-buffer (buffer-name))
   (let* ((default (find-tag-default))
-         (tagname (completing-read
+         (tagname (ido-completing-read
                    (format "Find tag (default %s): " default)
-                   'etags-select-complete-tag nil nil nil 'find-tag-history default)))
+                   ;; This is a funny way of spelling "give me all
+                   ;; possible completions."  It is a transformation
+                   ;; of the code that used to be here (for
+                   ;; completing-read, where this argument can be a
+                   ;; function that will be called to get possible
+                   ;; completions).
+                   ;;
+                   ;; I'm pretty sure this doesn't work right, because
+                   ;; sometimes I don't get prompted for tags that are
+                   ;; in the table.  Might be a problem with when it
+                   ;; re-reads (reverts) the tags table, that being
+                   ;; after it's already built the list of completions
+                   ;; for IDO.  I should fix this.
+                   (etags-select-complete-tag "" nil t)
+                   nil nil nil 'find-tag-history default)))
     (etags-select-find tagname)))
 
 (defun etags-select-complete-tag (string predicate what)
@@ -413,7 +427,9 @@ Use the C-u prefix to prevent the etags-select window from closing."
   "Quit etags-select buffer."
   (interactive)
   (kill-buffer nil)
-  (delete-window))
+  (delete-window)
+  (when etags-select-opened-window
+    (select-window etags-select-opened-window)))
 
 (defun etags-select-by-tag-number (first-digit)
   "Select a tag by number."

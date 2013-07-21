@@ -1026,3 +1026,20 @@ select * from users, prem_packages_history where userid=@id and package_type=pac
   (comint-send-input))
 
 (global-set-key (kbd "<f2> u") (lambda () (interactive) (sw-update-builds)))
+
+(defun gf-php (pattern)
+  "Search store project for PHP files containing REGXP"
+  (interactive "sEnter search string: ")
+  ;; save the current working directory for this buffer
+  ;; using cd commands resets default-directory apparently
+  (setq current-dir default-directory)
+  (cd "/home/swain/public_html/projects/ampiradev/gallery-sc/public_html")
+  (grep-find 
+   (concat "find . \\( -name \\*.php -o -name \\*.inc \\) -print0 | xargs -0 -e grep -n -e " pattern))
+
+  ;; go back to the right working dir
+  (cd-absolute current-dir))
+
+(set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
+
+
