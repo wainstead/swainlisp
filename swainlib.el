@@ -1025,3 +1025,10 @@ hi-lock-face-buffer to activate each in the current buffer."
         )
     )
   )
+
+;; courtesy Dale Sedivec
+;; originally titled my:yank-rectangle-to-new-lines
+(defun sw-yank-rectangle-to-new-lines ()
+  (interactive)
+  (save-excursion (newline (length killed-rectangle)))
+  (yank-rectangle))
