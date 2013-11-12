@@ -1032,3 +1032,7 @@ hi-lock-face-buffer to activate each in the current buffer."
   (interactive)
   (save-excursion (newline (length killed-rectangle)))
   (yank-rectangle))
+
+;; capture tasks easily
+(setq org-default-notes-file "~swain/.elisp/notes.org")
+     (define-key global-map "\C-cc" 'org-capture)
