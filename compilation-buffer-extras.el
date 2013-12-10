@@ -65,6 +65,11 @@
   (format "#%06x" (random #xffffff))
   )
 
+;; via stackoverflow: formatting date/time
+(defvar current-date-time-format "%a %b %d %H:%M:%S %Z %Y"
+  "Format of date to insert with `insert-current-date-time' func
+  See help of `format-time-string' for possible replacements")
+
 (defun sw-randomize-frame-colors ()
   "Change foreground and background colors of the current frame to
 random colors."
@@ -75,16 +80,21 @@ random colors."
        (bg-color (sw-make-random-hex-color-string))
        (color-distance #x3fffff)
        )
-    ;; only proceed if we got different numbers. If they are the same
-    ;; I think it crashes Emacs. See
+    ;; Might crash Emacs. See:
     ;; http://lists.gnu.org/archive/html/bug-gnu-emacs/2013-06/msg00869.html
     (if (not (eq fg-color bg-color))
         (progn
-          (message (format "Using fg %s bg %s" fg-color bg-color))
+          (shell-command (format "/bin/echo '%s nb %s nf %s' >> /Users/swain/.emacs.shellbuffers/colorchanges\n" 
+                                 (format-time-string current-date-time-format (current-time))
+                                 bg-color
+                                 fg-color))
+          (set-background-color bg-color)
+          (shell-command (format "/bin/echo 'background set' >> /Users/swain/.emacs.shellbuffers/colorchanges\n"))
           (set-foreground-color fg-color)
-          (set-background-color bg-color))
+          (shell-command (format "/bin/echo 'foreground set' >> /Users/swain/.emacs.shellbuffers/colorchanges\n"))
+          )
       ;; else
-          (message "Not changing colors, they were the same"))
+      (message "Not changing colors, new foreground and background colors were identical"))
     )
   )
 

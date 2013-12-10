@@ -1,4 +1,4 @@
-* Tasks
+
 ** TODO :undone: sw-comment-lines: comment lines matching regexp
 This is unfinished, sitting in swainlib.el
 ** TODO :undone: Finish Dismiss all "popups"
