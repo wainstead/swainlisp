@@ -1033,6 +1033,11 @@ hi-lock-face-buffer to activate each in the current buffer."
   (save-excursion (newline (length killed-rectangle)))
   (yank-rectangle))
 
+
+;; load a newer version of org-mode
+(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/lisp" load-path))
+(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
+
 ;; capture tasks easily
 (setq org-default-notes-file "~swain/.elisp/notes.org")
      (define-key global-map "\C-cc" 'org-capture)
