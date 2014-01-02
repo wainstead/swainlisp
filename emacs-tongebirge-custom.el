@@ -7,8 +7,8 @@
  '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
  '(indent-tabs-mode nil)
  '(line-number-display-limit nil)
- '(scroll-conservatively 1)
- '(send-mail-function (quote mailclient-send-it)))
+ '(org-agenda-files (quote ("~/notebooks/developer-notes/swain/LOG.org" "~/Dropbox/projects/django.org" "~/Dropbox/projects/stories.org" "~/Dropbox/projects/moo.org" "~/Dropbox/projects/master.org" "~/.elisp/emacs.org" "~/notebooks/developer-notes/swain/todo-lists/todo.org")))
+ '(scroll-conservatively 1))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
