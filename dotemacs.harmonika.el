@@ -1,8 +1,8 @@
 (setq custom-file "~/.elisp/emacs-harmonika-custom.el")
 (load custom-file)
+(tool-bar-mode -1)
 
-
-(setq mac-allow-anti-aliasing nil)
+;;(setq mac-allow-anti-aliasing nil)
 
 ;; this is the local file.
 (when window-system
@@ -128,3 +128,8 @@
 ;; (setq sql-database "bandspace")
 ;; (setq sql-server "localhost")
 (put 'upcase-region 'disabled nil)
+
+;; For SSC, I like compilation in a separate frame. Not so much for
+;; Waverous.
+(ad-unadvise 'compile)
+(ad-unadvise 'recompile)
