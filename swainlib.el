@@ -149,7 +149,7 @@
 ;;(setq emacs22 (eq emacs-major-version 22))
 
 ;;(when emacs22
-(blink-cursor-mode -1)
+(blink-cursor-mode t)
 ;;(tool-bar-mode -1)
 ;;    (tooltip-mode -1)
 ;;)
@@ -1054,5 +1054,5 @@ hi-lock-face-buffer to activate each in the current buffer."
 (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
 
 ;; capture tasks easily
-(setq org-default-notes-file "~swain/.elisp/notes.org")
-     (define-key global-map "\C-cc" 'org-capture)
+(setq org-default-notes-file "~swain/Dropbox/projects/notes.org")
+(define-key global-map "\C-cc" 'org-capture)
