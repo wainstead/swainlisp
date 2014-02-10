@@ -1,4 +1,5 @@
-
+** TODO :undone: F4 is my sytax checking. It should be context-sensitive.
+When I'm in PHP it should check PHP sytax, when in Perl, Perl and etc.
 ** TODO :undone: sw-comment-lines: comment lines matching regexp
    :PROPERTIES:
    :ID:       435EBD98-FBE1-40A9-8B7F-D4393E7FD562
