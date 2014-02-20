@@ -1,0 +1,16 @@
+* Tasks
+** TODO Read articles http://orgmode.org/manual/Using-capture.html#Using-capture http://members.optusnet.com.au/~charles57/GTD/gtd_workflow.html
+   [2013-11-12 Tue]
+** TODO Permanently set up the capture feature for org-mode
+   [2013-11-12 Tue]
+   [[file:~/.elisp/swainlib.el::(define-key%20global-map%20"\C-cc"%20'org-capture)][file:~/.elisp/swainlib.el::(define-key global-map "\C-cc" 'org-capture)]]
+** TODO Learn Emacs lisp macros
+   [2013-12-10 Tue]
+   [[file:~/.elisp/swainlib.el]]
+** TODO Add this to Reminders
+   [2013-12-16 Mon]
+   [[file:~/.elisp/swainlib.el]]
+** TODO Remove this notes.org file, or something
+   [2013-12-16 Mon]
+   [[file:~/.elisp/swainlib.el]]
+

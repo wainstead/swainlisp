@@ -1,0 +1,306 @@
+** TODO :undone: F4 is my sytax checking. It should be context-sensitive.
+When I'm in PHP it should check PHP sytax, when in Perl, Perl and etc.
+** TODO :undone: sw-comment-lines: comment lines matching regexp
+   :PROPERTIES:
+   :ID:       435EBD98-FBE1-40A9-8B7F-D4393E7FD562
+   :END:
+This is unfinished, sitting in swainlib.el
+** TODO :undone: Finish Dismiss all "popups"
+   :PROPERTIES:
+   :ID:       702BA5DD-0F45-4C76-88A3-64B9F9C58A20
+   :END:
+This makes all buffers whose names start with an asterisk to
+vanish... like *Occur*, *Help* and so on.
+
+** TODO :new: Try eshell for tailing log files instead of bash
+   :PROPERTIES:
+   :ID:       932FEE5A-F9AC-48A0-9153-8598BDB40137
+   :END:
+** TODO :new: Write a command to display database table info
+   :PROPERTIES:
+   :ID:       457C0E80-7E2B-4B3D-87C8-90161895EC0E
+   :END:
+I worked out how to get ctags to index plpgsql stored procedures; I
+then thought about how to get more info about a database table while
+reading code.
+psql nworks -c '\dd nfmc.grantee_grant_information'
+psql nworks -c '\d nfmc.grantee_grant_information'
+
+The first prints out comments on the table; the second prints out all
+information on the table. (Dunno why the latter doesn't render
+comments. Might be a way, haven't investigated).
+
+Then: while reading model.py, place cursor on a table name, execute
+this new command I write and the above shell calls are displayed.
+
+** TODO :new: Try the Emacs command that watches a file for updates (found via stackoverflow I think)
+   :PROPERTIES:
+   :ID:       14FF9139-FC2A-41C4-8E2D-F64583C0C9E9
+   :END:
+Sadly that post was deleted for being in the wrong category, of all things.
+** TODO :new: Use one of the Git modes to speed up work...
+   :PROPERTIES:
+   :ID:       760FB9E4-20F1-4640-A840-1D65C71160BB
+   :END:
+Find a way to do "git log (current buffer)" since that's broken in
+Emacs. The main problem is using Git means I need to reload the files,
+and currently I hit F13 to run a macro I wrote to get around this problem.
+** TODO :new: Still not using flymake and bretheren for on-the-fly syntax checking
+   :PROPERTIES:
+   :ID:       ACC396A9-B364-4178-9CAB-E1F8480C4B9B
+   :END:
+** TODO :new: See the comment block on top of sw-highlight-stuff
+   :PROPERTIES:
+   :ID:       3434E34C-3D44-4189-89EE-E42CA3E9458C
+   :END:
+Saving the settings of hi-lock for a given buffer
+** TODO :refactor: Rewrite sw-tail-logs-meta to take a function argument
+   :PROPERTIES:
+   :ID:       B312F8B4-FBB7-4287-BC52-6052248249FE
+   :END:
+Currently, the alist passed to this function provides strings that
+become the argument to 'tail -f'. This is not flexible enough. There
+is a note where to do this in ssc.el's copy of sw-tail-logs-meta.
+
+I think my thinking on this was running something like my alias
+"tailpg":
+
+tailpg='tail -f /tmp/postgres_out.log | perl -ne '\''s/\t/ /g; print'\'''
+
+Or maybe not? start.dev? At any rate, the code is messy and
+duplicated. Not sure why.
+
+** TODO :refactor: Revisit sw-tail-logs-meta
+   :PROPERTIES:
+   :ID:       363C28D7-8098-4C86-88C8-DC5A73E0FEEB
+   :END:
+Passing in a filename to tail is not flexible enough; the spawned
+shell should be able to do anything... it might not, in the future, be
+tailing a log.
+
+(This entry also included:
+
+  "In this case start.dev shouldn't be run automatically, though I think
+  the reason was it might already be running; hmm. start.dev should be
+  spawned in such a way that when the parent shell goes away
+  (i.e. quitting Emacs) it can be reclaimed when the shell start.dev
+  starts again, like doing a screen -r.
+
+" 
+
+But I've largely solved this by using GNU screen and Terminal to run
+start.dev).
+
+** TODO :refactor: Move shell buffer functions into a new file
+   :PROPERTIES:
+   :ID:       59981AB8-7C24-412F-834F-534904CCD576
+   :END:
+sw-git-commit-buffer and brethren have probably outgrown
+desktop-auto-save... or have they? Uncertain.
+** TODO :enhancement: Save the shell buffer, not just its contents
+   :PROPERTIES:
+   :ID:       9F879E40-68D6-414B-A2D1-3A897BBBB17D
+   :END:
+desktop-auto-save can save the plain text of the buffer and that's
+fine, but Miles Bader clued me to a way to actually save the contents
+of the buffer (via buffer-string) to a file... when Emacs starts up a
+buffer, then, like "cli," it could "reconstitute" the original buffer
+contents. 
+
+I doubt this means the kill ring, command history, location of the
+prompts and so on would all work again between invocations of the
+buffer, but one thing at a time.
+
+This might help:
+http://lists.gnu.org/archive/html/help-gnu-emacs/2009-10/msg00143.html
+Also just discovered this, for write-region:
+
+write-region is an interactive built-in function in `fileio.c'.
+
+(write-region START END FILENAME &optional APPEND VISIT LOCKNAME
+MUSTBENEW)
+
+Write current region into specified file.
+When called from a program, requires three arguments:
+START, END and FILENAME.  START and END are normally buffer positions
+specifying the part of the buffer to write.
+If START is nil, that means to use the entire buffer contents.
+If START is a string, then output that string to the file
+instead of any buffer contents; END is ignored.
+
+So if I use buffer-string as the first argument to write-region I
+should get what I am after.
+
+I just came across this:
+
+(defun sw-init-shell (buffer-name command-string)
+  "Initialize buffer buffer-name with command string command-string."
+  (interactive)
+  (switch-to-buffer (get-buffer buffer-name))
+  (goto-char (point-max))                                                                                                                         
+  (insert command-string)
+  (comint-send-input)
+)
+
+It's currently unused, but it makes me think the desire to pass args
+to a shell is more general than I thought.. when I do sw-nose I get a
+bash shell buffer that cd's to ~/bin/pippin... this is kinda the same
+thing as tailing a log file or whatever. Hmm.
+
+** TODO :enhancement: Update sw-start-new-log-entry to add correct amount of whitespace
+   :PROPERTIES:
+   :ID:       233BEBAE-67A0-462E-92E3-174601F50BD6
+   :END:
+It's always been random how much whitespace separates the start of a
+new entry.
+** TODO :enhancement: sw-cli should switch-to-window
+   :PROPERTIES:
+   :ID:       846DB845-F1EA-4371-8687-1299105892AC
+   :END:
+I don't know if that's an actual function; but if cli is visible in
+the frame, sw-cli should not switch the current window to that buffer
+but instead give focus to the window holding the cli buffer.
+** TODO :enhancement: Revisit calling Applescript from Emacs
+   :PROPERTIES:
+   :ID:       35D00654-253C-4F67-A8B3-AA3FC2A39ACA
+   :END:
+Update the file; see if anyone else has written anything
+
+** TODO :experiment: Create minor mode to highlight things in the file?
+   :PROPERTIES:
+   :ID:       BE1B3D1E-59CE-4212-AEA9-D865F38311E1
+   :END:
+From commit 47ec8fad6153043e32a0b16aa6945f3023d21892:
+Devised a couple of functions to eliminate the repetitive task of
+applying a set of calls to hi-lock-face-buffer every time I reload a
+file. I should learn to do on-the-fly major modes, perhaps, or some
+way of fontifying a buffer... that way I can add the file to the list
+for that major mode and every time I reload the file it's
+automagically highlighted. Might work for tailing log files too;
+perhaps I really want a minor mode.
+** TODO :experiment: Emacs Lisp version of AUTOLOAD?
+   :PROPERTIES:
+   :ID:       08C154E7-F843-4596-BE4F-54D2217075FD
+   :END:
+Metaprogramming challenge: passing additional path info as part
+of the function call... similar to Perl's AUTOLOAD
+functionality. If there is no Lisp function
+matching "sw-templates/grantee," for example, the function name
+should be parsed to find the base function (sw-templates) and
+append the rest of the path info ("grantee") to the string.
+
+* Bugs
+** TODO :bug: ipython in Emacs is broken
+   :PROPERTIES:
+   :ID:       07159AC3-6D8F-463B-8372-EC91CE8FA8DA
+   :END:
+*** TODO The command history gets "globalized" somehow, and sql statements appear in the histories of psql, cli, etc
+	:PROPERTIES:
+	:ID:       8EB463E4-7CC8-492F-9E58-8A3FDB58FF47
+	:END:
+*** TODO On startup the file ipython.el doesn't seem to load the first time (sometimes not the second)
+	:PROPERTIES:
+	:ID:       DCC5C5DE-C86A-429C-81A8-5B58C0DF6646
+	:END:
+*** TODO Sometimes a weird error about 'olors' shows upp
+	:PROPERTIES:
+	:ID:       0B7DA056-6FC9-40DC-BF61-7D299F4114F8
+	:END:
+** TODO :bug: sw-tail-nfmc-logs tries to start new frame+buffers
+   :PROPERTIES:
+   :ID:       F75B57F1-353A-413D-AA0A-5D44A77C4B20
+   :END:
+This function should detect if the frame already exists and, if so,
+switch to that frame.
+** TODO :bug: Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+   :PROPERTIES:
+   :ID:       219BC314-B0B9-41A1-A80B-C33CDB4019FF
+   :END:
+** TODO :bug: Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
+   :PROPERTIES:
+   :ID:       53193E9C-6446-4046-B15D-D3976237B04A
+   :END:
+This lies in sw-kill-logs-meta, in tail-logs.el. I don't see a way yet
+via comint-mode to just kill the buffer and avoid the prompt but there
+is most likely some way to do it. comint-interrupt-subjob will at
+least kill the 'tail' command running in the window but I need a way
+to off the shell itself. Or terminate-with-prejudice.
+** TODO :bug: Tweak the randomized colors for *compilation*
+   :PROPERTIES:
+   :ID:       529A1D63-A7C8-4B75-8CEE-D57532A075F1
+   :END:
+If the color returned is above or below certain threshold, we need to modify it somehow. Or even better: the two numbers have to be N apart, regardless.
+
+For example:
+
+0 and 9 are ok
+6 and 15 are ok
+7 and 15 are not, if our separation is 9
+
+So the commonality here lies in the "separation" number. And we don't want black or white, so some subtlety is required to modfiy the numbers.
+
+Brute force: keep calling (random) until we get a number in the range we like. This would be recursive so it wouldn't be hard to write.
+
+* Items from my old TODO list in swainlib.el:
+;;;;;;;;; TODO
+
+;; a command that uses a regular expression to comment out all
+;; matching lines. Should use the commenting convention of the current
+;; mode (possibly: use cursor movement commands this way: match
+;; line. Move cursor to beginning of statement. Set mark. Move cursor
+;; to end of statement. Comment region.
+
+;; When I use F8 to find file at point, first put the cursor back to
+;; point max before switching to the new file.
+
+;; I still need lisp to self-truncate a buffer. That is, when program
+;; output in shell mode is excessive, turn off font lock mode and keep
+;; the buffer size under a certain limit.
+
+;; M-x comint-truncate-buffer This command truncates the shell buffer
+;; to a certain maximum number of lines, specified by the variable
+;; comint-buffer-maximum-size. Here's how to do this automatically
+;; each time you get output from the subshell:
+
+;;               (add-hook 'comint-output-filter-functions
+;;                         'comint-truncate-buffer)
+
+
+;; for desktop-auto-save, defvar a flag variable t or null that tells
+;; us whether we've already written out a file. If it's null, test to
+;; see if the file is there; if it is, prompt the user yes or no if we
+;; can overwrite it.
+
+
+* Done
+** DONE Get *compilation* buffer to stay put somewhere
+   CLOSED: [2012-02-28 Tue 12:33]
+It would be nice to have this buffer in its own frame somewhere, and
+when I run F5 compilation can be viewed in that buffer it that
+frame... unfortunately a new buffer always opens in the active frame.
+Probably: when tapping "f5" the following should happen:
+*** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
+*** start compilation
+
+#+STARTUP: content
+** DONE When I hit compile, focus should return to the current buffer.
+   CLOSED: [2012-08-14 Tue 09:41]
+Compilation now happens in its own frame but that frame retains
+focus... even more annoying, switching focus means the cursor stops
+moving and output rolls off the bottom where I can't see it anymore.
+** DONE The compilation frame should choose random light and dark colors every time
+   CLOSED: [2012-08-14 Tue 10:48]
+This should be fairly trivial:
+
+(switch-to-frame)
+(set-foreground-color-randomly)
+(set-background-color-randomly)
+** DONE Write a proper Cheetah mode maybe
+   CLOSED: [2012-08-30 Thu 20:43]
+This wasn't necessary.
+http://advogato.org/person/wainstead/diary/98.html
+** DONE psql is not being saved to .emacs.shellbuffers.
+   CLOSED: [2012-08-22 Wed 09:54]
+** DONE :refactor: There are two versions of sw-tail-logs-meta now, consolidate
+   CLOSED: [2012-12-20 Thu 12:15]
+Dunno when this occurred but I only find one copy of the function now

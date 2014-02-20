@@ -94,7 +94,7 @@
 ;; escaping from recursive edits: abort-recursive-edit
 
 ;; make a TAGS file for your install of Emacs plus the libraries locally
-;; find /usr/local/share/emacs ~swain/.elisp \( -name \*.el -o -name .emacs \) | sudo etags -
+;; find /usr/local/share/emacs ~swain/.emacs.d \( -name \*.el -o -name .emacs \) | sudo etags -
 
 ;; make any old tags table:
 ;; find . -name "*.[chCH]" -print | etags -
@@ -111,31 +111,11 @@
 ;; C-M-f goto closing brace (standing on the opening brace)
 ;; C-M-b goto opening brace (standing on the closing brace)
 
+;; M-x set-goal-column
+
+;; (global-set-key (kbd "<f2> w") 'keyboard-quit)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
-
-;;;;;;;;; TODO
-
-;; a command that uses a regular expression to comment out all
-;; matching lines. Should use the commenting convention of the current
-;; mode (possibly: use cursor movement commands this way: match
-;; line. Move cursor to beginning of statement. Set mark. Move cursor
-;; to end of statement. Comment region.
-
-;; When I use F8 to find file at point, first put the cursor back to
-;; point max before switching to the new file.
-
-;; I still need lisp to self-truncate a buffer. That is, when program
-;; output in shell mode is excessive, turn off font lock mode and keep
-;; the buffer size under a certain limit.
-
-;; for desktop-auto-save, defvar a flag variable t or null that tells
-;; us whether we've already written out a file. If it's null, test to
-;; see if the file is there; if it is, prompt the user yes or no if we
-;; can overwrite it.
-
-
-
-;; END CHEAT SHEET ETC.
 
 
 
@@ -143,12 +123,12 @@
   ;; make pretty
   (defvar default-frame-alist '((background-color . "#040000")
                                 (foreground-color . "goldenrod")
-                                (cursor-color     . "green")))
+                                (cursor-color     . "red")))
   "Default colors for Emacs.")
 
 ;; default mode gunk
 
-(setq load-path (append load-path (list "~swain/.elisp")))
+(setq load-path (append load-path (list "~swain/.emacs.d")))
 
 ;; set the default command for M-x compile
 (setq compile-command "make")
@@ -169,11 +149,9 @@
 ;;(setq emacs22 (eq emacs-major-version 22))
 
 ;;(when emacs22
-(blink-cursor-mode -1)
-(tool-bar-mode -1)
+(blink-cursor-mode t)
+;;(tool-bar-mode -1)
 ;;    (tooltip-mode -1)
-(global-set-key [home] 'beginning-of-buffer)
-(global-set-key [end] 'end-of-buffer)
 ;;)
 
 ;; allow ansi colors in shell mode, i.e. let ls --color=yes work right
@@ -184,27 +162,13 @@
 ;; always use font-lock-mode in modes that support it
 (global-font-lock-mode t)
 
-;; hi-lock ships with emacs 21; older versions need p-whim-lock. Note
-;; that hi-lock is more featureful.
-(if window-system
-    (progn
-      (global-set-key "\C-xwi" 'hi-lock-find-patterns)
-      (global-set-key "\C-xwh" 'hi-lock-face-buffer)
-      (global-set-key "\C-xwr" 'hi-lock-unface-buffer)
-      (global-set-key "\C-xwb" 'hi-lock-write-interactive-patterns)))
-
-
-;; hideshow for programming
-;;(load-library "hideshow")
-;;(add-hook 'java-mode-hook 'hs-minor-mode)
-;;(add-hook 'perl-mode-hook 'hs-minor-mode)
-;;(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-
-;; ibuffer
+;; load the desktop on startup (from ~/)
+(desktop-load-default)
+;; automatically save the desktop on exit.
+(setq desktop-enable t)
+(load-file "~swain/.emacs.d/desktop-auto-save.el")
+(load-file "~swain/.emacs.d/tail-logs.el")
 (load-library "ibuffer")
-
-;; ruby
-(load-library "ruby-mode")
 
 ;; fix isearch so we can use backspace instead of delete
 (define-key isearch-mode-map "\C-h" 'isearch-delete-char)
@@ -246,11 +210,36 @@
 ;; gnus config
 (setq gnus-select-method '(nntp "news.panix.com"))
 
+;; get the speedbar... or not...
+(unless window-system
+  ;;(speedbar) ;; we just never use it. alas.
+  ;; else
+  (menu-bar-mode nil))
 
-;; newer version after rebinding C-x C-b to switch-to-buffer from 
-;; list-buffers
-;;(fset 'swlist
-;; "\C-x1\C-[xlist-buffers\C-m\C-x0\C-[xlist-buffers\C-m")
+;; check the man page for the 'date' command to format the day/time
+;; differently..
+(defun sw-display-seconds-in-status-bar ()
+  "Make the clock display the seconds so I know when cron is going to run..."
+  (interactive)
+  (setq display-time-interval 1)
+  (setq display-time-format "%c")
+  (display-time)
+  )
+
+;; larnep asked for this, so it is here. All tabs are spaces.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
+ ;; Your init file should contain only one such instance.
+ '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
+ '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
+ '(indent-tabs-mode nil)
+ '(line-number-display-limit nil)
+ '(scroll-conservatively 1))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
+ ;; Your init file should contain only one such instance.
+ '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
+ '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
 
 
 ;; scroll one line at a time
@@ -317,14 +306,6 @@
   (delete-region wipe-window-top wipe-window-bot)
   (kill-line))
 
-
-(global-set-key [f5] 'compile)
-
-;; find file at point bound to \C-f8
-;; now bound to f8 too
-(global-set-key [f8] 'find-file-at-point)
-
-
 ;; Note that (interactive) can take arguments specifying the format
 ;; expected; the variables are specified in the function definition
 ;; line (sw-replace).
@@ -340,42 +321,9 @@
 ;; bind goto-line to a key
 (global-set-key "\M-n" 'goto-line)
 
-;; open a command line interface for the long haul
-;;(fset 'sw-cli
-;;   "\C-[xshell\C-m\C-[xrename-buffer\C-mcli\C-m\C-xh\C-w\C-m")
-
-(defun sw-cli ()
-  "Open a shell buffer and name it \"cli\""
-  (interactive)
-  (sw-shell "cli")
-  )
-
-
-(defun sw-root ()
-  "A named shell buffer for doing root stuff."
-  (interactive)
-  (sw-shell "root")
-  )
-
-(defun sw-www ()
-  "Now my EMOTIONAL RESOURCES are heavily committed to 23% of the
- SMELTING and REFINING industry of the state of NEVADA!!"
-  (interactive)
-  (sw-shell "www")
-  )
-
-(defun sw-sql ()
-  "Open a shell buffer, rename it 'sql'"
-  (interactive)
-  (sw-shell "sql")
-  (abbrev-mode t)
-  (read-abbrev-file "~swain/.abbrev_defs")
-  )
-
-
 (defun sw-shell (sw-buff-name)
-  "Basically, a wrapper for M-x shell. Prompt for shell buffer name, and
-if there are autosaved contents from a previous incarnation, insert
+  "A wrapper for M-x shell. Prompt for shell buffer name, and if
+there are autosaved contents from a previous incarnation, insert
 them."
   (interactive "sBuffer name: ")
   (let ( (the-buffer (get-buffer sw-buff-name)) )
@@ -395,28 +343,39 @@ them."
     )
   )
 
-
-(defun sw-init-shell (buffer-name command-string)
-  "Initialize buffer buffer-name with command string command-string."
+(defun sw-cli ()
+  "Open a shell buffer and name it \"cli\""
   (interactive)
-  (switch-to-buffer (get-buffer buffer-name))
-  (goto-char (point-max))                                                                                                                         
-  (insert command-string)
-  (comint-send-input)
+  (sw-shell "cli")
+  )
+
+
+(defun sw-root ()
+  "A named shell buffer for doing root stuff."
+  (interactive)
+  (sw-shell "root")
+  )
+
+(defun sw-sql ()
+  "Open a shell buffer, rename it 'sql'"
+  (interactive)
+  (sw-shell "sql")
+  (abbrev-mode t)
+  (read-abbrev-file "~swain/.abbrev_defs")
+  )
+
+(defun sw-tail ()
+  "Open a shell buffer, rename it 'tail' for tailing files"
+  (interactive)
+  (sw-shell "tail")
+  )
+
+(defun clr ()
+  "git-commit all buffers, then clear the current buffer."
+  (interactive)
+  (sw-git-commit-buffers)
+  (erase-buffer)
 )
-
-
-;; open a shell to tail a log or other
-(fset 'sw-tail
-      "\C-[xshell\C-m\C-[xrename-buffer\C-mtail\C-m\C-xh\C-w\C-m")
-
-
-;; create an easier way to erase a whole buffer,
-;; without polluting the kill ring
-;;(fset 'clr
-;;   "\C-xh\C-[xdelete-region\C-m")
-(defalias 'clr 'erase-buffer)
-(global-set-key [(f3)] 'erase-buffer)
 
 ;; from the O'Reilly book on writing extensions
 ;; C-x b will not switch you to a buffer unless it exists
@@ -433,10 +392,6 @@ them."
 ;; I'm tired of C-x C-b opening that buffer...
 (global-set-key "\C-x\C-b" 'switch-to-buffer)
 
-;; obsolete, finally wrote it in lisp
-;;(fset 'quickswitch
-;;   "\C-[xswitch-to-buffer\C-m\C-m")
-
 (defun sw-qs () 
   "quickly switch between buffers"
   (interactive)
@@ -445,32 +400,17 @@ them."
 ;; set M-a to the above function
 (global-set-key "\M-a" 'sw-qs)
 
-
 ;; insert a javadoc comment
 (fset 'insert-javadoc
       [?/ ?* ?* return ?* return ?* ?/ up ? ])
 
-;; copy region to the X clipboard
-(global-set-key [f7] 'clipboard-kill-ring-save)
-
-;; yank from same
-(global-set-key [\C-f7] 'clipboard-yank)
-
-;; jump to the shell command output
-(fset 'show-output
-      [?\C-x ?b ?* ?S ?h ?e ?l ?l ?  ?C ?o ?m ?m ?a ?n ?d tab return])
-
-
-
 ;; Here's a command to insert a new log entry in the format I made up
-(defun start-new-log-entry ()
+(defun sw-start-new-log-entry ()
   "Insert a row of hash marks and then the date in swain format"
   (interactive)
   (goto-char (point-max))
   (insert "\n\n\n#########################################################################\n")
   (insert (format-time-string "%y%m%d %c\n\n" (current-time))))
-
-(defalias 'sw-start-new-log-entry 'start-new-log-entry)
 
 ;; Insert the date and time in a sortable way 
 (defun sw-insert-date ()
@@ -486,15 +426,6 @@ them."
   (insert (format-time-string "TO_DATE('%c', 'Dy Mon DD HH24:MI:SS YYYY')" (current-time))))
 
 
-;; this is for interop jobs: see the ID in the log, run this in sqlplus
-;; (defun interop-query (id)
-;;   "Insert a SQL query that returns the status from an interop run"
-;;   (interactive "sEnter the job ID: ")
-;;   (insert (format "SELECT name, percent_complete, error_description, debug_text, status, description FROM interop_job, interop_status,interop_type WHERE interop_job.interop_status_id=interop_status.interop_status_id AND interop_status.interop_type_id=interop_type.interop_type_id AND interop_job_id='%s';" id)))
-
-(global-set-key [\C-print] 'interop-query)
-
-
 ;; allow sw-qs to work with java mode too
 (add-hook 'java-mode-hook
           (lambda ()
@@ -506,49 +437,19 @@ them."
             (define-key compilation-mode-map "n" 'next-line)
             (define-key compilation-mode-map "p" 'previous-line)))
 
-
-;; Create a function sw-vi-j that does what J does in vi
-(defun sw-vi-j ()
-  "Join the current line to the next line (like J in vi)"
-  (interactive)
-  (delete-indentation (prefix-numeric-value t)))
-
-(global-set-key "\C-x\C-j" `sw-vi-j)
-
-;; load the desktop on startup (from ~/)
-(desktop-load-default)
-;; automatically save the desktop on exit.
-(setq desktop-enable t)
-(load-file "~swain/.elisp/desktop-auto-save.el")
-
-;;(desktop-read) ;; you can do this manually
-
-;; ;; set n and p for the misbehaved apropos mode:
-;; (defun fix-apropos ()
-;;  "Bind n and p in apropos mode buffers to next-line and previous-line"
-;;  (interactive)
-;;  (define-key apropos-mode-map "n" 'next-line)
-;;  (define-key apropos-mode-map "p" 'previous-line))
-
-;; ;; thanks to Samuel Padgett <samuel.padgett@gte.net>
-;; (eval-after-load "apropos"
-;;   '(progn
-;;      (define-key apropos-mode-map "n" 'next-line)
-;;      (define-key apropos-mode-map "p" 'previous-line)))
-
 ;; double space the lines of a region, useful for grep output etc.
 (fset 'double-space-region
       [?\C-u ?\M-| ?s ?e ?d ?  ?G return])
 
-                                        ; fix the fookin bookmark mode. is there any consistency in the emacs world?
-                                        ; tested, seems to work OK.
+; fix the fookin bookmark mode. is there any consistency in the emacs world?
+; tested, seems to work OK.
 (eval-after-load "bookmark"
   '(progn
      (define-key bookmark-bmenu-mode-map "
 " 'bookmark-bmenu-this-window)))
 
 ;; python mode stuff, if I have it
-;;(load "python-mode")
+(load "python-mode")
 (setq auto-mode-alist
       (append '(
                 ("\\.py\\'" . python-mode)) auto-mode-alist))
@@ -563,17 +464,12 @@ them."
 (add-to-list 'auto-mode-alist '("\\.vps$"     . python-mode     ))
 (add-to-list 'auto-mode-alist '("\\.tt2$"     . html-mode       ))
 (add-to-list 'auto-mode-alist '("\\.xsd$"     . sgml-mode       ))
-(add-to-list 'auto-mode-alist '("\\.js$"      . javascript-mode ))
+(add-to-list 'auto-mode-alist '("\\.js$"      . js-mode ))
 (add-to-list 'auto-mode-alist '("\\.xpi$"     . archive-mode    ))
 (add-to-list 'auto-mode-alist '("\\.rb$"      . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.tpl$"     . php-mode        ))
-
-;;(autoload 'javascript-mode "javascript-mode" "JavaScript mode" t)
-
-;;(load-library "props-mode")
-(load-library "php-mode")
 
 ;; thanks Jeff Dairiki for this hook
 (defun my-php-mode-hook-func ()
@@ -585,83 +481,39 @@ them."
 
 (add-hook 'php-mode-hook 'my-php-mode-hook-func)
 
-                                        ;(put 'narrow-to-region 'disabled nil)
-
-;; (defun find-pbms ()
-;;    "Do a regexp search backwords for \"error\" and \"exception\""
-;;    (interactive)
-;;    (re-search-backward "error\\|exception"))
-
-;;(global-set-key [f12] 'find-pbms)
-;;(global-set-key [f12] 'comment-region)
-;;(global-set-key [(control f12)] 'uncomment-region)
-;; convenience                                                                                                           
-;;(global-set-key [f12] 'enlarge-window)
-;;(global-set-key [(control f12)] 'shrink-window)
-(global-set-key [f12] 'toggle-truncate-lines)
-
-
 ;; I don't remember adding this or why.
 (put 'downcase-region 'disabled nil)
 
+;; Function keys
+(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
+(global-set-key [(f3)] 'clr)
+(global-set-key [(f4)] 'next-error)
+(global-set-key [f5] 'compile)
+(global-set-key [f6] `toggle-buffer-full-filename)
+;; copy region to the X clipboard
+;;(global-set-key [f7] 'clipboard-kill-ring-save)
+;; yank from same
+;;(global-set-key [\C-f7] 'clipboard-yank)
+;; snappy: macro + keybinding = hooha
+(fset 'next-frickin-tag
+      "\C-u\C-x.")
+(global-set-key [f7] 'next-frickin-tag)
+(global-set-key [f8] 'find-file-at-point)
+(global-set-key [f9] `sw-list)
+(global-set-key [(control f9)] 'sw-next-log)
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
 (global-set-key [f11] 'highlight-regexp)
 (global-set-key [\C-f11] 'unhighlight-regexp)
-
-(global-set-key [f6] `toggle-buffer-full-filename)
+(global-set-key [f12] 'toggle-truncate-lines)
+(global-set-key [f13] `hs-hide-level)
+(global-set-key [(control f13)] `hs-show-all)
+(global-set-key [home] 'beginning-of-buffer)
+(global-set-key [end] 'end-of-buffer)
 (global-set-key [pause] `delete-other-windows)
 (global-set-key [print] `other-window)
-
 (global-set-key "\C-c\C-g" 'font-lock-fontify-buffer)
 
-;; larnep asked for this, so it is here. All tabs are spaces.
-(custom-set-variables
- ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
- '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
- '(indent-tabs-mode nil)
- '(line-number-display-limit nil)
- '(scroll-conservatively 1))
-(custom-set-faces
- ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
- '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
-
-;; found on gnu.emacs.help; toggle the filename in the status bar to full
-;; pathname and back.
-
-;; (defun toggle-buffer-full-filename ()
-;;   "Toggle the buffer's name between just the filename and the file's full path.
-;; Preserve any <number> suffix that the buffer name may have already.  Give error
-;; if buffer is not associated with a file."
-;;   (interactive)
-;;   (let* ((full-filename (buffer-file-name))
-;;          (just-filename (file-name-nondirectory full-filename))
-;;          (buff-name (buffer-name))
-;;          (buffer-index
-;;           (if (string-match "<[0-9]+>$" buff-name)
-;;               (match-string 0 buff-name)
-;;             "")))
-;;     (rename-buffer
-;;      (cond ((string= buff-name (concat just-filename buffer-index))
-;;             (concat full-filename buffer-index))
-;;            (t
-;;             (concat just-filename buffer-index))))))
-
-;; reply posted to above, thanks to groups.google.com. Does not
-;; preserve user-selected buffer names.
-
-;; fix: instead of calculating the buffer short filename, store the
-;; value in a buffer local variable wiith make-variable-buffer-local
-;; like so: 
-;; (defvar sw-buffer-name nil buffer-name)
-;; (make-variable-buffer-local 'sw-buffer-name)
-;; we need to add a hook to rename-buffer so that if it's visiting a
-;; file, the buffer name is stashed in sw-buffer-name. Or, we just store
-;; it when we call toggle-buf..name. Easier.
-
+;; found via groups.google.com, somehow
 (defun toggle-buffer-full-filename ()
   "Toggle the buffer's name between just the filename and the file's full path.
 Preserve any <number> suffix that the buffer name may have
@@ -683,30 +535,8 @@ already.  Give error if buffer is not associated with a file."
 ;; remap C-x # to C-x c, which is more mnumonic, and easier on the carpals.
 (global-set-key "\C-xc" 'server-edit)
 
-;; get the speedbar
-(unless window-system
-  ;;(speedbar) ;; we just never use it. alas.
-  ;; else
-  (menu-bar-mode nil))
-
 (fset 'reformat-code
       [?\C-x ?h ?\C-u ?\M-| ?p ?e ?r ?l ?  ?- ?n ?p ?e ?  ?' ?s ?/ ?^ ?[ ?  ?\\ ?t ?] ?+ ?/ ?/ ?' return ?\C-x ?h ?\C-\M-\\])
-
-
-;; gunk for the emacs java ide
-;; (add-to-list 'load-path "~swain/.elisp/eieio-0.17beta3")
-
-;; (add-to-list 'load-path "~swain/.elisp/semantic-1.4beta13")
-;; (setq semantic-load-turn-everything-on t)
-;; (require 'semantic-load)
-
-;; (add-to-list 'load-path (expand-file-name "~swain/.elisp/jde/lisp"))
-
-(fset 'go-base
-      [?c ?d ?  ?~ ?/ ?b ?l ?u ?e ?w ?i ?r ?e ?/ ?b ?a ?s ?e return])
-
-(fset 'go-p
-      [?c ?d ?  ?~ ?/ ?b ?l ?u ?e ?w ?i ?r ?e ?/ ?p ?n ?c ?p ?o ?r ?t return])
 
 
 (defun sw-fb ()
@@ -716,13 +546,11 @@ already.  Give error if buffer is not associated with a file."
     ;; change the string here to the path off your $HOME
     (setq projectdir (concat projectdir "/projects/bluewire"))
     (insert
-     (format "/** 
- *
- */
+     (format "/** \n *\n */
 " 
-             ;; calculate the filename's path: full pathname minus projectdir
-             (substring (buffer-file-name) 
-                        (+ 1 (length projectdir)))))))
+;; calculate the filename's path: full pathname minus projectdir
+(substring (buffer-file-name) (+ 1 (length projectdir))))))
+)
 
 ;; looks ugly, but generates a simple Exception class definition
 (defun sw-except (name)
@@ -757,53 +585,6 @@ class %s extends Exception {
 
 
 (global-set-key [(control ?0)] 'unexpand-abbrev)
-(global-set-key [(f4)] 'next-error)
-
-
-;; Define convenient 'find' commands to use with grep-find. Prompt
-;; for the pattern. One for java files, one for jsp files.
-
-;; (defun gf-java (pattern)
-;; "Search bluewire dir for java files containing REGXP; this is defined in .emacs"
-;; (interactive "sEnter search string: ")
-;; ;; save the current working directory for this buffer
-;; ;; using cd commands resets default-directory apparently
-;; (setq current-dir default-directory)
-;; (cd "/home/swain/projects/bluewire/base")
-;; (grep-find 
-;;  (concat "find . -type f -name \*java -print0 | xargs -0 -e grep -n -e " pattern))
-;; ;; go back to the right working dir
-;; (cd-absolute current-dir))
-
-;; (defun gf-jsp (pattern)
-;; "Search bluewire dir for jsp files containing REGXP; this is defined in .emacs"
-;; (interactive "sEnter search string: ")
-;; (setq current-dir default-directory)
-;; (cd "/home/swain/projects/bluewire")
-;; (grep-find 
-;;  (concat "find . -type f -name \*jsp -print0 | xargs -0 -e grep -n -e " pattern))
-;;  (cd-absolute current-dir))
-
-
-(defun gf-php (pattern)
-  "Search store project for PHP files containing REGXP"
-  (interactive "sEnter search string: ")
-  ;; save the current working directory for this buffer
-  ;; using cd commands resets default-directory apparently
-  (setq current-dir default-directory)
-  (cd "/home/swain/public_html/projects/ampiradev/gallery-sc/public_html")
-  (grep-find 
-   (concat "find . \\( -name \\*.php -o -name \\*.inc \\) -print0 | xargs -0 -e grep -n -e " pattern))
-
-  ;; go back to the right working dir
-  (cd-absolute current-dir))
-
-
-
-;;(autoload 'w3m "w3m" "Interface for w3m on Emacs." t)
-;;(autoload 'w3m-find-file "w3m" "w3m interface function for local file." t)
-;;(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
-
 
 ;; found this on http://www.emacswiki.org/cgi-bin/wiki.pl?HtmlEndOfLine
 (defun html-end-of-line ()
@@ -831,14 +612,6 @@ class %s extends Exception {
         (widen))
     (end-of-line)))
 
-
-;; snappy: macro + keybinding = hooha
-(fset 'next-frickin-tag
-      "\C-u\C-x.")
-(global-set-key [\C-pause] 'next-frickin-tag)
-(global-set-key [\M-pause] 'pop-tag-mark)
-
-
 ;; Send a random line from Zippy to the minibuffer.
 (defun yow-ovrwt ()
   "Send a Zippyism to the minibuffer."
@@ -858,8 +631,8 @@ class %s extends Exception {
 
 
 ;; prepare the instant messenger!! move all zig!!
-;;(setq load-path (cons "~swain/.elisp/tnt" load-path))
-;;(setq load-path (append load-path (list "~swain/.elisp/tnt")))
+;;(setq load-path (cons "~swain/.emacs.d/tnt" load-path))
+;;(setq load-path (append load-path (list "~swain/.emacs.d/tnt")))
 ;;(load "tnt")
 ;;(setq tnt-use-timestamps t)
 
@@ -906,10 +679,6 @@ class %s extends Exception {
 ;; load this library for the functions that use browse-url-interactive-arg
 ;;(load-library "browse-url")
 
-
-(global-set-key [f13] `hs-hide-level)
-(global-set-key [(control f13)] `hs-show-all)
-
 ;; use compile to check the perl file in the current buffer
 (defun sw-perl-wc ()
   (interactive)
@@ -936,9 +705,6 @@ class %s extends Exception {
         (ibuffer-update nil))
     (ibuffer))
   (delete-other-windows))
-
-
-(global-set-key [f9] `sw-list)
 
 ;; move my shell buffer "buffername" to the dir the file is in. if not
 ;; visiting file make named shell buffer
@@ -995,101 +761,6 @@ the kill ring."
   (interactive)
   (delete-char (- (point-max) (point)) t))
 
-
-
-
-(defun sw-tail-f ()
-  "Tail a log file. Hooha."
-  (interactive)
-  (shell)
-  (switch-to-buffer "*shell*")
-  (rename-buffer "tail -f")
-  (goto-char (point-max))
-  (insert "tail -f /usr/local/resin/log/error.log")
-  (comint-send-input))
-
-(defun sw-ls-logs ()
-  "ls -lt on all log dirs, put prompt at bottom of buffer"
-  (interactive)
-  (goto-char (point-max))
-  (insert "ls -tl /opt/evw/logs; ls -lt /usr/local/resin/log; ls -lt /usr/local/apache/logs")
-  (comint-send-input))
-;; note this doesn't work; it executes before the shell is done with its work.
-;; Who says Emacs is slow?
-;;  (comint-show-maximum-output))
-
-
-
-;; use defun globally; setq this in the local .emacs file in your home dir
-(defvar sw-tail-file-alist '(
-                             ("apache access log" . "/usr/local/apache/logs/access_log")
-                             ("apache error log" . "/usr/local/apache/logs/error_log")
-                             )
-  "List of log files with names for buffers. Used by sw-tail-logs and sw-kill-logs.")
-
-
-(defun sw-tail-logs ()
-  "Tail log files in shell buffers. The files to tail, and the names to give
-   to buffers, are in the alist sw-tail-file-alist."
-  (interactive)
-  ;; if we are on a windowing system like X11, open this in a new frame
-  (if window-system
-      (let ((logs-frame (make-frame)))
-        (select-frame logs-frame)
-        (set-frame-name "logs")
-        (if (functionp 'sw-fix-logs)
-            (progn
-              (sw-fix-logs)
-              (sw-colors "303030")
-              (set-frame-width (selected-frame) 250)
-              (set-frame-height (selected-frame) 84)
-              (enlarge-window -25)
-              )
-          )
-        )
-    )
-    
-  (let (pair (file-alist sw-tail-file-alist))
-    (while (consp file-alist) 
-      ;; first time through these are equal so we do not split the buffer
-      (if (not (equal (safe-length file-alist) (safe-length sw-tail-file-alist)))
-          (split-window-vertically))
-      (setq pair (car file-alist))
-      (shell)
-      (rename-buffer (car pair))
-      (goto-char (point-max))
-      (insert (format "tail -f `ls -t %s* | head -1`" (cdr pair)))
-      (comint-send-input)
-      ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
-      (setq file-alist (cdr file-alist))
-      )
-    ;(balance-windows)
-    (window-configuration-to-register ?1))
-  )
- 
-;; undo the work of sw-tail-logs
-(defun sw-kill-logs ()
-  "Kill the buffers tailing the log files as listed in sw-tail-file-alist."
-  (interactive)
-  (if (y-or-n-p "Really kill the buffers that are tailing the log files? ")
-      (progn
-        (switch-to-buffer (car (car sw-tail-file-alist)))
-        (delete-other-windows)
-        (let ((file-alist sw-tail-file-alist))
-          (while (consp file-alist)
-            (setq pair (car file-alist))
-            (unless (kill-buffer (car pair))
-              (message (format "Couldn't kill the buffer %s." (car pair))))
-            (setq file-alist (cdr file-alist))
-            ))
-        (when window-system
-          (select-frame-by-name "logs")
-          (delete-frame))
-        )
-    ;; else:
-    (message "Log tailing buffers not deleted.")))
-
-
 ;; needs work. should use commenting style of current major mode.
 
 ;; optimization: use (if) on (null current-prefix-arg) and assign a
@@ -1133,81 +804,6 @@ the kill ring."
     )
   )
 
-
-;; iterate over the log buffers
-(defvar sw-log-counter (safe-length sw-tail-file-alist) 
-  "A counter that is used to help iterate over the log buffers.")
-(defvar sw-next-log-number 0
-  "Will be set to the position of the next log buffer to view.")
-
-(defun sw-next-log ()
-  "Display the next log in the log frame."
-  (interactive)
-  (let (buffer)  
-    (setq sw-log-counter (+ 1 sw-log-counter))
-    ;;(message (format "counter: %d" sw-log-counter))
-    (setq sw-next-log-number (% sw-log-counter (safe-length sw-tail-file-alist)))
-    ;;(message (format "next: %d" sw-next-log-number))
-    (setq buffer (nth sw-next-log-number sw-tail-file-alist))
-    (message (format "buffer: %s" (car buffer)))
-    (select-frame-by-name "logs") ;; bug: does not give the window focus in X11.app
-    ;;(select-frame-set-input-focus (selected-frame)) ;; didn't work, bug in X11.app
-    (delete-other-windows)
-    (switch-to-buffer (get-buffer (car buffer)))
-    )
-  )
-
-(global-set-key [(control f9)] 'sw-next-log)
-
-
-;; first version of a command that simulates next-error for Occur mode.
-;; FIXME: it's brittle
-(defun sw-next-occurrence ()
-  "move to the next line in the *Occur* buffer and go to it"
-  (interactive "*")
-  ;;(switch-to-buffer (get-buffer "*Occur*"))
-  (other-window 1)
-  (occur-next)
-  (occur-mode-goto-occurrence)
-  )
-
-(global-set-key [(meta insert)] 'sw-next-occurrence)
-
-;; use man to read perldocs FIXME: man can't find standard module
-;; perldocs. If command fails run the perldoc command instead.
-;;(defalias 'perldoc 'man)
-
-;; Nov 13, 2007: hey, this isn't in use yet! It's hardwired into sw-shell.
-
-;; (defun sw-restore-shell-buffer (buffer-name)
-;;   "Prompt user for the name of a past shell buffer; create a new one,
-;; and insert the old contents from the desktop-auto-save version."
-;;   (interactive "sName of the buffer to restore: ")
-;;   (shell)
-;;   (goto-char (point-min))
-;;   (insert-file (concat sw-buffer-file-name-prefix buffer-name))
-;;   (goto-char (point-max))
-;;   (comint-interrupt-subjob)
-;;   (rename-buffer buffer-name)
-;;   )
-
-;; processing mysteriously stops here. this is a marker.
-
-(defvar sw-record-separator ","
-  "Regular expression that matches the record separator for a given line."
-  )
-
-(defun sw-forward-next-record (&optional n)
-  "Move forward to the next instance of the record separator sw-record-separator."
-  (interactive "P")
-  (let ( (sentence-end sw-record-separator) )
-    (message (concat "sentence-end is now:" sentence-end))
-    (forward-sentence n)
-    )
-  )
-
-
-
 (defun sw-unix-to-human ()
   "Convert the Unix timestamp at point to human readable form."
   (interactive)
@@ -1248,6 +844,12 @@ after each yank."
   (let ((manual-program "perldoc"))
     (man man-args)))
 
+(defun pydoc (man-args)
+  (interactive "sPydoc: ")
+  (require 'man)
+  (let ((manual-program "pydoc"))
+    (man man-args)))
+
 (defun ri (man-args)
   (interactive "sri: ")
   (require 'man)
@@ -1272,10 +874,7 @@ after each yank."
   (shell-command-on-region (point-min) (point-max) (format "grep -v '%s'" pattern) 1 1 "*error crap*")
   )
 
-(set-register ?u "update osc_orders set orders_status = 7, processing_state = 'ready' where orders_id in ()")
-
-
-(defun sw-lint ()
+(defun sw-php-lint ()
   "Run a lint check on the file the current buffer is visiting."
   (interactive)
   (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
@@ -1311,28 +910,14 @@ after each yank."
   ;;(add-hook 'comint-output-filter-functions (lambda (string) (when (string-match pattern string) (message response))))
 )
 
-;; example of calling a lambda-created func
-;; (defun caller (myfunc)
-;;   "call the function which be lambda"
-;;   (funcall myfunc)
-;;   )
-
-;; (defun passit ()
-;;   "call caller and get results."
-;;   (interactive)
-;;   (caller (lambda () (message "You are a big sailor boy!")))
-;;   )
-
-
-
 (add-hook 'comint-output-filter-functions 'swain-watch-for-stuff)
 
 (fset 'sw-php-lint-check-on-buffer
       [?\C-x ?h ?\M-| ?p ?h ?p ?  ?- ?l return])
 
-
 ;; stolen from:
 ;; http://www.splode.com/~friedman/software/emacs-lisp/src/buffer-fns.el
+;; this is a utility function used elsewherei
 (defun apply-on-rectangle-region-points (fun beg end &rest args)
   "Like `apply-on-rectangle', but pass points in the buffer instead of columns."
   (apply-on-rectangle
@@ -1384,15 +969,90 @@ after each yank."
 (fset 'sw-xml-format-region
    [?\C-u ?\M-| ?x ?m ?l ?l ?i ?n ?g backspace ?t ?  ?- ?- ?f ?o ?r ?m ?a ?t ?  ?- ?- ?n ?o ?a ?r backspace backspace ?w ?a ?r ?n ?i ?n ?g ?  ?- return])
 
-;; check the man page for the 'date' command to format the day/time
-;; differently..
-(defun sw-display-seconds-in-status-bar ()
-  "Make the clock display the seconds so I know when cron is going to run..."
-  (interactive)
-  (setq display-time-interval 1)
-  (setq display-time-format "%c")
-  (display-time)
+;; for shell buffers, truncate them when they get too big
+;;(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
+
+;; variable by which to truncate them: comint-buffer-maximum-size to
+;; set this locally use M-x make-variable-buffer-local, then set the
+;; variable to the size you want for that buffer. Otherwise this is
+;; set in .emacs-custom.el, and is handled by Emacs's customization
+;; interface.
+
+;; Give diff and patch files a color scheme that works with a black
+;; background. Note the hyphen at the end of the basename: diff-mode-
+(load-file "~swain/.emacs.d/diff-mode-.el")
+
+;; One function and two convenience commands for running git diff and
+;; putting the results in a special window.
+(defun sw-git-diff-meta (output-buffer-name git-command)
+  "Run git-command as a shell command; output to
+   output-buffer-name."
+  (switch-to-buffer (get-buffer-create output-buffer-name))
+  (diff-mode)
+  (shell-command git-command output-buffer-name)
+  (hi-lock-unface-buffer "^diff.*")
+  (hi-lock-face-buffer "^diff.*" "hi-green")
+  (toggle-read-only)
+)
+(defun sw-git-diff ()
+  "Run git diff, output to new buffer"
+  (interactive) 
+  (sw-git-diff-meta "*git diff*" "git diff")
   )
 
+(defun sw-git-diff-master ()
+  "Run git diff master HEAD, output to new buffer"
+  (interactive)
+  (sw-git-diff-meta "*git diff master*" "git diff master HEAD")
+  )
 
-(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
+;; What would also be useful: a function to pull out and list all the
+;; currently active highlights in a given buffer. hi-lock probably has
+;; a variable (maybe even an alist) storing this information. That way
+;; I can iteratively highlight a buffer and when I've reached a point
+;; of highest usefulness pull it all out... maybe even store it in a
+;; register or a global so reloading the file just automagically does
+;; the right thing.
+(defun sw-highlight-stuff ()
+  "Pass an alist to the recursive function sw-apply-hs-regexps to
+   highlight stuff in the current buffer. This function is the UI
+   to the recursive function sw-apply-hs-regexps."
+  (interactive)
+  (sw-apply-hs-regexps '(
+                         ("EXCEPTION:" . "hi-red-b")
+                         ("WARNING:" . "hi-yellow")
+                         ("---> Report ran successfully." . "hi-green-b")
+                         ))
+  )
+
+(defun sw-apply-hs-regexps (sw-hi-alist)
+  "Recurse through an alist of (regexp . color) and use
+hi-lock-face-buffer to activate each in the current buffer."
+  (if sw-hi-alist
+      (progn
+        ;; first unhighlight it, in case it was already done; this
+        ;; happens sometimes when Emacs asks us to reload a file
+        ;; because it changed on disc. hi-lock-unface-buffer just
+        ;; returns 'nil' if it wasn't faced already.
+        (hi-lock-unface-buffer (car (car sw-hi-alist)))
+        (hi-lock-face-buffer (car (car sw-hi-alist)) (cdr (car sw-hi-alist)))
+        (sw-apply-hs-regexps (cdr sw-hi-alist))
+        )
+    )
+  )
+
+;; courtesy Dale Sedivec
+;; originally titled my:yank-rectangle-to-new-lines
+(defun sw-yank-rectangle-to-new-lines ()
+  (interactive)
+  (save-excursion (newline (length killed-rectangle)))
+  (yank-rectangle))
+
+
+;; load a newer version of org-mode
+(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/lisp" load-path))
+(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
+
+;; capture tasks easily
+(setq org-default-notes-file "~swain/Dropbox/projects/notes.org")
+(define-key global-map "\C-cc" 'org-capture)

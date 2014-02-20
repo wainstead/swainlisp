@@ -1,14 +1,27 @@
-Sorry for the emptyother mail.  Try M-x customize-group RET ansi-color
-RET.  There is a vector with the color names used somewhere in that
-buffer.  Personally, I use cornflowerblue instead of blue.  :)
+;; This was my first attempt at returning point to the prompt in a
+;; shell after finding file at point... while it failed, I learned how
+;; to disable advice in the four lines at the end. You set the flag on
+;; each piece of advice to disabled, then you call ad-activate to make
+;; the changes to the flags take effect.
 
-Alex.
--- http://www.emacswiki.org/ 
+(defadvice find-file-at-point (before return-to-point disable )
+"return point to point-max after finding file"
+(message "boy, howdy!"))
 
-The marker comint-last-output-start seems to be unset at this point.
-Try to add a (setq comint-last-output-start (point-min-marker))
-to shell-mode-hook, perhaps.  Untested.  :)  I think this is a bug
-somewhere in comint.el, perhaps you should report it via normal
-channels, too?
+(defadvice find-file-at-point (after return-to-point disable )
+"return point to point-max after finding file"
+(message "hello, sailor!"))
 
-Alex.
+
+(defadvice find-file-at-point (around return-to-point disable)
+"return point to point-max after finding file"
+(message "need a date?"))
+
+(ad-disable-advice 'find-file-at-point 'before 'return-to-point)
+(ad-disable-advice 'find-file-at-point 'after 'return-to-point)
+(ad-disable-advice 'find-file-at-point 'around 'return-to-point)
+(ad-activate 'find-file-at-point)
+
+;; this removes them entirely
+(ad-unadvise 'find-file-at-point)
+
