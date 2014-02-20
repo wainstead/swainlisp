@@ -94,7 +94,7 @@
 ;; escaping from recursive edits: abort-recursive-edit
 
 ;; make a TAGS file for your install of Emacs plus the libraries locally
-;; find /usr/local/share/emacs ~swain/.elisp \( -name \*.el -o -name .emacs \) | sudo etags -
+;; find /usr/local/share/emacs ~swain/.emacs.d \( -name \*.el -o -name .emacs \) | sudo etags -
 
 ;; make any old tags table:
 ;; find . -name "*.[chCH]" -print | etags -
@@ -128,7 +128,7 @@
 
 ;; default mode gunk
 
-(setq load-path (append load-path (list "~swain/.elisp")))
+(setq load-path (append load-path (list "~swain/.emacs.d")))
 
 ;; set the default command for M-x compile
 (setq compile-command "make")
@@ -166,8 +166,8 @@
 (desktop-load-default)
 ;; automatically save the desktop on exit.
 (setq desktop-enable t)
-(load-file "~swain/.elisp/desktop-auto-save.el")
-(load-file "~swain/.elisp/tail-logs.el")
+(load-file "~swain/.emacs.d/desktop-auto-save.el")
+(load-file "~swain/.emacs.d/tail-logs.el")
 (load-library "ibuffer")
 
 ;; fix isearch so we can use backspace instead of delete
@@ -631,8 +631,8 @@ class %s extends Exception {
 
 
 ;; prepare the instant messenger!! move all zig!!
-;;(setq load-path (cons "~swain/.elisp/tnt" load-path))
-;;(setq load-path (append load-path (list "~swain/.elisp/tnt")))
+;;(setq load-path (cons "~swain/.emacs.d/tnt" load-path))
+;;(setq load-path (append load-path (list "~swain/.emacs.d/tnt")))
 ;;(load "tnt")
 ;;(setq tnt-use-timestamps t)
 
@@ -980,7 +980,7 @@ after each yank."
 
 ;; Give diff and patch files a color scheme that works with a black
 ;; background. Note the hyphen at the end of the basename: diff-mode-
-(load-file "~swain/.elisp/diff-mode-.el")
+(load-file "~swain/.emacs.d/diff-mode-.el")
 
 ;; One function and two convenience commands for running git diff and
 ;; putting the results in a special window.
