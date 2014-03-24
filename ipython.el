@@ -22,6 +22,9 @@
 ;;
 ;;   (setq ipython-command "/SOME-PATH/ipython")
 ;;   (require 'ipython)
+
+(setq ipython-command "/Users/swain/.vpy/27production0/bin/ipython")
+(require 'ipython)
 ;;
 ;; Ipython will be set as the default python shell, but only if the ipython
 ;; executable is in the path. For ipython sessions autocompletion with <tab>
