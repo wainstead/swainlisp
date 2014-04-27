@@ -1054,5 +1054,5 @@ hi-lock-face-buffer to activate each in the current buffer."
 (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
 
 ;; capture tasks easily
-(setq org-default-notes-file "~swain/Dropbox/projects/notes.org")
+(setq org-default-notes-file "~swain/Dropbox/projects/GTD/notes.org")
 (define-key global-map "\C-cc" 'org-capture)
