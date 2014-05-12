@@ -1,4 +1,4 @@
-** TODO :undone: Factor out unique buffers into a function
+** TODO :refactor: Factor out unique buffers into a function
 In this function, I need to move the "or" statement out into a
 function:
 
