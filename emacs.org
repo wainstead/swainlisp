@@ -1,3 +1,35 @@
+** TODO :undone: Factor out unique buffers into a function
+In this function, I need to move the "or" statement out into a
+function:
+
+;; For all shell buffers, save their contents to individual files. The
+;; idea here is to preserve their contents in case of a crash.
+(defun sw-save-shell-buffer-contents ()
+  "Find and save all buffers that are in shell-mode"
+  (interactive)
+  (and (file-accessible-directory-p sw-buffer-file-name-prefix)
+       (let ( (bufflist (buffer-list)) ) 
+         (while bufflist
+           (setq buff (car bufflist))
+           (save-excursion
+             (set-buffer buff)
+             (when (or (string= major-mode "shell-mode") (or (string= (buffer-name) "psql") (string= (buffer-name) "*Python*")) )
+
+Here, the line:
+(or (string= (buffer-name) "psql") (string= (buffer-name) "*Python*"))
+should come out into a function that receives the arg buffer-name, and
+does (or) for all user-defined buffer names.
+
+For SSC it would be something like:
+
+(defun sw-intersting-buffers (buff)
+;; not interactive
+(or
+(string= (buffer-name) "psql")
+(string= (buffer-name) "*Python*")
+;; include more string comparisons here
+)
+ 
 ** TODO :undone: F4 is my sytax checking. It should be context-sensitive.
 When I'm in PHP it should check PHP sytax, when in Perl, Perl and etc.
 ** TODO :undone: sw-comment-lines: comment lines matching regexp
