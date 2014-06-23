@@ -1056,3 +1056,13 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; capture tasks easily
 (setq org-default-notes-file "~swain/Dropbox/projects/GTD/notes.org")
 (define-key global-map "\C-cc" 'org-capture)
+
+(defun sw-git-show-sha-at-point ()
+  "Run git-show on the SHA at point as a shell command."
+  (interactive)
+  (let ( (git-sha (thing-at-point 'word)) )
+    (if  (null git-sha) 
+        (error "Point does not appear to be on a Unix timestamp"))
+    (shell-command (format "git show %s" git-sha))
+    )
+  )
