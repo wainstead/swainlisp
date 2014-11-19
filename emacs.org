@@ -106,9 +106,9 @@ duplicated. Not sure why.
    :PROPERTIES:
    :ID:       363C28D7-8098-4C86-88C8-DC5A73E0FEEB
    :END:
-Passing in a filename to tail is not flexible enough; the spawned
-shell should be able to do anything... it might not, in the future, be
-tailing a log.
+*** Passing in a filename to tail is not flexible enough.
+The spawned shell should be able to do anything... it might not, in
+the future, be tailing a log.
 
 (This entry also included:
 
@@ -122,6 +122,12 @@ tailing a log.
 
 But I've largely solved this by using GNU screen and Terminal to run
 start.dev).
+*** Defining the data structure should be enough to get the job done.
+I currently have to copy/paste another frame's start and stop
+functions and search/replace strings. Terrible. sw-tail-FOO-logs and
+sw-kill-FOO-logs should not have to be defined this way... either
+autovivify these commands or make them simple one line declarations
+(wrappers around a more general function).
 
 ** TODO :refactor: Move shell buffer functions into a new file
    :PROPERTIES:
