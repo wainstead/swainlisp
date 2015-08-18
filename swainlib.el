@@ -448,12 +448,6 @@ them."
      (define-key bookmark-bmenu-mode-map "
 " 'bookmark-bmenu-this-window)))
 
-;; python mode stuff, if I have it
-(load "python-mode")
-(setq auto-mode-alist
-      (append '(
-                ("\\.py\\'" . python-mode)) auto-mode-alist))
-
 ;; files to open in sgml-mode, java-mode, whatnot
 (add-to-list 'auto-mode-alist '("\\.jhtml$"   . sgml-mode       ))
 (add-to-list 'auto-mode-alist '("\\.jsp$"     . java-mode       ))
@@ -1066,3 +1060,5 @@ hi-lock-face-buffer to activate each in the current buffer."
     (shell-command (format "git show %s" git-sha))
     )
   )
+
+(load-file "~swain/.emacs.d/python-settings.el")
