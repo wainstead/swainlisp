@@ -25,3 +25,144 @@
 ;; this removes them entirely
 (ad-unadvise 'find-file-at-point)
 
+
+** Thu Dec  4 16:54:55 2014 (I wish the tests were organized so that simple, basic tests )
+
+I wish the tests were organized so that simple, basic tests came first
+and then more complex tests came after, getting progressively more
+complicated. There's probably some tests that are "outliers" in the
+sense that they are so different from how any other test is written
+that they could be tagged differently.
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/tests/test_documentation.py
+
+** Fri Mar  6 13:54:00 2015 (Use access to Apache logs to determine most commonly used re)
+
+Use access to Apache logs to determine most commonly used reports,
+find reports+params that are rarely or never used
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/nfmcreporting/nfmc_reports.py
+
+** Thu Mar 26 14:25:30 2015 (A psql client that can be run from inside of IPython, or ipd)
+
+A psql client that can be run from inside of IPython, or ipdb.
+
+The problem: I'm debugging bootstrapping. I need to see the state of
+the database. In particular, I need to see the results of a given
+query, or rather, why a grantee is not in the results of that query.
+
+From the IPython or ipdb prompt I need to start querying the
+database. I can do that now with sql.execute() statements, but that's
+tedious and is certainly not featureful.
+
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/bootstrap_program_round.py
+
+** Mon Apr 13 09:42:26 2015 (Review ~/bin scripts. Some are quite old from incomplete pro)
+
+Review ~/bin scripts. Some are quite old from incomplete projects. 
+
+** Tue Apr 21 15:40:21 2015 (install centos on virtualbox)
+
+install centos on virtualbox
+
+** Tue Apr 21 15:40:33 2015 (set up ssh from virtual server to guest host)
+
+set up ssh from virtual server to guest host
+
+
+** Wed Jun 10 12:41:32 2015 (master crosstab())
+
+master crosstab()
+
+https://stackoverflow.com/questions/3002499/postgresql-crosstab-query/11751905#11751905
+
+** Thu Jun 11 15:06:55 2015 (document how the Pipeline Manager works. LOG.org entry on 12)
+
+document how the Pipeline Manager works. LOG.org entry on 121210 Mon
+Dec 10 07:44:15 2012 documents it.
+
+/Users/swain/notebooks/developer-notes/swain/LOG.org
+
+** Thu Jun 11 16:07:40 2015 (Somehow document all the NFMC aspects and what they do. Mayb)
+
+Somehow document all the NFMC aspects and what they do. Maybe Sphinx.
+
+** Sun Jun 28 07:24:13 2015 (Write a "grand tour" of our test cases. What features are ac)
+
+Write a "grand tour" of our test cases. What features are actually
+tested? Can this tell us what is not tested?
+
+I just discovered (probably, rediscovered) there are tests for a
+subset of the "aspect" classes.
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/tests/test_nfmcreporting.py
+
+** Thu Jul 16 10:57:08 2015 (Write a better 'searchpython')
+
+Write a better 'searchpython'
+
+Write a search tool, perhaps using Perl and the directory walking code
+from Higher Order Perl, to search files for keywords.
+
+This new tool should be able to search portions of the code, or rather
+omit portions of the code. For example:
+
+* NFMC code base
+* SSC code base
+* core code base
+
+Typically I'll want to search just "core" and "NFMC."
+
+Optionally, file types like SQL can be added or excluded.
+
+
+** Fri Jul 17 15:03:26 2015 (Actually, rather than write my own tool, just use 'ack' well)
+
+Actually, rather than write my own tool, just use 'ack' well
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/model.py
+
+** Mon Jul 27 12:53:29 2015 (hack on Cheetah, in ~/cheetah-github)
+
+hack on Cheetah, in ~/cheetah-github
+
+** Tue Aug  4 22:01:11 2015 (find regresssion that screws up comint-mode. I want to be ab)
+
+find regresssion that screws up comint-mode. I want to be able to use
+output as input.
+
+/Users/swain/git/pippin/sites/nfmc-reporting/mods/user_actions.py
+
+** Thu Aug  6 11:52:47 2015 (A lot of great documentation on the system is captured in on)
+
+A lot of great documentation on the system is captured in one of the
+worst places: the git log. Is there some way to extract all the good
+info in git log so it's available to read in a different way?
+
+/Users/swain/notebooks/developer-notes/swain/LOG.org
+
+** Mon Aug 17 19:56:59 2015 (I get this during Emacs startup:)
+
+I get this during Emacs startup:
+
+ls does not support --dired; see `dired-use-ls-dired' for more details.
+
+Maybe wanna install the GNU version in /usr/local and wire Emacs to
+use that?
+
+** Mon Aug 17 19:57:21 2015 (On Emacs startup I always get:)
+
+On Emacs startup I always get:
+
+   Warning (initialization): An error occurred while loading `/Users/swain/.emacs':
+   
+   Symbol's function definition is void: exec-path-from-shell-initialize
+   
+   To ensure normal operation, you should investigate and remove the
+   cause of the error in your initialization file.  Start Emacs with
+   the `--debug-init' option to view a complete error backtrace.
+   Warning (initialization): Your `load-path' seems to contain
+   your `.emacs.d' directory: ~swain/.emacs.d
+   This is likely to cause problems...
+   Consider using a subdirectory instead, e.g.: /Users/swain/.emacs.d/lisp
