@@ -128,7 +128,7 @@
 
 ;; default mode gunk
 
-(setq load-path (append load-path (list "~swain/.emacs.d")))
+;;(setq load-path (append load-path (list "~swain/.emacs.d")))
 
 ;; set the default command for M-x compile
 (setq compile-command "make")
@@ -1062,3 +1062,13 @@ hi-lock-face-buffer to activate each in the current buffer."
   )
 
 (load-file "~swain/.emacs.d/python-settings.el")
+
+;; New code from Dale: toggle full screen mode. Light edits from
+;; original.
+
+(defun sw-toggle-full-screen (&optional frame)
+  (interactive)
+  (set-frame-parameter frame 'fullscreen
+                       (if (frame-parameter frame 'fullscreen) nil 'fullboth)))
+
+
