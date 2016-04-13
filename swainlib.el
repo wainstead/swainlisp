@@ -1072,3 +1072,8 @@ hi-lock-face-buffer to activate each in the current buffer."
                        (if (frame-parameter frame 'fullscreen) nil 'fullboth)))
 
 
+(fset 'psql-expand-output
+   [?\C-a ?\C-k ?\\ ?x return ?\C-y return ?\\ ?x return])
+;; how to set a key on a particular keymap in a particular buffer? I
+;; only care about this being available in the buffer named "psql"
+(global-set-key "\C-cx" 'psql-expand-output)
