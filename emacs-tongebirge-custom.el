@@ -26,21 +26,23 @@
         (mode . lisp-mode)))))))
  '(indent-tabs-mode nil)
  '(line-number-display-limit nil)
+ '(org-agenda-files
+   (quote
+    ("~/notebooks/developer-notes/swain/todo-lists/trac_4276_hpf_undo.org" "~/notebooks/developer-notes/swain/todo-lists/gtd.org" "~/notebooks/developer-notes/swain/todo-lists/round_10.org" "~/notebooks/developer-notes/swain/todo-lists/24_hour_button.org" "~/notebooks/developer-notes/swain/todo-lists/bootstrapping-documentation-task-list.org")))
  '(scroll-conservatively 1))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#040000" :foreground "goldenrod" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Anonymous Pro"))))
- '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))) t)
- '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))) t)
- '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))) t)
- '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))) t)
- '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))) t)
- '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))) t)
- '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))) t)
- '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))) t)
- '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta"))) t)
+ '(diff-added ((((background dark)) (:foreground "#FFFF9B9BFFFF")) (t (:foreground "DarkGreen"))))
+ '(diff-changed ((((background dark)) (:foreground "Yellow")) (t (:foreground "MediumBlue"))))
+ '(diff-context ((((background dark)) (:foreground "White")) (t (:foreground "Black"))))
+ '(diff-file-header ((((background dark)) (:foreground "Cyan" :background "Black")) (t (:foreground "Red" :background "White"))))
+ '(diff-header ((((background dark)) (:foreground "Cyan")) (t (:foreground "Red"))))
+ '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))))
+ '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))))
+ '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))))
+ '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta"))))
  '(show-paren-match ((((class color)) (:background "navy" :foreground "yellow"))))
  '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
