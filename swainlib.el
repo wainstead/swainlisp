@@ -270,8 +270,9 @@
   (interactive "P")
   (scroll-right (prefix-numeric-value n)))
 
-(global-set-key [(control ?.)] 'sw-scroll-left-n)
-(global-set-key [(control ?,)] 'sw-scroll-right-n)
+;; I never use these
+;; (global-set-key [(control ?.)] 'sw-scroll-left-n)
+;; (global-set-key [(control ?,)] 'sw-scroll-right-n)
 
 
 ;; move the cursor to the top/bottom of the window
@@ -1072,8 +1073,17 @@ hi-lock-face-buffer to activate each in the current buffer."
                        (if (frame-parameter frame 'fullscreen) nil 'fullboth)))
 
 
+;; usage: type in your sql statement, then type \C-x. This wraps the
+;; query in \x commands.
 (fset 'psql-expand-output
    [?\C-a ?\C-k ?\\ ?x return ?\C-y return ?\\ ?x return])
-;; how to set a key on a particular keymap in a particular buffer? I
-;; only care about this being available in the buffer named "psql"
-(global-set-key "\C-cx" 'psql-expand-output)
+;; need to add this via a hook function though
+;; (define-key sql-mode-map (kbd "x") 'psql-expand-output)
+
+;; Define my personal keymap, whose prefix key will be control-;
+(defvar sw-map nil
+  "Steve Wainstead's personal keymap for any mode")
+(define-prefix-command 'sw-map)
+(global-set-key [(control ?;)] 'sw-map)
+;; set my quickswitch macro to 'a'
+(define-key sw-map (kbd "a") 'sw-qs)
