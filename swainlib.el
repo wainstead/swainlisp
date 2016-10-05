@@ -270,26 +270,32 @@
   (interactive "P")
   (scroll-right (prefix-numeric-value n)))
 
+
 ;; I never use these
 ;; (global-set-key [(control ?.)] 'sw-scroll-left-n)
 ;; (global-set-key [(control ?,)] 'sw-scroll-right-n)
 
 
 ;; move the cursor to the top/bottom of the window
-(defun point-to-top ()
-  "Put the point on top line of the window."
-  (interactive)
-  (move-to-window-line 0))
+;; (defun point-to-top ()
+;;   "Put the point on top line of the window."
+;;   (interactive)
+;;   (move-to-window-line 0))
+;; (defun point-to-bottom ()
+;;   "Put the point at the beginning of the last visible line."
+;;   (interactive)
+;;   (move-to-window-line -1))
 
-(global-set-key "\M-," 'point-to-top)
+;; (global-set-key "\M-," 'point-to-top)
+;; (global-set-key "\M-." 'point-to-bottom)
+
+(global-set-key "\M-," 'previous-multiframe-window)
+(global-set-key "\M-." 'next-multiframe-window)
+
+
+;; These are reset as part of the example code in "Writing GNU Emacs
+;; Extensions".
 (global-set-key "\C-x," 'tags-loop-continue)
-
-(defun point-to-bottom ()
-  "Put the point at the beginning of the last visible line."
-  (interactive)
-  (move-to-window-line -1))
-
-(global-set-key "\M-." 'point-to-bottom)
 (global-set-key "\C-x." 'find-tag)
 
 
