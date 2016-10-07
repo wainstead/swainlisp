@@ -33,7 +33,7 @@
   ;; if we are in the frame holding the compilation buffer, don't switch frames.
   (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
   (sw-write-compilation-buffer)
-  (sw-randomize-frame-colors)
+  ;;(sw-randomize-frame-colors)
 )
 
 
@@ -42,7 +42,7 @@
    ~/.emacs.shellbuffers directory and git commit it."
   (and (not(string= (buffer-name) "*compilation*")) (switch-to-buffer-other-frame "*compilation*"))
   (sw-write-compilation-buffer)
-  (sw-randomize-frame-colors)
+  ;;(sw-randomize-frame-colors)
 )
 
 ;; This turned out to be a not-so-good idea because erase-buffer is
