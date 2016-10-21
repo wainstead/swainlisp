@@ -1113,3 +1113,6 @@ hi-lock-face-buffer to activate each in the current buffer."
   (other-window -1))
 (global-set-key "\M-," 'sw-next-window)
 (global-set-key "\M-." 'sw-previous-window)
+(global-set-key [\C-prior] 'comint-previous-prompt)
+(global-set-key [\C-next] 'comint-next-prompt)
+
