@@ -289,8 +289,6 @@
 ;; (global-set-key "\M-," 'point-to-top)
 ;; (global-set-key "\M-." 'point-to-bottom)
 
-(global-set-key "\M-," 'previous-multiframe-window)
-(global-set-key "\M-." 'next-multiframe-window)
 
 
 ;; These are reset as part of the example code in "Writing GNU Emacs
@@ -1087,9 +1085,31 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; (define-key sql-mode-map (kbd "x") 'psql-expand-output)
 
 ;; Define my personal keymap, whose prefix key will be control-;
+;; (next step is to define my own minor mode to override major modes
+;; (quickswitch, for one))
+;; improve this: define my own minor mode to reduce typing! This
+;; keymap can then be the minor mode's keymap.
 (defvar sw-map nil
   "Steve Wainstead's personal keymap for any mode")
 (define-prefix-command 'sw-map)
 (global-set-key [(control ?;)] 'sw-map)
 ;; set my quickswitch macro to 'a'
 (define-key sw-map (kbd "a") 'sw-qs)
+
+;;(define-key comint-mode-map [(meta-prior)] 'comint-previous-prompt)
+
+;; Perhaps these should be in a personal minor mode. The key bindings
+;; were originally set to ones from Writing GNU Emacs Extensions, and
+;; they scrolled the screen left or right. I never used them in the 16
+;; years I had them. Due to RSIs I needed an easier way to switch
+;; windows than C-xo. Emacs made me use next-multiframe-window prior
+;; to this; that kinda sucked because I scrolled through all windows
+;; in all frames, which was not desirable.
+(defun sw-next-window ()
+  (interactive)
+  (other-window 1))
+(defun sw-previous-window ()
+  (interactive)
+  (other-window -1))
+(global-set-key "\M-," 'sw-next-window)
+(global-set-key "\M-." 'sw-previous-window)
