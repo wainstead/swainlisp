@@ -1116,3 +1116,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (global-set-key [\C-prior] 'comint-previous-prompt)
 (global-set-key [\C-next] 'comint-next-prompt)
 
+
+;; it ain't bound to anything, so bind it and save my pinkies another
+;; trip
+(global-set-key [(control ?`)] 'next-error)
