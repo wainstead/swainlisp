@@ -1120,3 +1120,13 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; it ain't bound to anything, so bind it and save my pinkies another
 ;; trip
 (global-set-key [(control ?`)] 'next-error)
+
+
+;; key-chord stuff
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define-global "cl" 'sw-cli)
+(key-chord-define-global "df" 'next-buffer)
+(key-chord-define-global "j1" 'delete-other-windows)
+(key-chord-define-global "ps" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+(key-chord-define-global "./" 'undo)
