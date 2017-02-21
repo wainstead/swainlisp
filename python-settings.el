@@ -65,4 +65,4 @@
 (setq python-shell-virtualenv-path "~swain/.vpy/27production0/")
 
 (setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i")
+      python-shell-interpreter-args "--simple-prompt -i")
