@@ -836,25 +836,21 @@ after each yank."
     )
   )
 
-
+ (require 'man)
 (defun perldoc (man-args)
   (interactive "sPerldoc: ")
-  (require 'man)
   (let ((manual-program "perldoc"))
     (man man-args)))
 
 (defun pydoc (man-args)
   (interactive "sPydoc: ")
-  (require 'man)
   (let ((manual-program "pydoc"))
     (man man-args)))
 
 (defun ri (man-args)
   (interactive "sri: ")
-  (require 'man)
   (let ((manual-program "ri"))
     (man man-args)))
-
 
 ;; tested. works. yay.
 (defun sw-clumpkill ()
@@ -1125,8 +1121,15 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; key-chord stuff
 (require 'key-chord)
 (key-chord-mode 1)
-(key-chord-define-global "cl" 'sw-cli)
 (key-chord-define-global "df" 'next-buffer)
 (key-chord-define-global "j1" 'delete-other-windows)
-(key-chord-define-global "ps" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
-(key-chord-define-global "./" 'undo)
+(key-chord-define-global "a;" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+;;(key-chord-define-global "./" 'undo) ;; no, I use that for running commands
+(key-chord-define-global "jf" 'switch-to-buffer)
+(key-chord-define-global "f0" 'delete-window)
+(key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
+(key-chord-define-global "jk" 'sw-qs)
+;;(key-chord-unset-global "cc")
+;;(key-chord-unset-global "./")
+(key-chord-unset-global "jj")
+
