@@ -852,15 +852,15 @@ after each yank."
   (let ((manual-program "ri"))
     (man man-args)))
 
-;; tested. works. yay.
-(defun sw-clumpkill ()
-  "Clump all kills together. You can then do one yank to get them all back."
-  (interactive)
-  (append-next-kill)
-  (kill-line)
-  )
+;; ;; tested. works. yay.
+;; (defun sw-clumpkill ()
+;;   "Clump all kills together. You can then do one yank to get them all back."
+;;   (interactive)
+;;   (append-next-kill)
+;;   (kill-line)
+;;   )
 
-(global-set-key "\M-k" 'sw-clumpkill) ;; m'kay?
+;; (global-set-key "\M-k" 'sw-clumpkill) ;; m'kay?
 
 
 (defun sw-grepv (pattern)
@@ -1132,4 +1132,3 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;;(key-chord-unset-global "cc")
 ;;(key-chord-unset-global "./")
 (key-chord-unset-global "jj")
-
