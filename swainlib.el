@@ -1131,4 +1131,4 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jk" 'sw-qs)
 ;;(key-chord-unset-global "cc")
 ;;(key-chord-unset-global "./")
-(key-chord-unset-global "jj")
+
