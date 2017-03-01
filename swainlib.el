@@ -1123,7 +1123,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-mode 1)
 (key-chord-define-global "df" 'next-buffer)
 (key-chord-define-global "j1" 'delete-other-windows)
-(key-chord-define-global "a;" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+(key-chord-define-global "jg" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 ;;(key-chord-define-global "./" 'undo) ;; no, I use that for running commands
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
@@ -1131,4 +1131,6 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jk" 'sw-qs)
 ;;(key-chord-unset-global "cc")
 ;;(key-chord-unset-global "./")
+;; this will get me in trouble eventually, like with C-style languages
+;;(key-chord-unset-global "a;")
 
