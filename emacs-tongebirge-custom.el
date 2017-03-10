@@ -5,6 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
+ '(cursor-type (quote box))
  '(ibuffer-saved-limits
    (quote
     (("java"
