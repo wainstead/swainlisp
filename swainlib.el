@@ -1129,6 +1129,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "f0" 'delete-window)
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
 (key-chord-define-global "jk" 'sw-qs)
+(key-chord-define-global "jc" 'sw-cli)
 ;;(key-chord-unset-global "cc")
 ;;(key-chord-unset-global "./")
 ;; this will get me in trouble eventually, like with C-style languages
