@@ -1123,6 +1123,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-mode 1)
 (key-chord-define-global "jv" 'next-buffer)
 (key-chord-define-global "j1" 'delete-other-windows)
+(key-chord-define-global "j2" 'split-window-below)
+(key-chord-define-global "j3" 'split-window-right)
 (key-chord-define-global "jg" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 ;; actually, 'q' makes more sense, because SqL. I orginally chose 'g'
 ;; because postGresql.
@@ -1133,6 +1135,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
 (key-chord-define-global "jk" 'sw-qs)
 (key-chord-define-global "jc" 'sw-cli)
+(key-chord-define-global "js" 'save-buffer)
 ;;(key-chord-unset-global "df")
 ;;(key-chord-unset-global "./")
 ;; this will get me in trouble eventually, like with C-style languages
@@ -1143,3 +1146,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (dirtrack-mode)
 
 (define-key key-translation-map [(meta ? )] [(control ?x)])
+
+;; auto save file: do so after 100 chars typed, default is 300
+;; https://www.emacswiki.org/emacs/AutoSave
+(setq auto-save-interval 100)
