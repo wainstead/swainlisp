@@ -1150,3 +1150,14 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; auto save file: do so after 100 chars typed, default is 300
 ;; https://www.emacswiki.org/emacs/AutoSave
 (setq auto-save-interval 100)
+
+;; good bye saving files with \C-x \C-s, a killer of the left hand.
+(defun save-the-other-way-steve ()
+  "don't use C-xC-s anymore, use 'sj'"
+  (interactive)
+  (ding)
+  (display-warning :error "Use key-chord 'js' for saving files now"))
+(global-set-key "\C-x\C-s" 'save-the-other-way-steve)
+
+;; and, forevermore, forevermore...
+(define-key key-translation-map [(meta ? )] [(control ?x)])
