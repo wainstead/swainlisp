@@ -1080,18 +1080,6 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; need to add this via a hook function though
 ;; (define-key sql-mode-map (kbd "x") 'psql-expand-output)
 
-;; Define my personal keymap, whose prefix key will be control-;
-;; (next step is to define my own minor mode to override major modes
-;; (quickswitch, for one))
-;; improve this: define my own minor mode to reduce typing! This
-;; keymap can then be the minor mode's keymap.
-(defvar sw-map nil
-  "Steve Wainstead's personal keymap for any mode")
-(define-prefix-command 'sw-map)
-(global-set-key [(control ?;)] 'sw-map)
-;; set my quickswitch macro to 'a'
-(define-key sw-map (kbd "a") 'sw-qs)
-
 ;;(define-key comint-mode-map [(meta-prior)] 'comint-previous-prompt)
 
 ;; Perhaps these should be in a personal minor mode. The key bindings
@@ -1125,21 +1113,28 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "j1" 'delete-other-windows)
 (key-chord-define-global "j2" 'split-window-below)
 (key-chord-define-global "j3" 'split-window-right)
-(key-chord-define-global "jg" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
-;; actually, 'q' makes more sense, because SqL. I orginally chose 'g'
-;; because postGresql.
-(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
-;;(key-chord-define-global "./" 'undo) ;; no, I use that for running commands
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
+
+(key-chord-define-global "jg" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+(key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
+(key-chord-define-global "PF" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
+
 (key-chord-define-global "jk" 'sw-qs)
+(key-chord-define-global "JK" 'sw-qs) ;; note it's the caps lock version of the previous
+
 (key-chord-define-global "jc" 'sw-cli)
+(key-chord-define-global "JC" 'sw-cli)
+
 (key-chord-define-global "js" 'save-buffer)
-;;(key-chord-unset-global "df")
-;;(key-chord-unset-global "./")
-;; this will get me in trouble eventually, like with C-style languages
-;;(key-chord-unset-global "a;")
+(key-chord-define-global "JS" 'save-buffer)
+
+(key-chord-define-global "jw" 'other-frame)
+(key-chord-define-global "JW" 'other-frame)
+;; note that 'jx' is now reserved as the prefix code for my keymap
+;; sw-map.
 
 ;; new prompt parsing for shells
 (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)]" 1 nil))
@@ -1161,3 +1156,20 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 ;; and, forevermore, forevermore...
 (define-key key-translation-map [(meta ? )] [(control ?x)])
+;;(define-key key-translation-map [(meta ? )(meta ?c)] [(control ?c)])
+
+;; Define my personal keymap, whose prefix key will be control-;
+;; (UPDATE: now using jx via key-chord.el) (next step is to define my
+;; own minor mode to override major modes (quickswitch, for one))
+;; improve this: define my own minor mode to reduce typing! This
+;; keymap can then be the minor mode's keymap.
+(defvar sw-map nil
+  "Steve Wainstead's personal keymap for any mode")
+(define-prefix-command 'sw-map)
+(global-set-key [(control ?;)] 'sw-map)
+;; set my quickswitch macro to 'a'
+(define-key sw-map (kbd "a") 'sw-qs)
+;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
+(key-chord-define-global "jx" sw-map)
+(define-key sw-map (kbd "t") 'org-todo)
+(define-key sw-map (kbd "c") 'compile)
