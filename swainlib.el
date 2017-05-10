@@ -1116,7 +1116,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
 
-(key-chord-define-global "jg" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 (key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
