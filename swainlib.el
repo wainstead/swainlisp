@@ -293,8 +293,8 @@
 
 ;; These are reset as part of the example code in "Writing GNU Emacs
 ;; Extensions".
-(global-set-key "\C-x," 'tags-loop-continue)
-(global-set-key "\C-x." 'find-tag)
+(global-set-key "\C-x," 'xref-pop-marker-stack)
+(global-set-key "\C-x." 'xref-find-definitions)
 
 
 (defvar wipe-window-top (make-marker))
@@ -1045,8 +1045,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 
 ;; load a newer version of org-mode
-(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/lisp" load-path))
-(setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
+;; (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/lisp" load-path))
+;; (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
 
 ;; capture tasks easily
 (setq org-default-notes-file "~swain/Dropbox/projects/GTD/notes.org")
@@ -1154,6 +1154,14 @@ hi-lock-face-buffer to activate each in the current buffer."
   (display-warning :error "Use key-chord 'js' for saving files now"))
 (global-set-key "\C-x\C-s" 'save-the-other-way-steve)
 
+;; faster way to pop out now, I suppose: \C-x ,
+(defun pop-out-the-other-way-steve ()
+  "don't use M-* anymore, use '\C-x ,'"
+  (interactive)
+  (ding)
+  (display-warning :error "Use '\C-x ,' for popping out now"))
+(global-set-key [(meta ?*)] 'pop-out-the-other-way-steve)
+
 ;; and, forevermore, forevermore...
 (define-key key-translation-map [(meta ? )] [(control ?x)])
 ;;(define-key key-translation-map [(meta ? )(meta ?c)] [(control ?c)])
@@ -1173,3 +1181,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jx" sw-map)
 (define-key sw-map (kbd "t") 'org-todo)
 (define-key sw-map (kbd "c") 'compile)
+
+;; doesn't work... have to figure out what the active keymap is in the
+;; frame for *Compilation*
+;;(define-key compilation-button-map "d" `other-window)
