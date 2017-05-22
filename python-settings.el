@@ -62,7 +62,9 @@
 ;; new stuff (based on instructions in python.el)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq python-shell-virtualenv-path "~swain/.vpy/27production0/")
+; obsolete in 25.2..?
+;(setq python-shell-virtualenv-path "~swain/.vpy/27production0/")
 
+(setq python-shell-virtualenv-root "~swain/.vpy/27production0/")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
