@@ -1,3 +1,6 @@
+;; Personal customizations for PHP
+;; Removed from swainlib.el for tidyness
+
 (add-to-list 'auto-mode-alist '("\\.tpl$"     . php-mode        ))
 
 ;; thanks Jeff Dairiki for this hook
