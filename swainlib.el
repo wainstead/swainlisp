@@ -126,7 +126,7 @@
 ;;(setq load-path (append load-path (list "~swain/.emacs.d")))
 
 ;; set the default command for M-x compile
-(setq compile-command "make")
+(setq compile-command "make -C ~/git/pippin nfmc")
 ;;"cd .; ant -emacs -f build.xml targetName")
 
 ;; always scroll the buffer as compilation proceeds...
@@ -407,20 +407,11 @@ them."
   (insert (format-time-string "TO_DATE('%c', 'Dy Mon DD HH24:MI:SS YYYY')" (current-time))))
 
 ;; make n and p work without control key for buffers like *grep*
-(add-hook 'compilation-mode-hook
+;; h/t to Dale Sedivec for suggesting modifying the parent mode's map!
+(add-hook 'special-mode-hook
           (lambda ()
-            (define-key compilation-mode-map "n" 'next-line)
-            (define-key compilation-mode-map "p" 'previous-line)))
-
-(add-hook 'occur-mode-hook
-          (lambda ()
-            (define-key occur-mode-map "n" 'next-line)
-            (define-key occur-mode-map "p" 'previous-line)))
-
-(add-hook 'help-mode-hook
-          (lambda ()
-            (define-key help-mode-map "n" 'next-line)
-            (define-key help-mode-map "p" 'previous-line)))
+            (define-key special-mode-map "n" 'next-line)
+            (define-key special-mode-map "p" 'previous-line)))
 
 ;; double space the lines of a region, useful for grep output etc.
 (fset 'double-space-region
