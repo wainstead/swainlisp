@@ -50,11 +50,6 @@
 ;; double space a region: C-u M-| sed G RET
 ;; delete ALL blank lines from a file (same as "grep '.' "): sed '/^$/d'
 
-;; M-. to find tag, M-* to pop out; these are the defaults. M-. is
-;; remapped to C-x-. You use C-u C-x-. to get to the next matching
-;; tag. In tags-search it's C-x-, which is another candidate for 
-;; a replacement command.
-
 ;; M-/ is dabbrev-expand, which searches all buffers for an expansion. Rules.
 
 ;; The oddly named finder-by-keyword is how you discover modes that are
@@ -430,17 +425,21 @@ them."
   (interactive)
   (insert (format-time-string "TO_DATE('%c', 'Dy Mon DD HH24:MI:SS YYYY')" (current-time))))
 
-
-;; allow sw-qs to work with java mode too
-(add-hook 'java-mode-hook
-          (lambda ()
-            (define-key java-mode-map "\M-a" 'sw-qs)))
-
 ;; make n and p work without control key for buffers like *grep*
 (add-hook 'compilation-mode-hook
           (lambda ()
             (define-key compilation-mode-map "n" 'next-line)
             (define-key compilation-mode-map "p" 'previous-line)))
+
+(add-hook 'occur-mode-hook
+          (lambda ()
+            (define-key occur-mode-map "n" 'next-line)
+            (define-key occur-mode-map "p" 'previous-line)))
+
+(add-hook 'help-mode-hook
+          (lambda ()
+            (define-key help-mode-map "n" 'next-line)
+            (define-key help-mode-map "p" 'previous-line)))
 
 ;; double space the lines of a region, useful for grep output etc.
 (fset 'double-space-region
@@ -484,7 +483,11 @@ them."
 (put 'downcase-region 'disabled nil)
 
 ;; Function keys
-(global-set-key (kbd "<f2> p") (lambda () (interactive) 'comint-previous-input))
+
+;; Probably this was an attempt to do "previous prompt", which I think
+;;is C-x p in comint mode.  (global-set-key (kbd "<f2> p") (lambda ()
+;;(interactive) 'comint-previous-input))
+
 (global-set-key [(f3)] 'clr)
 (global-set-key [(f4)] 'next-error)
 (global-set-key [f5] 'compile)
@@ -501,7 +504,9 @@ them."
 (global-set-key [f9] `sw-list)
 (global-set-key [(control f9)] 'sw-next-log)
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
-(global-set-key [f11] 'highlight-regexp)
+;; We now use "M-s h r" because it's in easy reach, and there's other
+;; cool things under the "M-s h" prefix.
+;;(global-set-key [f11] 'highlight-regexp)
 (global-set-key [\C-f11] 'unhighlight-regexp)
 (global-set-key [f12] 'toggle-truncate-lines)
 (global-set-key [f13] `hs-hide-level)
