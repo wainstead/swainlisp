@@ -221,21 +221,6 @@
   (display-time)
   )
 
-;; larnep asked for this, so it is here. All tabs are spaces.
-(custom-set-variables
- ;; custom-set-variables was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(ansi-color-names-vector ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
- '(ibuffer-saved-limits (quote (("java" ((name . ".java"))) ("gnus" ((or (mode . message-mode) (mode . mail-mode) (mode . gnus-group-mode) (mode . gnus-summary-mode) (mode . gnus-article-mode)))) ("programming" ((or (mode . emacs-lisp-mode) (mode . cperl-mode) (mode . c-mode) (mode . java-mode) (mode . idl-mode) (mode . lisp-mode)))))))
- '(indent-tabs-mode nil)
- '(line-number-display-limit nil)
- '(scroll-conservatively 1))
-(custom-set-faces
- ;; custom-set-faces was added by Custom -- don't edit or cut/paste it!
- ;; Your init file should contain only one such instance.
- '(show-paren-match-face ((((class color)) (:background "navy" :foreground "yellow"))))
- '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
-
 
 ;; scroll one line at a time
 
@@ -400,10 +385,6 @@ them."
 ;; set M-a to the above function
 (global-set-key "\M-a" 'sw-qs)
 
-;; insert a javadoc comment
-(fset 'insert-javadoc
-      [?/ ?* ?* return ?* return ?* ?/ up ? ])
-
 ;; Here's a command to insert a new log entry in the format I made up
 (defun sw-start-new-log-entry ()
   "Insert a row of hash marks and then the date in swain format"
@@ -467,17 +448,7 @@ them."
 (add-to-list 'auto-mode-alist '("\\.rb$"      . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
-(add-to-list 'auto-mode-alist '("\\.tpl$"     . php-mode        ))
 
-;; thanks Jeff Dairiki for this hook
-(defun my-php-mode-hook-func ()
-  (c-set-style "gnu")
-  (setq tab-width 4
-        c-basic-offset 4
-        c-hanging-comment-ender-p nil
-        indent-tabs-mode nil))
-
-(add-hook 'php-mode-hook 'my-php-mode-hook-func)
 
 ;; I don't remember adding this or why.
 (put 'downcase-region 'disabled nil)
@@ -541,38 +512,6 @@ already.  Give error if buffer is not associated with a file."
 
 (fset 'reformat-code
       [?\C-x ?h ?\C-u ?\M-| ?p ?e ?r ?l ?  ?- ?n ?p ?e ?  ?' ?s ?/ ?^ ?[ ?  ?\\ ?t ?] ?+ ?/ ?/ ?' return ?\C-x ?h ?\C-\M-\\])
-
-
-(defun sw-fb ()
-  "Add a flowerbox to a Java file"
-  (interactive)
-  (let ( (projectdir (getenv "HOME")))
-    ;; change the string here to the path off your $HOME
-    (setq projectdir (concat projectdir "/projects/bluewire"))
-    (insert
-     (format "/** \n *\n */
-" 
-;; calculate the filename's path: full pathname minus projectdir
-(substring (buffer-file-name) (+ 1 (length projectdir))))))
-)
-
-;; looks ugly, but generates a simple Exception class definition
-(defun sw-except (name)
-  "Insert a new Java Exception class based on user input"
-  (interactive "sClass name: ")
-  (insert (format "
-/** 
-  * @author $Author: swain $
-  * @version $Id: swainlib.el,v 1.50 2007/11/13 16:29:59 swain Exp $
-  * 
-  */
-class %s extends Exception {
-    public %s() {}
-    public %s(String msg) {
-        super(msg);
-    }
-}" name name name))
-  )
 
 
 ;; don't show me annotations unless I ask
@@ -874,14 +813,6 @@ after each yank."
   (shell-command-on-region (point-min) (point-max) (format "grep -v '%s'" pattern) 1 1 "*error crap*")
   )
 
-(defun sw-php-lint ()
-  "Run a lint check on the file the current buffer is visiting."
-  (interactive)
-  (let ( (php-interpreter "/opt/php5/bin/php -l") ) 
-    (shell-command (format "%s %s" php-interpreter (buffer-file-name))) 
-    )
-  )
-
 (defun sw-chmod-plusx ()
   "Change the current file to executable."
   (interactive)
@@ -911,9 +842,6 @@ after each yank."
 )
 
 (add-hook 'comint-output-filter-functions 'swain-watch-for-stuff)
-
-(fset 'sw-php-lint-check-on-buffer
-      [?\C-x ?h ?\M-| ?p ?h ?p ?  ?- ?l return])
 
 ;; stolen from:
 ;; http://www.splode.com/~friedman/software/emacs-lisp/src/buffer-fns.el
