@@ -135,19 +135,14 @@
 ;; enable paren matching
 (show-paren-mode)
 
-;;(set default-major-mode 'text-mode)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-;;(global-set-key "\C-h" 'delete-backward-char)
-(global-set-key [(meta ??)] 'help) ;; finally
+;; (global-set-key [(meta ??)] 'help) ;; finally
+;; (global-unset-key [(meta ??)])
 
 ;; from a post on slashdot: how to do away with some of the gunk
 ;;(setq emacs22 (eq emacs-major-version 22))
 
-;;(when emacs22
 (blink-cursor-mode t)
-;;(tool-bar-mode -1)
-;;    (tooltip-mode -1)
-;;)
 
 ;; allow ansi colors in shell mode, i.e. let ls --color=yes work right
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
@@ -454,14 +449,19 @@ them."
 (global-set-key [(f4)] 'next-error)
 (global-set-key [f5] 'compile)
 (global-set-key [f6] `toggle-buffer-full-filename)
+
 ;; copy region to the X clipboard
 ;;(global-set-key [f7] 'clipboard-kill-ring-save)
 ;; yank from same
 ;;(global-set-key [\C-f7] 'clipboard-yank)
+
 ;; snappy: macro + keybinding = hooha
 (fset 'next-frickin-tag
       "\C-u\C-x.")
-(global-set-key [f7] 'next-frickin-tag)
+;; I never use this keybinding... usually I do M-x next-frickin-tag
+;;(global-set-key [f7] 'next-frickin-tag)
+
+
 (global-set-key [f8] 'find-file-at-point)
 (global-set-key [f9] `sw-list)
 (global-set-key [(control f9)] 'sw-next-log)
@@ -1109,3 +1109,6 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; doesn't work... have to figure out what the active keymap is in the
 ;; frame for *Compilation*
 ;;(define-key compilation-button-map "d" `other-window)
+
+;; Dale told me this: make the Option key send 'alt'
+(setq ns-option-modifier 'alt)
