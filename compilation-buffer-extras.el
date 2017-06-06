@@ -99,4 +99,4 @@ random colors."
   )
 
 ;; dismiss the compilation frame with one button
-(define-key compilation-mode-map "d" 'other-frame)
+;;(define-key compilation-mode-map "d" 'other-frame)

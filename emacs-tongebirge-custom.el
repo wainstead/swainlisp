@@ -3,34 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-   ["black" "red" "green" "yellow" "cornflowerblue" "magenta" "cyan" "white"])
- '(cursor-type (quote box))
- '(ibuffer-saved-limits
+ '(package-selected-packages
    (quote
-    (("java"
-      ((name . ".java")))
-     ("gnus"
-      ((or
-        (mode . message-mode)
-        (mode . mail-mode)
-        (mode . gnus-group-mode)
-        (mode . gnus-summary-mode)
-        (mode . gnus-article-mode))))
-     ("programming"
-      ((or
-        (mode . emacs-lisp-mode)
-        (mode . cperl-mode)
-        (mode . c-mode)
-        (mode . java-mode)
-        (mode . idl-mode)
-        (mode . lisp-mode)))))))
- '(indent-tabs-mode nil)
- '(line-number-display-limit nil)
- '(org-agenda-files
-   (quote
-    ("~/notebooks/developer-notes/swain/todo-lists/trac_4276_hpf_undo.org" "~/notebooks/developer-notes/swain/todo-lists/gtd.org" "~/notebooks/developer-notes/swain/todo-lists/round_10.org" "~/notebooks/developer-notes/swain/todo-lists/24_hour_button.org" "~/notebooks/developer-notes/swain/todo-lists/bootstrapping-documentation-task-list.org")))
- '(scroll-conservatively 1))
+    (projectile php-mode markdown-mode magit lua-mode keyfreq js3-mode jabber flycheck f espresso-theme dired+ csv-mode crontab-mode auctex ag))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -44,6 +19,4 @@
  '(diff-hunk-header ((((background dark)) (:foreground "Black" :background "#05057F7F8D8D")) (t (:foreground "White" :background "Salmon"))))
  '(diff-index ((((background dark)) (:foreground "Magenta")) (t (:foreground "Green"))))
  '(diff-nonexistent ((((background dark)) (:foreground "#FFFFFFFF7474")) (t (:foreground "DarkBlue"))))
- '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta"))))
- '(show-paren-match ((((class color)) (:background "navy" :foreground "yellow"))))
- '(tnt-other-name-face ((((class color)) (:foreground "skyblue")))))
+ '(diff-removed ((((background dark)) (:foreground "#7474FFFF7474")) (t (:foreground "DarkMagenta")))))
