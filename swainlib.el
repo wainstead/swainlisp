@@ -1112,3 +1112,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 ;; Dale told me this: make the Option key send 'alt'
 (setq ns-option-modifier 'alt)
+
+(defvar sw-magit-map nil "Steve's own keymap for magit commands")
+(define-prefix-command 'sw-magit-map)
+(global-set-key "\M-sm" 'sw-magit-map)
+(define-key sw-magit-map (kbd "s") 'magit-status)
