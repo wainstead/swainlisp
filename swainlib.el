@@ -1117,3 +1117,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-prefix-command 'sw-magit-map)
 (global-set-key "\M-sm" 'sw-magit-map)
 (define-key sw-magit-map (kbd "s") 'magit-status)
+
+(add-hook 'comint-mode-hook
+          (lambda ()
+	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
+	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
