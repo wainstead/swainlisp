@@ -68,3 +68,9 @@
 (setq python-shell-virtualenv-root "~swain/.vpy/27production0/")
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "--simple-prompt -i")
+
+;; in conjunction with JRR... guess what the indentation is
+(load-file "~swain/.emacs.d/guess-style-master/guess-style.el")
+(autoload 'guess-style-set-variable "guess-style" nil t)
+(autoload 'guess-style-guess-variable "guess-style")
+(autoload 'guess-style-guess-all "guess-style" nil t)
