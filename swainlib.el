@@ -1122,3 +1122,8 @@ hi-lock-face-buffer to activate each in the current buffer."
           (lambda ()
 	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
+
+(defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
+(define-prefix-command 'sw-projectile-map)
+(global-set-key "\M-sp" 'sw-projectile-map)
+(define-key sw-projectile-map (kbd "f") 'projectile-find-file)
