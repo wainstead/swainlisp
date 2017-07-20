@@ -1,7 +1,19 @@
+;; -*- indent-tabs-mode: nil; -*-
+
 ;; The "meta" functions came later... see comment staring with "This
 ;; first block..."
 
 ;; a copy of the shell script "waittail" is at the end of this file
+
+(defun sw-arrange-nfmc-log-windows ()
+  "Hack to arrange windows in the frame."
+  (interactive)
+  (delete-window (get-buffer-window (get-buffer "nfmc error log")))
+  (select-window (get-buffer-window (get-buffer "error log")))
+  (split-window-horizontally)
+  (switch-to-buffer (get-buffer "nfmc error log"))
+  (balance-windows)
+  )
 
 (defun sw-tail-logs-meta (commands-alist tail-frame-name)
   "meta function for opening logs and tailing them in a new frame"
@@ -18,9 +30,20 @@
       ;; first time through these are equal so we do not split the buffer
       (if (not (equal (safe-length file-alist) (safe-length commands-alist)))
           (split-window-vertically))
+
+      ;; Emacs 25.x: The shell function now uses some heuristic to
+      ;; split the windows, which breaks things. Attempt to work
+      ;; around this. We'll first switch to a new buffer with the name
+      ;; of the buffer we want -- switch-to-buffer will create it if
+      ;; it doesn't exist. We pass 't' so it doesn't make a new
+      ;; window. We pass (shell) the name of the buffer so it creates
+      ;; a shell in that new buffer.
+
+      ;; (car pair) is the buffer name
+      ;; (cdr pair) is the file name or command
       (setq pair (car file-alist))
-      (shell)
-      (rename-buffer (car pair))
+      (switch-to-buffer (car pair) nil t)
+      (shell (car pair))
       (goto-char (point-max))
       (if (cdr pair)
           ;; 'nil' indicates "don't tail any log"
@@ -32,7 +55,7 @@
       ;;(message "car: %s cdr: %s" (car pair) (cdr pair))
       (setq file-alist (cdr file-alist))
       )
-    (balance-windows)
+    (sw-arrange-nfmc-log-windows)
     (window-configuration-to-register ?1))
   )
 
@@ -50,6 +73,7 @@
         (let ((file-alist commands-alist))
           (while (consp file-alist)
             (setq pair (car file-alist))
+            (delete-process (get-buffer-process (car pair)))
             (unless (kill-buffer (car pair))
               (message (format "Couldn't kill the buffer %s." (car pair))))
             (setq file-alist (cdr file-alist))
