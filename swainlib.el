@@ -1104,7 +1104,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
 (key-chord-define-global "jx" sw-map)
 (define-key sw-map (kbd "t") 'org-todo)
-(define-key sw-map (kbd "c") 'compile)
+(define-key sw-map (kbd "m") 'compile)
 
 ;; doesn't work... have to figure out what the active keymap is in the
 ;; frame for *Compilation*
@@ -1127,3 +1127,23 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-prefix-command 'sw-projectile-map)
 (global-set-key "\M-sp" 'sw-projectile-map)
 (define-key sw-projectile-map (kbd "f") 'projectile-find-file)
+
+
+;; (setq visible-bell nil)
+;; (defun sw-ding ()
+;;   "ring the bell when S-SPC is typed"
+;;   (interactive)
+;;   (setq visible-bell t)
+;;   (ding)
+;;   (setq visible-bell nil)
+;;   )
+;; (global-set-key [(shift ? )] 'sw-ding)
+;; (global-unset-key [(shift ? )])
+
+;; I open my cheatsheet so often I may as well bind it
+(defun sw-open-cheatsheet ()
+  "open my cheatsheet"
+  (interactive)
+  (find-file "~/notebooks/developer-notes/swain/cheatsheet")
+  )
+(define-key sw-map (kbd "c") 'sw-open-cheatsheet)
