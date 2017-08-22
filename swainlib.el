@@ -462,8 +462,8 @@ them."
 ;;(global-set-key [f7] 'next-frickin-tag)
 
 
-(global-set-key [f8] 'find-file-at-point)
-(global-set-key [f9] `sw-list)
+;;(global-set-key [f8] 'find-file-at-point) ;; now "jx f"
+;;(global-set-key [f9] `sw-list) ;; now "jx i"
 (global-set-key [(control f9)] 'sw-next-log)
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
 ;; We now use "M-s h r" because it's in easy reach, and there's other
@@ -1040,7 +1040,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
 
-(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "*SQL: psql*"))))
 (key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
@@ -1160,3 +1160,5 @@ hi-lock-face-buffer to activate each in the current buffer."
   (set-window-width 80))
 
 (define-key sw-map (kbd "8") 'set-80-columns)
+(define-key sw-map (kbd "i") 'sw-list)
+(define-key sw-map (kbd "f") 'find-file-at-point)
