@@ -378,7 +378,9 @@ them."
   (switch-to-buffer (other-buffer)))
 
 ;; set M-a to the above function
-(global-set-key "\M-a" 'sw-qs)
+;;(global-set-key "\M-a" 'sw-qs)
+;;(global-unset-key "\M-a")
+;; now bound to key-chord jk
 
 ;; Here's a command to insert a new log entry in the format I made up
 (defun sw-start-new-log-entry ()
@@ -445,10 +447,10 @@ them."
 ;;is C-x p in comint mode.  (global-set-key (kbd "<f2> p") (lambda ()
 ;;(interactive) 'comint-previous-input))
 
-(global-set-key [(f3)] 'clr)
-(global-set-key [(f4)] 'next-error)
-(global-set-key [f5] 'compile)
-(global-set-key [f6] `toggle-buffer-full-filename)
+;;(global-set-key [(f3)] 'clr)
+;;(global-set-key [(f4)] 'next-error)
+;;(global-set-key [f5] 'compile)
+;;(global-set-key [f6] `toggle-buffer-full-filename)
 
 ;; copy region to the X clipboard
 ;;(global-set-key [f7] 'clipboard-kill-ring-save)
@@ -464,7 +466,7 @@ them."
 
 ;;(global-set-key [f8] 'find-file-at-point) ;; now "jx f"
 ;;(global-set-key [f9] `sw-list) ;; now "jx i"
-(global-set-key [(control f9)] 'sw-next-log)
+
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
 ;; We now use "M-s h r" because it's in easy reach, and there's other
 ;; cool things under the "M-s h" prefix.
@@ -630,7 +632,7 @@ already.  Give error if buffer is not associated with a file."
 ;; different buffer switcher. Solaris build complains about keyboard
 ;; bell with macros. Also handles case where ibuffer not created yet.
 (defun sw-list ()
-  "switch to Ibuffer; this function should be bound to F9"
+  "switch to Ibuffer"
   (interactive)
   (setq buffer (get-buffer "*Ibuffer*"))
   (if (bufferp buffer)
@@ -1027,7 +1029,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 ;; it ain't bound to anything, so bind it and save my pinkies another
 ;; trip
-(global-set-key [(control ?`)] 'next-error)
+;; Nope: let's use "M-g n" instead and avoid the control key
+;;(global-set-key [(control ?`)] 'next-error)
 
 
 ;; key-chord stuff
@@ -1041,22 +1044,22 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "f0" 'delete-window)
 
 (key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "*SQL: psql*"))))
-(key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
+;;(key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
-(key-chord-define-global "PF" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
+;;(key-chord-define-global "PF" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
 
 (key-chord-define-global "jk" 'sw-qs)
-(key-chord-define-global "JK" 'sw-qs) ;; note it's the caps lock version of the previous
+;;(key-chord-define-global "JK" 'sw-qs) ;; note it's the caps lock version of the previous
 
 (key-chord-define-global "jc" 'sw-cli)
-(key-chord-define-global "JC" 'sw-cli)
+;;(key-chord-define-global "JC" 'sw-cli)
 
 (key-chord-define-global "js" 'save-buffer)
-(key-chord-define-global "JS" 'save-buffer)
+;;(key-chord-define-global "JS" 'save-buffer)
 
 (key-chord-define-global "jw" 'other-frame)
-(key-chord-define-global "JW" 'other-frame)
+;;(key-chord-define-global "JW" 'other-frame)
 ;; note that 'jx' is now reserved as the prefix code for my keymap
 ;; sw-map.
 
@@ -1072,7 +1075,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 ;; good bye saving files with \C-x \C-s, a killer of the left hand.
 (defun save-the-other-way-steve ()
-  "don't use C-xC-s anymore, use 'sj'"
+  "Don't use C-xC-s anymore, use 'js'."
   (interactive)
   (ding)
   (display-warning :error "Use key-chord 'js' for saving files now"))
@@ -1080,7 +1083,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 
 ;; faster way to pop out now, I suppose: \C-x ,
 (defun pop-out-the-other-way-steve ()
-  "don't use M-* anymore, use '\C-x ,'"
+  "Don't use M-* anymore, use '\C-x ,'."
   (interactive)
   (ding)
   (display-warning :error "Use '\C-x ,' for popping out now"))
@@ -1096,7 +1099,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; improve this: define my own minor mode to reduce typing! This
 ;; keymap can then be the minor mode's keymap.
 (defvar sw-map nil
-  "Steve Wainstead's personal keymap for any mode")
+  "Steve Wainstead's personal keymap for any mode.")
 (define-prefix-command 'sw-map)
 (global-set-key [(control ?;)] 'sw-map)
 ;; set my quickswitch macro to 'a'
@@ -1113,7 +1116,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; Dale told me this: make the Option key send 'alt'
 (setq ns-option-modifier 'alt)
 
-(defvar sw-magit-map nil "Steve's own keymap for magit commands")
+(defvar sw-magit-map nil "Steve's own keymap for magit commands.")
 (define-prefix-command 'sw-magit-map)
 (global-set-key "\M-sm" 'sw-magit-map)
 (define-key sw-magit-map (kbd "s") 'magit-status)
@@ -1128,7 +1131,9 @@ hi-lock-face-buffer to activate each in the current buffer."
 (global-set-key "\M-sp" 'sw-projectile-map)
 (define-key sw-projectile-map (kbd "f") 'projectile-find-file)
 
-
+;; I wondered if shift-spacebar might make a handy prefix key. Below I
+;; coded this to ring the bell any time I hit shift-spacebar to see if
+;; it happens in my normal typing, and it did, a lot.
 ;; (setq visible-bell nil)
 ;; (defun sw-ding ()
 ;;   "ring the bell when S-SPC is typed"
@@ -1162,3 +1167,46 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-key sw-map (kbd "8") 'set-80-columns)
 (define-key sw-map (kbd "i") 'sw-list)
 (define-key sw-map (kbd "f") 'find-file-at-point)
+
+;; Letting these return to their defaults, use prefix jx now..
+;;(global-set-key [(f3)] 'clr)
+;;(global-set-key [(f4)] 'next-error)
+;;(global-set-key [f5] 'compile)
+;;(global-set-key [f6] `toggle-buffer-full-filename)
+
+(define-key sw-map [f3] 'clr)
+(define-key sw-map [f5] 'compile)
+(define-key sw-map [f6] `toggle-buffer-full-filename)
+(define-key sw-map (kbd "%") `query-replace)
+
+;; Compile
+(defvar sw-meta-a-map nil
+  "Steve Wainstead's personal keymap bound to M-a.")
+(define-prefix-command 'sw-meta-a-map)
+(global-set-key "\M-a" 'sw-meta-a-map)
+(define-key sw-meta-a-map "d" 'delete-trailing-whitespace)
+
+(defvar sw-compile-map nil
+  "Steve Wainstead's personal keymap for compilation commands")
+(define-prefix-command 'sw-compile-map)
+(global-set-key "\M-ac" 'sw-compile-map)
+
+(define-key sw-compile-map "t" '(lambda () (interactive) (compile "make -C ~/git/pippin TAGS")))
+(define-key sw-compile-map "n" '(lambda () (interactive) (compile "make -C ~/git/pippin nfmc")))
+(define-key sw-compile-map "f" '(lambda () (interactive) (compile "make -C ~/git/pippin clean full")))
+(define-key sw-compile-map "k" '(lambda () (interactive) (compile "make -C ~/git/pippin kick-nfmc-services")))
+;; works, but fugly
+;;(define-key sw-compile-map "c" (defun sw-compile-templates () "make templates" (interactive) (compile "make -C ~/git/pippin clean full")))
+
+(defun sw-hide-emacs ()
+  "Hide Emacs"
+  (interactive)
+  (setq apscript "
+tell application \"System Events\"
+  set visible of application process \"Emacs\" to false
+end tell
+"
+        )
+  (ns-do-applescript apscript)
+  )
+(global-set-key "\M-h" 'sw-hide-emacs)
