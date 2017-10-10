@@ -1126,10 +1126,13 @@ hi-lock-face-buffer to activate each in the current buffer."
 	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
 
-(defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
-(define-prefix-command 'sw-projectile-map)
-(global-set-key "\M-sp" 'sw-projectile-map)
-(define-key sw-projectile-map (kbd "f") 'projectile-find-file)
+;; (defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
+;; (define-prefix-command 'sw-projectile-map)
+(global-set-key "\M-sp" 'projectile-command-map)
+(global-set-key "\M-ss" 'isearch-forward)
+(global-set-key "\M-sr" 'isearch-backward)
+
+;(define-key sw-projectile-map (kbd "f") 'projectile-find-file)
 
 ;; I wondered if shift-spacebar might make a handy prefix key. Below I
 ;; coded this to ring the bell any time I hit shift-spacebar to see if
@@ -1168,6 +1171,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-key sw-map (kbd "i") 'sw-list)
 (define-key sw-map (kbd "f") 'find-file-at-point)
 
+
 ;; Letting these return to their defaults, use prefix jx now..
 ;;(global-set-key [(f3)] 'clr)
 ;;(global-set-key [(f4)] 'next-error)
@@ -1179,19 +1183,22 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-key sw-map [f6] `toggle-buffer-full-filename)
 (define-key sw-map (kbd "%") `query-replace)
 
-;; Compile
+
 (defvar sw-meta-a-map nil
   "Steve Wainstead's personal keymap bound to M-a.")
 (define-prefix-command 'sw-meta-a-map)
 (global-set-key "\M-a" 'sw-meta-a-map)
 (define-key sw-meta-a-map "d" 'delete-trailing-whitespace)
+(define-key sw-meta-a-map "f" 'find-file-at-point)
+(define-key sw-meta-a-map "u" 'untabify)
 
+;; Compilation stuff
 (defvar sw-compile-map nil
   "Steve Wainstead's personal keymap for compilation commands")
 (define-prefix-command 'sw-compile-map)
 (global-set-key "\M-ac" 'sw-compile-map)
 
-(define-key sw-compile-map "t" '(lambda () (interactive) (compile "make -C ~/git/pippin TAGS")))
+(define-key sw-compile-map "t" '(lambda () "Make TAGS file" (interactive) (compile "make -C ~/git/pippin TAGS")))
 (define-key sw-compile-map "n" '(lambda () (interactive) (compile "make -C ~/git/pippin nfmc")))
 (define-key sw-compile-map "f" '(lambda () (interactive) (compile "make -C ~/git/pippin clean full")))
 (define-key sw-compile-map "k" '(lambda () (interactive) (compile "make -C ~/git/pippin kick-nfmc-services")))
@@ -1210,3 +1217,9 @@ end tell
   (ns-do-applescript apscript)
   )
 (global-set-key "\M-h" 'sw-hide-emacs)
+
+;; bind uppercase equivalents to vim cursor movement keys
+(global-set-key [(meta ?J)] 'next-line)
+(global-set-key [(meta ?K)] 'previous-line)
+(global-set-key [(meta ?H)] 'backward-char)
+(global-set-key [(meta ?L)] 'forward-char)
