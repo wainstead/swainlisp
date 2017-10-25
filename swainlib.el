@@ -519,7 +519,6 @@ already.  Give error if buffer is not associated with a file."
           (lambda ()
             (setq comint-last-output-start (point-min-marker))))
 
-
 (global-set-key [(control ?0)] 'unexpand-abbrev)
 
 ;; found this on http://www.emacswiki.org/cgi-bin/wiki.pl?HtmlEndOfLine
@@ -1191,6 +1190,12 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-key sw-meta-a-map "d" 'delete-trailing-whitespace)
 (define-key sw-meta-a-map "f" 'find-file-at-point)
 (define-key sw-meta-a-map "u" 'untabify)
+(define-key sw-meta-a-map "o" 'comint-delete-output)
+
+;; take it away from org-mode
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (define-key org-mode-map (kbd "M-a") nil)))
 
 ;; Compilation stuff
 (defvar sw-compile-map nil
@@ -1205,21 +1210,98 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; works, but fugly
 ;;(define-key sw-compile-map "c" (defun sw-compile-templates () "make templates" (interactive) (compile "make -C ~/git/pippin clean full")))
 
-(defun sw-hide-emacs ()
-  "Hide Emacs"
-  (interactive)
-  (setq apscript "
-tell application \"System Events\"
-  set visible of application process \"Emacs\" to false
-end tell
-"
-        )
-  (ns-do-applescript apscript)
-  )
-(global-set-key "\M-h" 'sw-hide-emacs)
+(global-set-key "\M-h" 'ns-do-hide-emacs)
 
 ;; bind uppercase equivalents to vim cursor movement keys
 (global-set-key [(meta ?J)] 'next-line)
 (global-set-key [(meta ?K)] 'previous-line)
 (global-set-key [(meta ?H)] 'backward-char)
 (global-set-key [(meta ?L)] 'forward-char)
+
+;; or use alt, because it's not used for practically anything!
+(global-set-key [(alt ?j)] 'next-line)
+(global-set-key [(alt ?k)] 'previous-line)
+(global-set-key [(alt ?h)] 'backward-char)
+(global-set-key [(alt ?l)] 'forward-char)
+
+;;(global-set-key (kbd "M-j") 'forward-char)
+
+(defun sw-pp ()
+  "Make iTunes either pause or play"
+  (interactive)
+  (do-applescript "tell application \"iTunes\" to playpause")
+  )
+(define-key sw-meta-a-map "p" 'sw-pp)
+
+;; experimental
+(defun sw-jump-to-line-from-stacktrace (stacktrace-string)
+  "Highlight line in Firefox, copy, run this command"
+  (interactive "sString from stack trace: ")
+  ;;(setq stacktrace-string "  File \"/Users/swain/ssc/sites/nfmc/fc/actions/programmatic_report.py\", line 1568, in populate_form")
+  ;;(setq stacktrace-string (car kill-ring)) ;; pulling from the clipboard didn't work
+  (setq pieces (split-string stacktrace-string "[\s,\"]"))
+
+  ;; The file path as seen in the stack trace in the browser, for
+  ;; example: /Users/swain/ssc/nfmc-reporting/navigation.py
+  (setq ssc-filepath (nth 4 pieces))
+  ;; The line number reported in the line from the stack trace
+  (setq lineno (nth 8 pieces))
+
+  (setq pythonscript (format "~/git/pippin/%s"
+			 (substring ssc-filepath (string-width "/Users/swain/ssc") (string-width pathy))))
+  (message (format "Looking for %s" pythonscript))
+  ;;(string-width "/Users/swain/ssc")
+  (find-file pythonscript)
+  (goto-line (string-to-number lineno)))
+
+(define-key sw-meta-a-map "j" 'sw-jmp-to-place)
+(define-key sw-meta-a-map "y" 'yank)
+(define-key sw-meta-a-map "r" 'insert-register)
+(define-key sw-meta-a-map "6" `toggle-buffer-full-filename)
+
+;; Database stuff
+(defvar sw-sql-map nil
+  "Steve Wainstead's personal keymap for SQL/database commands")
+(define-prefix-command 'sw-sql-map)
+;; 's' is for 'SQL'
+(global-set-key "\M-as" 'sw-sql-map)
+
+;; Thus far this effort fails. I want to use one function for handling
+;; the details of sending the contents of the register to the buffer,
+;; but passing something like ?s is problematic via the lambda
+;; function. Note, however, sometimes I want to call comint-send-input
+;; and sometimes I don't, so that needs to be taken into
+;; consideration.
+;; (defun sw-send-command-to-psql (register-char)
+;;   "Insert the contents of a register at max-point"
+;;   (interactive)
+;;      (goto-char (point-max))
+;;      (insert-register (byte-to-string register-char))
+;;      (comint-send-input))
+;; (define-key sw-sql-map "c"
+;;   '(lambda () (sw-send-command-to-psql ?s)))
+;; (define-key sw-sql-map "t"
+;;   '(lambda () (message (char ?t))))
+
+;; mnemonic: "c" for "connect"
+(define-key sw-sql-map "c"
+  '(lambda ()
+     "Insert contents of register 'c' at point-max"
+     (interactive)
+     (goto-char (point-max))
+     (insert-register ?s)
+     (comint-send-input)))
+
+;; mnemonic: "t" for transaction. I used "l" originally because I
+;; didn't have any better registers available.
+(define-key sw-sql-map "t"
+  '(lambda ()
+     "Insert contents of register 'l' at point-max, which inserts
+the SQL to start a transaction that calls
+nfmc.set_current_user_and_ip."
+     (interactive)
+     (goto-char (point-max))
+     (insert-register ?l)
+     (goto-char (point-max))
+     (backward-word)
+     ))

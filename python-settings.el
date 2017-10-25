@@ -1,3 +1,7 @@
+;;; package -- Summary
+
+;;; Commentary:
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; originally from swainlib.el
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -75,3 +79,20 @@
 (autoload 'guess-style-guess-variable "guess-style")
 (autoload 'guess-style-guess-all "guess-style" nil t)
 (add-hook 'python-mode-hook 'guess-style-guess-all)
+
+
+;; Enable flycheck everywhere is a bad idea because we have a mountain
+;; of old code
+;;(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; Dunno why but flycheck cannot find the executables, tho they are in
+;; my path.
+;; disable flake8 as we are tied to an older version which can't find mccabe
+;; (setq flycheck-python-flake8-executable
+;;       "/Users/swain/.vpy/27production0/bin/flake8")
+(setq flycheck-python-pylint-executable
+      "/Users/swain/.vpy/27production0/bin/pylint")
+
+;; wtf why don't these work? that's why I set two of them
+(setq python-check-command "pylint")
+(setq python-check-custom-command "pylint")
