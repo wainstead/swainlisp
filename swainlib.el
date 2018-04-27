@@ -245,29 +245,6 @@
   (interactive "P")
   (scroll-right (prefix-numeric-value n)))
 
-
-;; I never use these
-;; (global-set-key [(control ?.)] 'sw-scroll-left-n)
-;; (global-set-key [(control ?,)] 'sw-scroll-right-n)
-
-
-;; move the cursor to the top/bottom of the window
-;; (defun point-to-top ()
-;;   "Put the point on top line of the window."
-;;   (interactive)
-;;   (move-to-window-line 0))
-;; (defun point-to-bottom ()
-;;   "Put the point at the beginning of the last visible line."
-;;   (interactive)
-;;   (move-to-window-line -1))
-
-;; (global-set-key "\M-," 'point-to-top)
-;; (global-set-key "\M-." 'point-to-bottom)
-
-
-
-;; These are reset as part of the example code in "Writing GNU Emacs
-;; Extensions".
 (global-set-key "\C-x," 'xref-pop-marker-stack)
 (global-set-key "\C-x." 'xref-find-definitions)
 
@@ -377,31 +354,15 @@ them."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-;; set M-a to the above function
-;;(global-set-key "\M-a" 'sw-qs)
-;;(global-unset-key "\M-a")
-;; now bound to key-chord jk
-
-;; Here's a command to insert a new log entry in the format I made up
+;; Switch to org-mode for my work diary
 (defun sw-start-new-log-entry ()
-  "Insert a row of hash marks and then the date in swain format"
+  "Insert a new node for the day's entries"
   (interactive)
   (goto-char (point-max))
-  (insert "\n\n\n#########################################################################\n")
-  (insert (format-time-string "%y%m%d %c\n\n" (current-time))))
-
-;; Insert the date and time in a sortable way 
-(defun sw-insert-date ()
-  "Insert the current date and time so I can track myself"
-  (interactive)
-  (goto-char (point-max))
-  (insert (format-time-string "\n%y%m%d %T " (current-time))))
-
-;; write out an Oracle TO_DATE() function. Date is set to the here and now.
-(defun todate-oracle ()
-  "Insert a TO_DATE() function for Oracle SQL"
-  (interactive)
-  (insert (format-time-string "TO_DATE('%c', 'Dy Mon DD HH24:MI:SS YYYY')" (current-time))))
+  ;; This line is still visually useful for marking the end of an
+  ;; entry and the start of the next.
+  (insert "\n#########################################################################\n")
+  (insert (format-time-string "**** %y%m%d %c\n\n" (current-time))))
 
 ;; make n and p work without control key for buffers like *grep*
 ;; h/t to Dale Sedivec for suggesting modifying the parent mode's map!
@@ -437,44 +398,27 @@ them."
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
 
+;; doesn't seem to work. 4/27/2018.
+(defun sw-color-background-for-fixture-functions ()
+  "Distinguish conftest.py files from others"
+  (setq-local face-remapping-alist
+	      '((default .
+		  (:foreground "goldenrod" :background "#2E002E")))))
+
+(add-to-list 'auto-mode-alist '("conftest.py" . python-mode ))
 
 ;; I don't remember adding this or why.
 (put 'downcase-region 'disabled nil)
 
-;; Function keys
-
-;; Probably this was an attempt to do "previous prompt", which I think
-;;is C-x p in comint mode.  (global-set-key (kbd "<f2> p") (lambda ()
-;;(interactive) 'comint-previous-input))
-
-;;(global-set-key [(f3)] 'clr)
-;;(global-set-key [(f4)] 'next-error)
-;;(global-set-key [f5] 'compile)
-;;(global-set-key [f6] `toggle-buffer-full-filename)
-
-;; copy region to the X clipboard
-;;(global-set-key [f7] 'clipboard-kill-ring-save)
-;; yank from same
-;;(global-set-key [\C-f7] 'clipboard-yank)
-
 ;; snappy: macro + keybinding = hooha
 (fset 'next-frickin-tag
       "\C-u\C-x.")
-;; I never use this keybinding... usually I do M-x next-frickin-tag
-;;(global-set-key [f7] 'next-frickin-tag)
-
-
-;;(global-set-key [f8] 'find-file-at-point) ;; now "jx f"
-;;(global-set-key [f9] `sw-list) ;; now "jx i"
 
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
-;; We now use "M-s h r" because it's in easy reach, and there's other
+;; I now use "M-s h r" because it's in easy reach, and there's other
 ;; cool things under the "M-s h" prefix.
-;;(global-set-key [f11] 'highlight-regexp)
 (global-set-key [\C-f11] 'unhighlight-regexp)
 (global-set-key [f12] 'toggle-truncate-lines)
-(global-set-key [f13] `hs-hide-level)
-(global-set-key [(control f13)] `hs-show-all)
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
 (global-set-key [pause] `delete-other-windows)
@@ -503,16 +447,9 @@ already.  Give error if buffer is not associated with a file."
 ;; remap C-x # to C-x c, which is more mnumonic, and easier on the carpals.
 (global-set-key "\C-xc" 'server-edit)
 
-(fset 'reformat-code
-      [?\C-x ?h ?\C-u ?\M-| ?p ?e ?r ?l ?  ?- ?n ?p ?e ?  ?' ?s ?/ ?^ ?[ ?  ?\\ ?t ?] ?+ ?/ ?/ ?' return ?\C-x ?h ?\C-\M-\\])
-
-
 ;; don't show me annotations unless I ask
 (setq bookmark-automatically-show-annotations nil)
 (setq bookmark-save-flag t)
-
-(fset 'greperr
-      [?\C-x ?h ?\C-u ?\M-| ?g ?r ?e ?p ?  ?- ?i ?  ?e ?r ?r ?o ?r return])
 
 ;; fix shell mode
 (add-hook 'shell-mode-hook 
@@ -547,30 +484,6 @@ already.  Give error if buffer is not associated with a file."
         (widen))
     (end-of-line)))
 
-;; Send a random line from Zippy to the minibuffer.
-(defun yow-ovrwt ()
-  "Send a Zippyism to the minibuffer."
-  (interactive)
-  (message (yow)))
-
-;; disable insert key, which sends us into overwrite mode.
-(global-set-key [insert] `yow-ovrwt)
-
-;; note that with the prefix argument the function "yow" does the same
-;; thing
-(defun yow-insert ()
-  "Insert a random line from Zippy at point"
-  (interactive)
-  (insert (yow)))
-
-
-
-;; prepare the instant messenger!! move all zig!!
-;;(setq load-path (cons "~swain/.emacs.d/tnt" load-path))
-;;(setq load-path (append load-path (list "~swain/.emacs.d/tnt")))
-;;(load "tnt")
-;;(setq tnt-use-timestamps t)
-
 ;; prompt user for a background color; foreground and cursor colors
 ;; are hardwired.
 (defun sw-colors (color-string)
@@ -592,27 +505,11 @@ already.  Give error if buffer is not associated with a file."
 (setq sql-user "root")
 (setq sql-database "v3")
 
-;; Copied from ProjectBuilder's release notes for the December 2002
-;; devtools update. But some files need to be copied over from the
-;; 21.1 build that Apples ships with OS X.
-;; (autoload 'gnuserv-start "gnuserv-compat" 
-;;   "Allow this Emacs process to be a server for client processes." t)
-;; (gnuserv-start)
-
 ;; Try to set the history list for hi-lock (formerly p-whim-lock)
 (defvar hi-lock-face-history
   (list "hi-black-b" "hi-blue-b" "hi-red-b" "hi-green-b" "hi-black-hb"
         "hi-yellow" "hi-pink" "hi-green" "hi-blue" )
   "History list of faces for hi-lock interactive functions.")
-
-;; original hack
-;; (defvar p-whim-lock-face-history
-;;       (list "bwl-liteblu" "bwl-pink" "bwl-red" "bwl-green" "bwl-blue" 
-;; 	    "hi-yellow" "hi-blue" "hi-pink" "hi-green" "bwl-black")
-;;       "History list of faces for whim-lock interactive functions.")
-
-;; load this library for the functions that use browse-url-interactive-arg
-;;(load-library "browse-url")
 
 ;; use compile to check the perl file in the current buffer
 (defun sw-perl-wc ()
@@ -677,67 +574,11 @@ already.  Give error if buffer is not associated with a file."
   (sw-move-shell-here "cli")
   )
 
-(defun sw-move-root-here ()
-  "move the buffer named root to the current directory"
-  (interactive)
-  (sw-move-shell-here "root")
-  )
-
-(defun sw-move-www-here ()
-  "move the buffer named www to the current directory"
-  (interactive)
-  (sw-move-shell-here "www")
-  )
-
-
 (defun sw-delete-to-end ()
   "Delete all chars from point to end of buffer. Save the stuff in
 the kill ring."
   (interactive)
   (delete-char (- (point-max) (point)) t))
-
-;; needs work. should use commenting style of current major mode.
-
-;; optimization: use (if) on (null current-prefix-arg) and assign a
-;; symbol to point to the function you want to use (akin to a function
-;; pointer).
-
-(defvar sw-comment-pattern nil
-  "Pattern to match when commenting out lines in sw-comment-lines")
-(defvar sw-comment-chars "#"
-  "What char is used to comment out lines in sw-comment-lines")
-(defvar sw-already-commented-lines nil
-  "Set to t when lines have been commented via sw-comment lines. Defaults to nil.")
-(make-variable-buffer-local 'sw-comment-pattern)
-(make-variable-buffer-local 'sw-comment-chars)
-(make-variable-buffer-local 'sw-already-commented-lines)
-
-(defun sw-comment-lines (pattern comment-chars)
-  "Comment all lines in the buffer that match regexp."
-  (interactive "sComment lines matching regexp: \nsPattern: ")
-  (setq sw-comment-pattern pattern)
-  (setq sw-comment-chars comment-chars)
-  (setq sw-already-commented-lines t)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward pattern (point-max) t)
-      (beginning-of-line)
-      (insert (format "%s " comment-chars))
-      (end-of-line)
-      )
-    )
-  )
-
-;; FIXME: undone
-(defun sw-toggle-lines ()
-  "Undo or redo the commenting of lines in the current buffer.
-   Complains if you haven't run sw-comment-lines yet."
-  (interactive)
-  (if (null sw-already-commented-lines)
-      (error "Call sw-comment-lines first.")
-    (message (format "Teach me how to re-replace from ^ with '%s' and '%s'" sw-comment-pattern sw-comment-chars))
-    )
-  )
 
 (defun sw-unix-to-human ()
   "Convert the Unix timestamp at point to human readable form."
@@ -752,26 +593,6 @@ the kill ring."
     )
   )
 
-;; replace ^M in an entire buffer. Needs to be reworked to do only a
-;; region, eventually.
-(fset 'sw-replace-M
-      [?\M-< escape ?% ?\C-q ?\C-m return ?\C-q ?\C-j return ?!])
-
-;; hacked this up for ronnyg
-(defun multiyank (numtimes)
-  "Yank the last thing in the kill ring as many times as the user
-specifies. Also, if the prefix argument is given, insert a newline 
-after each yank."
-  (interactive "nNumber of times to yank: ")
-  ;;(message (format "got %d" numtimes))
-  (while (> numtimes 0)
-    (yank)
-    (setq numtimes (- numtimes 1))
-    (if (not (null current-prefix-arg))
-        (insert "\n"))
-    )
-  )
-
  (require 'man)
 (defun perldoc (man-args)
   (interactive "sPerldoc: ")
@@ -782,22 +603,6 @@ after each yank."
   (interactive "sPydoc: ")
   (let ((manual-program "pydoc"))
     (man man-args)))
-
-(defun ri (man-args)
-  (interactive "sri: ")
-  (let ((manual-program "ri"))
-    (man man-args)))
-
-;; ;; tested. works. yay.
-;; (defun sw-clumpkill ()
-;;   "Clump all kills together. You can then do one yank to get them all back."
-;;   (interactive)
-;;   (append-next-kill)
-;;   (kill-line)
-;;   )
-
-;; (global-set-key "\M-k" 'sw-clumpkill) ;; m'kay?
-
 
 (defun sw-grepv (pattern)
   "Do a grep -v on the fracking buffer."
@@ -926,41 +731,6 @@ after each yank."
   (sw-git-diff-meta "*git diff master*" "git diff master HEAD")
   )
 
-;; What would also be useful: a function to pull out and list all the
-;; currently active highlights in a given buffer. hi-lock probably has
-;; a variable (maybe even an alist) storing this information. That way
-;; I can iteratively highlight a buffer and when I've reached a point
-;; of highest usefulness pull it all out... maybe even store it in a
-;; register or a global so reloading the file just automagically does
-;; the right thing.
-(defun sw-highlight-stuff ()
-  "Pass an alist to the recursive function sw-apply-hs-regexps to
-   highlight stuff in the current buffer. This function is the UI
-   to the recursive function sw-apply-hs-regexps."
-  (interactive)
-  (sw-apply-hs-regexps '(
-                         ("EXCEPTION:" . "hi-red-b")
-                         ("WARNING:" . "hi-yellow")
-                         ("---> Report ran successfully." . "hi-green-b")
-                         ))
-  )
-
-(defun sw-apply-hs-regexps (sw-hi-alist)
-  "Recurse through an alist of (regexp . color) and use
-hi-lock-face-buffer to activate each in the current buffer."
-  (if sw-hi-alist
-      (progn
-        ;; first unhighlight it, in case it was already done; this
-        ;; happens sometimes when Emacs asks us to reload a file
-        ;; because it changed on disc. hi-lock-unface-buffer just
-        ;; returns 'nil' if it wasn't faced already.
-        (hi-lock-unface-buffer (car (car sw-hi-alist)))
-        (hi-lock-face-buffer (car (car sw-hi-alist)) (cdr (car sw-hi-alist)))
-        (sw-apply-hs-regexps (cdr sw-hi-alist))
-        )
-    )
-  )
-
 ;; courtesy Dale Sedivec
 ;; originally titled my:yank-rectangle-to-new-lines
 (defun sw-yank-rectangle-to-new-lines ()
@@ -1042,7 +812,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
 
-(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "*SQL: psql*"))))
+(key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "*SQL*"))))
 ;;(key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
 
 (key-chord-define-global "pf" '(lambda () (interactive) (switch-to-buffer (get-buffer "*Python*"))))
@@ -1130,6 +900,7 @@ hi-lock-face-buffer to activate each in the current buffer."
 (global-set-key "\M-sp" 'projectile-command-map)
 (global-set-key "\M-ss" 'isearch-forward)
 (global-set-key "\M-sr" 'isearch-backward)
+(global-set-key "\M-sc" 'clr)
 
 ;(define-key sw-projectile-map (kbd "f") 'projectile-find-file)
 
@@ -1169,13 +940,6 @@ hi-lock-face-buffer to activate each in the current buffer."
 (define-key sw-map (kbd "8") 'set-80-columns)
 (define-key sw-map (kbd "i") 'sw-list)
 (define-key sw-map (kbd "f") 'find-file-at-point)
-
-
-;; Letting these return to their defaults, use prefix jx now..
-;;(global-set-key [(f3)] 'clr)
-;;(global-set-key [(f4)] 'next-error)
-;;(global-set-key [f5] 'compile)
-;;(global-set-key [f6] `toggle-buffer-full-filename)
 
 (define-key sw-map [f3] 'clr)
 (define-key sw-map [f5] 'compile)
@@ -1233,26 +997,73 @@ hi-lock-face-buffer to activate each in the current buffer."
   )
 (define-key sw-meta-a-map "p" 'sw-pp)
 
-;; experimental
+
 (defun sw-jump-to-line-from-stacktrace (stacktrace-string)
-  "Highlight line in Firefox, copy, run this command"
+  "Highlight line in Firefox, copy, run this command.
+
+Experimental.
+
+Example input lines from stack traces in Firefox:
+  File \"/Users/swain/ssc/nfmc-reporting/grantee_actions.py\", line 151, in sub_navigation_items
+  File \"/Users/swain/ssc/nfmc-reporting/grantee_reporting_csv.py\", line 85, in process_nfmc_upload
+  File \"/Users/swain/ssc/nfmc-reporting/greyzone.py\", line 67, in greyzone_index
+  File \"/Users/swain/ssc/nfmc-reporting/model.py\", line 96, in foo
+  File \"/Users/swain/ssc/nfmc-reporting/nfmc_chunked_form.py\", line 24, in populate
+  File \"/Users/swain/ssc/nfmc-reporting/pippin-core/pippin-fcgi.py\", line 32, in <module>
+  File \"/Users/swain/ssc/nfmc-reporting/programmatic_report_facades.py\", line 383, in status_message
+  File \"/Users/swain/ssc/nfmc-reporting/siteoutage.py\", line 150, in enforce_or_load_outages
+  File \"/Users/swain/ssc/nfmc-reporting/user_actions.py\", line 467, in post_init
+  File \"/Users/swain/ssc/pippin-core/BaseSkinTemplate.py\", line 33, in do_header
+  File \"/Users/swain/ssc/pippin-core/SkinnedTemplate.py\", line 130, in respond
+  File \"/Users/swain/ssc/pippin-core/SkinnedTemplate.py\", line 93, in respond
+  File \"/Users/swain/ssc/pippin-core/pippin.py\", line 848, in handle_request
+  File \"/Users/swain/ssc/pippin-core/pippin_fastcgi_server.py\", line 69, in handler
+  File \"/Users/swain/ssc/pippin-core/pippin_logging.py\", line 91, in wrapper
+  File \"/Users/swain/ssc/py/datasource.py\", line 938, in execute
+  File \"/Users/swain/ssc/py/htmlforms.py\", line 553, in process
+  File \"/Users/swain/ssc/py/ormapper.py\", line 630, in extension_getattr
+  File \"/Users/swain/ssc/py/sql.py\", line 580, in _query_inner
+  File \"/Users/swain/ssc/sites/nfmc/nfmc_csv_swallower.py\", line 79, in process_events
+  File \"/Users/swain/ssc/sites/nfmc/templates/skins/default.html\", line 307, in skin_header
+  File \"/Users/swain/ssc/sites/templates/skins/base.py\", line 405, in base_header
+
+Notable is the second-to-last, which is a template file. This
+might be a special case.
+
+"
   (interactive "sString from stack trace: ")
-  ;;(setq stacktrace-string "  File \"/Users/swain/ssc/sites/nfmc/fc/actions/programmatic_report.py\", line 1568, in populate_form")
-  ;;(setq stacktrace-string (car kill-ring)) ;; pulling from the clipboard didn't work
-  (setq pieces (split-string stacktrace-string "[\s,\"]"))
+  ;;(setq pieces (split-string stacktrace-string "[\s,\"]"))
 
   ;; The file path as seen in the stack trace in the browser, for
   ;; example: /Users/swain/ssc/nfmc-reporting/navigation.py
-  (setq ssc-filepath (nth 4 pieces))
+  ;;(setq ssc-filepath (nth 4 pieces))
   ;; The line number reported in the line from the stack trace
-  (setq lineno (nth 8 pieces))
+  ;;(setq lineno (nth 8 pieces))
 
-  (setq pythonscript (format "~/git/pippin/%s"
-			 (substring ssc-filepath (string-width "/Users/swain/ssc") (string-width pathy))))
-  (message (format "Looking for %s" pythonscript))
-  ;;(string-width "/Users/swain/ssc")
-  (find-file pythonscript)
-  (goto-line (string-to-number lineno)))
+  (let
+      (input-pieces ssc-path line-num nfmcpattern is-in-mods path-prefix-string)
+    (setq input-pieces (split-string stacktrace-string "[\s,\"]"))
+    (setq ssc-path (nth 4 input-pieces))
+    (setq line-num (nth 8 input-pieces))
+    (setq nfmcpattern "/Users/swain/ssc/nfmc-reporting/")
+    (setq is-in-mods (string= nfmcpattern (substring ssc-path 0 (string-width nfmcpattern))))
+    (setq path-prefix-string "~/git/pippin")
+
+    (message "ssc-path: %s line-num: %s is-in-mods %s" ssc-path line-num is-in-mods)
+    (if is-in-mods
+    	(setq addsites "sites/")
+      (setq addsites "")
+      )
+    (setq pythonscript (format "%s/%s/%s" path-prefix-string addsites
+    			       (substring ssc-path
+    					  (string-width path-prefix-string)
+    					  (string-width ssc-path)
+    					  )))
+    (message (format "Looking for %s line number %s" pythonscript line-num))
+    ;;(find-file pythonscript)
+    ;; (goto-line (string-to-number line-num))
+    )
+  )
 
 (define-key sw-meta-a-map "j" 'sw-jmp-to-place)
 (define-key sw-meta-a-map "y" 'yank)
@@ -1283,6 +1094,8 @@ hi-lock-face-buffer to activate each in the current buffer."
 ;; (define-key sw-sql-map "t"
 ;;   '(lambda () (message (char ?t))))
 
+
+
 ;; mnemonic: "c" for "connect"
 (define-key sw-sql-map "c"
   '(lambda ()
@@ -1305,3 +1118,48 @@ nfmc.set_current_user_and_ip."
      (goto-char (point-max))
      (backward-word)
      ))
+
+;; mnemonic: "a" for audit log.
+(define-key sw-sql-map "a"
+  '(lambda ()
+     "Insert contents of register 'a' at point-max, which inserts
+the SQL to select the most recent lines from nfmc.audit_log."
+     (interactive)
+     (goto-char (point-max))
+     (insert-register ?a)
+     (goto-char (point-max))
+     (backward-word)
+     ))
+
+;; mnemonic: "r" for reload
+(define-key sw-sql-map "r"
+  '(lambda ()
+     "Insert the command to reload the database into the psql shell"
+     (interactive)
+     (goto-char (point-max))
+     (insert "\\i ~/sql/reloaddb.sql")
+     (comint-send-input)
+     ))
+
+;; Load Dired X when Dired is loaded.
+;; https://www.emacswiki.org/emacs/DiredOmitMode
+(add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
+(setq dired-omit-mode t)
+
+;; https://www.emacswiki.org/emacs/WinnerMode
+;; undo/redo window configurations
+;; C-c left, C-c right
+;; winner-undo, winner-redo
+;; will probably bind them to something better
+(winner-mode 1)
+
+
+;; sqlup
+;; https://github.com/Trevoke/sqlup-mode.el
+;; h/t Dale for pointing it out
+;; Capitalize keywords in SQL mode
+(add-hook 'sql-mode-hook 'sqlup-mode)
+;; Capitalize keywords in an interactive session (e.g. psql)
+(add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+;; Set a global keyword to use sqlup on a region
+(global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
