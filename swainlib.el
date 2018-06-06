@@ -705,7 +705,7 @@ the kill ring."
 
 ;; Give diff and patch files a color scheme that works with a black
 ;; background. Note the hyphen at the end of the basename: diff-mode-
-(load-file "~swain/.emacs.d/diff-mode-.el")
+;;(load-file "~swain/.emacs.d/diff-mode-.el")
 
 ;; One function and two convenience commands for running git diff and
 ;; putting the results in a special window.
@@ -1143,8 +1143,8 @@ the SQL to select the most recent lines from nfmc.audit_log."
 
 ;; Load Dired X when Dired is loaded.
 ;; https://www.emacswiki.org/emacs/DiredOmitMode
-(add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
-(setq dired-omit-mode t)
+;; (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
+;; (setq dired-omit-mode t)
 
 ;; https://www.emacswiki.org/emacs/WinnerMode
 ;; undo/redo window configurations
