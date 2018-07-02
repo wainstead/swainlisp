@@ -902,7 +902,12 @@ the kill ring."
 (global-set-key "\M-sr" 'isearch-backward)
 (global-set-key "\M-sc" 'clr)
 
-;(define-key sw-projectile-map (kbd "f") 'projectile-find-file)
+(global-set-key "\M-sl" (lambda () (interactive) (select-frame-by-name "nfmc logs")))
+
+(add-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+(global-set-key "\M-s\M-s" 'speedbar-get-focus)
+
+;; (define-key sw-projectile-map (kbd "f") 'projectile-find-file)
 
 ;; I wondered if shift-spacebar might make a handy prefix key. Below I
 ;; coded this to ring the bell any time I hit shift-spacebar to see if
@@ -1143,8 +1148,8 @@ the SQL to select the most recent lines from nfmc.audit_log."
 
 ;; Load Dired X when Dired is loaded.
 ;; https://www.emacswiki.org/emacs/DiredOmitMode
-;; (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
-;; (setq dired-omit-mode t)
+(add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
+(setq dired-omit-mode t)
 
 ;; https://www.emacswiki.org/emacs/WinnerMode
 ;; undo/redo window configurations
