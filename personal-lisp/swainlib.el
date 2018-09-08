@@ -156,8 +156,8 @@
 (desktop-load-default)
 ;; automatically save the desktop on exit.
 (setq desktop-enable t)
-(load-file "~swain/.emacs.d/desktop-auto-save.el")
-(load-file "~swain/.emacs.d/tail-logs.el")
+(load "desktop-auto-save.el")
+(load "tail-logs.el")
 (load-library "ibuffer")
 
 ;; fix isearch so we can use backspace instead of delete
@@ -757,7 +757,7 @@ the kill ring."
     )
   )
 
-(load-file "~swain/.emacs.d/python-settings.el")
+(load "python-settings.el")
 
 ;; New code from Dale: toggle full screen mode. Light edits from
 ;; original.
