@@ -119,9 +119,9 @@
   ;; (defvar default-frame-alist '((background-color . "#040000")
   ;;                               (foreground-color . "goldenrod")
   ;;                               (cursor-color     . "red")))
-  (add-to-list 'default-frame-alist '(forground-color . "goldenrod"))
+  (add-to-list 'default-frame-alist '(foreground-color . "goldenrod"))
   (add-to-list 'default-frame-alist '(background-color . "#040000"))
-  (add-to-list 'default-frame-alist '(cursor-color . "red"))
+  ;;(add-to-list 'default-frame-alist '(cursor-color . "red"))
   "Default colors for Emacs.")
 
 ;; default mode gunk
