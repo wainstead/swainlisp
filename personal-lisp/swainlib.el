@@ -1171,3 +1171,10 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
 ;; Set a global keyword to use sqlup on a region
 (global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
+
+
+;; From magit's documentation pages
+;; https://magit.vc/manual/magit/Installing-from-an-Elpa-Archive.html#Installing-from-an-Elpa-Archive
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
