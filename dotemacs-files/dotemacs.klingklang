@@ -1,0 +1,67 @@
+(load-file "~swain/.elisp/swainlib.el")
+(setq custom-file "~/.elisp/emacs-klingklang-custom.el")
+(load custom-file)
+
+;; disable the graphical toolbar (i.e. the "print" icon and friends)
+(tool-bar-mode -1)
+
+(defun sw-waverous ()
+  "go forth and be unsteady"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects/waverous/server")
+  (comint-send-input))
+
+
+(defun sw-projects ()
+  "Yow!  Legally-imposed CULTURE-reduction is CABBAGE-BRAINED!"
+  (interactive)
+  (switch-to-buffer (get-buffer "cli"))
+  (goto-char (point-max))
+  (insert "cd ~swain/public_html/projects")
+  (comint-send-input))
+
+
+;; default compile command for compiling waverous lambdamoo
+(setq compile-command "make CFLAGS='-g -m32 -Wall'")
+
+
+(defun moo-connect ()
+  "open a telnet connection to the server"
+  (interactive)
+  (telnet "localhost" 7777))
+
+(setq c-default-style
+      '((c-mode . "k&r")))
+(setq c-basic-offset 4)
+
+(defun moo-disconnect ()
+  "say goodnight gracie"
+  (interactive)
+  (insert ";shutdown()"))
+(put 'narrow-to-region 'disabled nil)
+
+
+;; mozrepl stuff, for shelling into firefox
+;; (add-to-list 'load-path "/home/swain/public_html/projects/mozrepl/chrome/content")
+
+;; (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
+
+;; (add-hook 'espresso-mode-hook 'espresso-custom-setup)
+;; (defun espresso-custom-setup ()
+;;   (moz-minor-mode 1))
+
+
+;; every time you open a Javascript file, you will now
+;; have the following keybindings available:
+
+;;     * C-c C-s: open a MozRepl interaction buffer and switch to it
+;;     * C-c C-l: save the current buffer and load it in MozRepl
+;;     * C-M-x: send the current function (as recognized by c-mark-function) to MozRepl
+;;     * C-c C-c: send the current function to MozRepl and switch to the interaction buffer
+;;     * C-c C-r: send the current region to MozRepl
+
+;; In the interaction buffer:
+
+;;     * C-c c: insert the current name of the REPL plus the dot operator (usually repl.)
