@@ -129,7 +129,7 @@
 ;;(setq load-path (append load-path (list "~swain/.emacs.d")))
 
 ;; set the default command for M-x compile
-(setq compile-command "make -C ~/git/pippin nfmc")
+;;(setq compile-command "make -C ~/git/pippin nfmc")
 ;;"cd .; ant -emacs -f build.xml targetName")
 
 ;; always scroll the buffer as compilation proceeds...

@@ -24,7 +24,8 @@
 
 ;; attempt to get Emacs's "M-x compile" to work with the newly merged
 ;; in "unification" branch, 2/23/2012
-(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; source ~/.vpy/default/bin/activate; echo -n $PYTHONPATH"))
+
+;;(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; source ~/.vpy/default/bin/activate; echo -n $PYTHONPATH"))
 
 ;; Copied from python.el that came with Emacs 24.3.1
 ;; (setq
@@ -69,8 +70,8 @@
 ; obsolete in 25.2..?
 ;(setq python-shell-virtualenv-path "~swain/.vpy/27production0/")
 
-(setq python-shell-virtualenv-root "~swain/.vpy/27production0/")
-(setq python-shell-interpreter "ipython"
+;;(setq python-shell-virtualenv-root "~swain/.vpy/27production0/")
+(setq python-shell-interpreter "ipython3"
       python-shell-interpreter-args "--simple-prompt -i")
 
 ;; in conjunction with JRR... guess what the indentation is
