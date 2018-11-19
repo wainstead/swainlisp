@@ -112,8 +112,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
 
-(add-to-path 'load-path "~/.emacs.d/personal-lisp")
-(add-to-path 'load-path "~/.emacs.d/external-packages")
+(add-to-list 'load-path "~/.emacs.d/personal-lisp")
+(add-to-list 'load-path "~/.emacs.d/external-packages")
 
 (when window-system
   ;; make pretty
