@@ -25,7 +25,7 @@
 ;; attempt to get Emacs's "M-x compile" to work with the newly merged
 ;; in "unification" branch, 2/23/2012
 
-;;(setenv "PYTHONPATH" (shell-command-to-string "source ~swain/.bashrc; source ~/.vpy/default/bin/activate; echo -n $PYTHONPATH"))
+;;(setenv "PYTHONPATH" (shell-command-to-string "source ~/.bashrc; source ~/.vpy/default/bin/activate; echo -n $PYTHONPATH"))
 
 ;; Copied from python.el that came with Emacs 24.3.1
 ;; (setq
@@ -40,7 +40,7 @@
 ;;  python-shell-completion-string-code
 ;;    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 ;; 
-;; (load-file "~swain/.emacs.d/ipython.el")
+;; (load-file "~/.emacs.d/ipython.el")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -59,7 +59,7 @@
 ;; originally from ~/.emacs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (setq py-install-directory "~swain/.emacs.d/python-mode.el-6.2.0/")
+;; (setq py-install-directory "~/.emacs.d/python-mode.el-6.2.0/")
 ;; (add-to-list 'load-path py-install-directory)
 ;; (require 'python-mode)
 
@@ -68,14 +68,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; obsolete in 25.2..?
-;(setq python-shell-virtualenv-path "~swain/.vpy/27production0/")
+;(setq python-shell-virtualenv-path "~/.vpy/27production0/")
 
-;;(setq python-shell-virtualenv-root "~swain/.vpy/27production0/")
+;;(setq python-shell-virtualenv-root "~/.vpy/27production0/")
 (setq python-shell-interpreter "ipython3"
       python-shell-interpreter-args "--simple-prompt -i")
 
 ;; in conjunction with JRR... guess what the indentation is
-(load-file "~swain/.emacs.d/guess-style-master/guess-style.el")
+(load-file "~/.emacs.d/guess-style-master/guess-style.el")
 (autoload 'guess-style-set-variable "guess-style" nil t)
 (autoload 'guess-style-guess-variable "guess-style")
 (autoload 'guess-style-guess-all "guess-style" nil t)
