@@ -89,7 +89,7 @@
 ;; escaping from recursive edits: abort-recursive-edit
 
 ;; make a TAGS file for your install of Emacs plus the libraries locally
-;; find /usr/local/share/emacs ~swain/.emacs.d \( -name \*.el -o -name .emacs \) | sudo etags -
+;; find /usr/local/share/emacs ~/.emacs.d \( -name \*.el -o -name .emacs \) | sudo etags -
 
 ;; make any old tags table:
 ;; find . -name "*.[chCH]" -print | etags -
@@ -126,7 +126,7 @@
 
 ;; default mode gunk
 
-;;(setq load-path (append load-path (list "~swain/.emacs.d")))
+(setq load-path (append load-path (list "~/.emacs.d/personal-lisp")))
 
 ;; set the default command for M-x compile
 ;;(setq compile-command "make -C ~/git/pippin nfmc")
@@ -175,7 +175,7 @@
 
 ;; automatically load the .abbrev_defs file and abbrev-mode
 (defvar sw-abbrev-defs
-  "~swain/.abbrev_defs"
+  "~/.abbrev_defs"
   "abbreviation definitions file")
 ;; first time caller? make the file
 (if (not (file-exists-p sw-abbrev-defs))
@@ -321,7 +321,7 @@ them."
   (interactive)
   (sw-shell "sql")
   (abbrev-mode t)
-  (read-abbrev-file "~swain/.abbrev_defs")
+  (read-abbrev-file "~/.abbrev_defs")
   )
 
 (defun sw-tail ()
@@ -708,7 +708,8 @@ the kill ring."
 
 ;; Give diff and patch files a color scheme that works with a black
 ;; background. Note the hyphen at the end of the basename: diff-mode-
-;;(load-file "~swain/.emacs.d/diff-mode-.el")
+
+;;(load-file "~/.emacs.d/diff-mode-.el")
 
 ;; One function and two convenience commands for running git diff and
 ;; putting the results in a special window.
@@ -747,7 +748,7 @@ the kill ring."
 ;; (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
 
 ;; capture tasks easily
-(setq org-default-notes-file "~swain/Dropbox/projects/GTD/notes.org")
+;;(setq org-default-notes-file "~/Dropbox/projects/GTD/notes.org")
 (define-key global-map "\C-cc" 'org-capture)
 
 (defun sw-git-show-sha-at-point ()
