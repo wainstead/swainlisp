@@ -127,7 +127,6 @@
 
 ;; default mode gunk
 
-(setq load-path (append load-path (list "~/.emacs.d/personal-lisp")))
 
 ;; set the default command for M-x compile
 ;;(setq compile-command "make -C ~/git/pippin nfmc")
