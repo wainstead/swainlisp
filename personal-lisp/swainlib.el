@@ -815,6 +815,7 @@ the kill ring."
 (key-chord-define-global "j3" 'split-window-right)
 (key-chord-define-global "jf" 'switch-to-buffer)
 (key-chord-define-global "f0" 'delete-window)
+(key-chord-define-global "jl" 'other-window)
 
 (key-chord-define-global "jq" '(lambda () (interactive) (switch-to-buffer (get-buffer "*SQL*"))))
 ;;(key-chord-define-global "JQ" '(lambda () (interactive) (switch-to-buffer (get-buffer "psql"))))
@@ -1180,3 +1181,6 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+;; rails stuff
+(add-hook 'ruby-mode-hook 'robe-mode)
