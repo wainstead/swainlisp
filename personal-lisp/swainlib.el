@@ -910,7 +910,15 @@ the kill ring."
 
 (global-set-key "\M-sl" (lambda () (interactive) (select-frame-by-name "nfmc logs")))
 
-(add-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+;; Update speedbar to display... a directory? Dale provided this
+;; tidbit when Speedbar was not behaving as I expected it would.
+;;(add-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+;; Nov 30 2018 was getting:
+;; Updating speedbar to: /Users/spawlowski/dev/minutes-api/...
+;; error in process filter: speedbar-update-localized-contents: Wrong type argument: stringp, nil
+;; error in process filter: Wrong type argument: stringp, nil
+;;(remove-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+
 (global-set-key "\M-s\M-s" 'speedbar-get-focus)
 
 ;; (define-key sw-projectile-map (kbd "f") 'projectile-find-file)
@@ -933,7 +941,7 @@ the kill ring."
 (defun sw-open-cheatsheet ()
   "open my cheatsheet"
   (interactive)
-  (find-file "~/notebooks/developer-notes/swain/cheatsheet")
+  (find-file "~/Documents/cheatsheet.org")
   )
 (define-key sw-map (kbd "c") 'sw-open-cheatsheet)
 (define-key sw-map (kbd "o") 'comint-delete-output)
