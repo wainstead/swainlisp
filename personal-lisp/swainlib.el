@@ -539,7 +539,8 @@ already.  Give error if buffer is not associated with a file."
         (switch-to-buffer buffer)
         (ibuffer-update nil))
     (ibuffer))
-  (delete-other-windows))
+  ;;(delete-other-windows)
+  )
 
 ;; move my shell buffer "buffername" to the dir the file is in. if not
 ;; visiting file make named shell buffer
