@@ -883,6 +883,8 @@ the kill ring."
 (key-chord-define-global "jx" sw-map)
 (define-key sw-map (kbd "t") 'org-todo)
 (define-key sw-map (kbd "m") 'compile)
+(define-key sw-map (kbd "u") 'winner-undo)
+(define-key sw-map (kbd "r") 'winner-redo)
 
 ;; doesn't work... have to figure out what the active keymap is in the
 ;; frame for *Compilation*
