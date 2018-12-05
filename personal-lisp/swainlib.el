@@ -942,7 +942,7 @@ the kill ring."
 (defun sw-open-cheatsheet ()
   "open my cheatsheet"
   (interactive)
-  (find-file "~/Documents/cheatsheet.org")
+  (find-file "~/Documents/workfiles/cheatsheet.org")
   )
 (define-key sw-map (kbd "c") 'sw-open-cheatsheet)
 (define-key sw-map (kbd "o") 'comint-delete-output)
