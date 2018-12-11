@@ -900,7 +900,9 @@ the kill ring."
 	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
 
-;;(projectile-mode +1)
+(defvar load-projectile-mode nil)
+(and load-projectile-mode (projectile-mode +1))
+
 ;; (defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
 ;; (define-prefix-command 'sw-projectile-map)
 (global-set-key "\M-sp" 'projectile-command-map)
