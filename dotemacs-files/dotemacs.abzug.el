@@ -5,5 +5,5 @@
 
 ;; working off these instructions:
 ;; https://tuhdo.github.io/helm-intro.html
-(require 'helm-config)
-(helm-mode 1)
+;; (require 'helm-config)
+;; (helm-mode 1)
