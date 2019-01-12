@@ -1195,3 +1195,32 @@ the SQL to select the most recent lines from nfmc.audit_log."
 
 ;; rails stuff
 (add-hook 'ruby-mode-hook 'robe-mode)
+
+
+;; Put begin/end strings around a region in org-mode
+;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
+(defun sw-org-format-example (mode)
+  ;; as cool as this is -- it lets you enter lambdas -- we'll stick
+  ;; with predetermined functions for now. Later: allow a choice that
+  ;; prompts the user for a lambda. Also need: let user enter
+  ;; arbitrary mode name
+  ;;(interactive "XFunction to apply to region: ")
+  (interactive
+   (let ((completion-ignore-case  t))
+     (list (completing-read "Format as: " '("diff" "example" "ruby" "sql" "perl" "lisp") nil t))
+     ))
+
+  (save-excursion
+    (let* ((beg (region-beginning))
+           (end (region-end))
+	   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
+	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
+
+	   (resulting-text
+	    (format "%s%s\n%s%s %s\n"
+		    beginstr mode
+		    (buffer-substring-no-properties beg end)
+		    endstr mode)))
+      (kill-region beg end)
+      (insert resulting-text))
+  ))
