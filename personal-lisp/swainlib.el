@@ -836,7 +836,7 @@ the kill ring."
 (key-chord-define-global "jw" 'other-frame)
 ;;(key-chord-define-global "JW" 'other-frame)
 ;; note that 'jx' is now reserved as the prefix code for my keymap
-;; sw-map.
+;; sw-jx-map.
 
 ;; new prompt parsing for shells
 (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)]" 1 nil))
@@ -871,14 +871,31 @@ the kill ring."
 ;; Define my personal keymap, whose prefix key will be control-;
 ;; (UPDATE: now using jx via key-chord.el) (next step is to define my
 ;; own minor mode to override major modes (quickswitch, for one))
-;; improve this: define my own minor mode to reduce typing! This
-;; keymap can then be the minor mode's keymap.
-(defvar sw-map nil
-  "Steve Wainstead's personal keymap for any mode.")
-(define-prefix-command 'sw-map)
-(global-set-key [(control ?;)] 'sw-map)
+;; NOTE: Dale recommends god-mode as well, which will probabaly do
+;; what I want: improve this: define my own minor mode to reduce
+;; typing! This keymap can then be the minor mode's keymap.
+(defvar sw-jx-map nil
+  "Steve Wainstead's first personal keymap for any mode.")
+
+(defvar sw-zx-map nil
+  "Another of Steve Wainstead's personal keymaps for any mode.")
+
+;; for jx
+(define-prefix-command 'sw-jx-map)
+(key-chord-define-global "jx" sw-jx-map)
+
+;; for zx
+(define-prefix-command 'sw-zx-map)
+(key-chord-define-global "zx" sw-zx-map)
+
+;; not working yet.
+;;(define-key sw-zx-map (kbd "h") 'helm-command-prefix)
+
+(global-set-key [(control ?;)] 'sw-jx-map)
+
 ;; set my quickswitch macro to 'a'
-(define-key sw-map (kbd "a") 'sw-qs)
+(define-key sw-jx-map (kbd "a") 'sw-qs)
+
 ;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
 (key-chord-define-global "jx" sw-map)
 (define-key sw-map (kbd "t") 'org-todo)
@@ -903,7 +920,9 @@ the kill ring."
 	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
 
-(projectile-mode +1)
+(defvar load-projectile-mode nil)
+(and load-projectile-mode (projectile-mode +1))
+
 ;; (defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
 ;; (define-prefix-command 'sw-projectile-map)
 (global-set-key "\M-sp" 'projectile-command-map)
@@ -946,8 +965,8 @@ the kill ring."
   (interactive)
   (find-file "~/Documents/workfiles/cheatsheet.org")
   )
-(define-key sw-map (kbd "c") 'sw-open-cheatsheet)
-(define-key sw-map (kbd "o") 'comint-delete-output)
+(define-key sw-jx-map (kbd "c") 'sw-open-cheatsheet)
+(define-key sw-jx-map (kbd "o") 'comint-delete-output)
 
 ;; filched from http://nullprogram.com/blog/2010/10/06/
 (defun set-window-width (n)
@@ -959,14 +978,14 @@ the kill ring."
   (interactive)
   (set-window-width 80))
 
-(define-key sw-map (kbd "8") 'set-80-columns)
-(define-key sw-map (kbd "i") 'sw-list)
-(define-key sw-map (kbd "f") 'find-file-at-point)
+(define-key sw-jx-map (kbd "8") 'set-80-columns)
+(define-key sw-jx-map (kbd "i") 'sw-list)
+(define-key sw-jx-map (kbd "f") 'find-file-at-point)
 
-(define-key sw-map [f3] 'clr)
-(define-key sw-map [f5] 'compile)
-(define-key sw-map [f6] `toggle-buffer-full-filename)
-(define-key sw-map (kbd "%") `query-replace)
+(define-key sw-jx-map [f3] 'clr)
+(define-key sw-jx-map [f5] 'compile)
+(define-key sw-jx-map [f6] `toggle-buffer-full-filename)
+(define-key sw-jx-map (kbd "%") `query-replace)
 
 
 (defvar sw-meta-a-map nil
