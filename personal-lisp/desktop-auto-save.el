@@ -34,7 +34,7 @@
 ;; (desktop-load-default)
 ;; ;; automatically save the desktop on exit.
 ;; (setq desktop-enable t)
-;; (load-file "~swain/.elisp/desktop-auto-save.el")
+;; (load-file "~/.elisp/desktop-auto-save.el")
 
 
 
@@ -91,7 +91,7 @@ consequences.")
        )
   )
 
-(defvar sw-buffer-file-name-prefix "~swain/.emacs.shellbuffers/"
+(defvar sw-buffer-file-name-prefix "~/.emacs.shellbuffers/"
   "All shell buffers, when their contents are saved, get this string prefixed to the buffer name.")
 
 ;; save a shell buffer's contents to ~/.emacs.shellbuffers/buffer-name; doesn't switch
@@ -109,7 +109,7 @@ consequences.")
   "Make a buffer file name string from the buffer name passed in
 by prefixing the string passed in with the contents of the
 variable sw-buffer-file-name-prefix. For example: pass in 'cli'
-and it returns '~swain/.emacs.shellbuffers/cli'"
+and it returns '~/.emacs.shellbuffers/cli'"
   ;;(message (concat sw-buffer-file-name-prefix buffname))
   (concat sw-buffer-file-name-prefix (buffer-name buffer))
   )
@@ -173,7 +173,7 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
 ;;   "do an svn revert on the shell buffers directory, then for each
 ;; open buffer, insert its file at point-min"
 ;;   (interactive)
-;;   (shell-command "svn revert ~swain/.emacs.shellbuffers/*")
+;;   (shell-command "svn revert ~/.emacs.shellbuffers/*")
 ;;   ;; now recurse, since they are reverted. Don't want to revert every
 ;;   ;; time.
 ;;   (sw-insert-previous-shellbuffer-contents (list "cli" "root" "www" "sql")))
@@ -194,7 +194,7 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
       (progn
         (switch-to-buffer (get-buffer (car shell-buffer-list)))
         (goto-char (point-min))
-        (insert-file (format "~swain/.emacs.shellbuffers/%s" (car shell-buffer-list)))
+        (insert-file (format "~/.emacs.shellbuffers/%s" (car shell-buffer-list)))
         (goto-char (point-max))
         (sw-insert-previous-shellbuffer-contents (cdr shell-buffer-list))
         )
@@ -206,7 +206,7 @@ and it returns '~swain/.emacs.shellbuffers/cli'"
    git-commit those files in ~/.emacs.shellbuffers."
   (interactive)
   (sw-save-shell-buffer-contents)
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
+  (shell-command "cd ~/.emacs.shellbuffers; git commit -am \"Committing buffers\"")
 )
 ;; when quiting Emacs save and commit the shell buffers
 (add-hook 'kill-emacs-hook 'sw-git-commit-buffers t)

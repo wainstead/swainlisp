@@ -539,7 +539,8 @@ already.  Give error if buffer is not associated with a file."
         (switch-to-buffer buffer)
         (ibuffer-update nil))
     (ibuffer))
-  (delete-other-windows))
+  ;;(delete-other-windows)
+  )
 
 ;; move my shell buffer "buffername" to the dir the file is in. if not
 ;; visiting file make named shell buffer
@@ -894,10 +895,13 @@ the kill ring."
 
 ;; set my quickswitch macro to 'a'
 (define-key sw-jx-map (kbd "a") 'sw-qs)
-;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
 
-(define-key sw-jx-map (kbd "t") 'org-todo)
-(define-key sw-jx-map (kbd "m") 'compile)
+;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
+(key-chord-define-global "jx" sw-map)
+(define-key sw-map (kbd "t") 'org-todo)
+(define-key sw-map (kbd "m") 'compile)
+(define-key sw-map (kbd "u") 'winner-undo)
+(define-key sw-map (kbd "r") 'winner-redo)
 
 ;; doesn't work... have to figure out what the active keymap is in the
 ;; frame for *Compilation*
@@ -959,7 +963,7 @@ the kill ring."
 (defun sw-open-cheatsheet ()
   "open my cheatsheet"
   (interactive)
-  (find-file "~/Documents/cheatsheet.org")
+  (find-file "~/Documents/workfiles/cheatsheet.org")
   )
 (define-key sw-jx-map (kbd "c") 'sw-open-cheatsheet)
 (define-key sw-jx-map (kbd "o") 'comint-delete-output)
@@ -1210,3 +1214,32 @@ the SQL to select the most recent lines from nfmc.audit_log."
 
 ;; rails stuff
 (add-hook 'ruby-mode-hook 'robe-mode)
+
+
+;; Put begin/end strings around a region in org-mode
+;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
+(defun sw-org-format-example (mode)
+  ;; as cool as this is -- it lets you enter lambdas -- we'll stick
+  ;; with predetermined functions for now. Later: allow a choice that
+  ;; prompts the user for a lambda. Also need: let user enter
+  ;; arbitrary mode name
+  ;;(interactive "XFunction to apply to region: ")
+  (interactive
+   (let ((completion-ignore-case  t))
+     (list (completing-read "Format as: " '("diff" "example" "ruby" "sql" "perl" "lisp") nil t))
+     ))
+
+  (save-excursion
+    (let* ((beg (region-beginning))
+           (end (region-end))
+	   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
+	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
+
+	   (resulting-text
+	    (format "%s%s\n%s%s %s\n"
+		    beginstr mode
+		    (buffer-substring-no-properties beg end)
+		    endstr mode)))
+      (kill-region beg end)
+      (insert resulting-text))
+  ))

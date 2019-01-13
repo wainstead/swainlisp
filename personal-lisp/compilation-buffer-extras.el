@@ -22,7 +22,7 @@
 (defun sw-write-compilation-buffer()
   "Hook function to write the *compilation* buffer for each compile."
   (and (get-buffer "*compilation*") (sw-save-buffer-invisibly (get-buffer "*compilation*")))
-  (shell-command "cd ~swain/.emacs.shellbuffers; git commit -m \"saving last compilation\" ?compilation?")
+  (shell-command "cd ~/.emacs.shellbuffers; git commit -m \"saving last compilation\" ?compilation?")
 )
 
 ;; every time the "compile" or "recompile" functions are run, write
