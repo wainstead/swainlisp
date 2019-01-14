@@ -1242,9 +1242,9 @@ the SQL to select the most recent lines from nfmc.audit_log."
 ;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
 (defun sw-org-format-example (mode)
   ;; as cool as this is -- it lets you enter lambdas -- we'll stick
-  ;; with predetermined functions for now. Later: allow a choice that
-  ;; prompts the user for a lambda. Also need: let user enter
-  ;; arbitrary mode name
+  ;; with plain strings for now. Later: allow a choice that prompts
+  ;; the user for a lambda. Also need: let user enter arbitrary mode
+  ;; name.
   ;;(interactive "XFunction to apply to region: ")
   (interactive
    (let ((completion-ignore-case  t))
