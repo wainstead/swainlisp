@@ -367,6 +367,28 @@ them."
   (insert "\n#########################################################################\n")
   (insert (format-time-string "**** %y%m%d %c\n\n" (current-time))))
 
+(defun sw-insert-daily-checklist ()
+  "Insert a blank checklist of morning tasks"
+  (interactive)
+  (goto-char (point-max))
+  (let ((checklist "- [ ] Outlook Calendar Meetings & Tickler items
+- [ ] Slack channels
+- [ ] Outlook Inbox
+- [ ] Outlook Actionable folder
+- [ ] Outlook Waiting On folder
+- [ ] Outlook High Priority
+- [ ] Outlook Tasks
+- [ ] TargetProcess: review scrum board
+- [ ] Confluence updates https://confluence.corp.diligent.com:8443/#all-updates
+- [ ] Emacs/GTD: Clear inbox.org
+- [ ] Emacs/GTD: Review gtd.org
+- [ ] Emacs/GTD: Move tickler.org items to Outlook Calendar"))
+    (insert (format-time-string "* %y%m%d %c\n\n" (current-time)))
+    (insert checklist)
+    (ignore-errors (while (org-previous-item) nil))
+    )
+  )
+
 ;; make n and p work without control key for buffers like *grep*
 ;; h/t to Dale Sedivec for suggesting modifying the parent mode's map!
 (add-hook 'special-mode-hook
@@ -1226,7 +1248,15 @@ the SQL to select the most recent lines from nfmc.audit_log."
   ;;(interactive "XFunction to apply to region: ")
   (interactive
    (let ((completion-ignore-case  t))
-     (list (completing-read "Format as: " '("diff" "example" "ruby" "sql" "perl" "lisp") nil t))
+     (list (completing-read "Format as: " '(
+					    "diff"
+					    "example"
+					    "ruby"
+					    "sql"
+					    "perl"
+					    "lisp"
+					    "emacs-lisp"
+					    ) nil t))
      ))
 
   (save-excursion
@@ -1236,7 +1266,7 @@ the SQL to select the most recent lines from nfmc.audit_log."
 	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
 
 	   (resulting-text
-	    (format "%s%s\n%s%s %s\n"
+	    (format "%s%s\n%s%s%s\n"
 		    beginstr mode
 		    (buffer-substring-no-properties beg end)
 		    endstr mode)))
