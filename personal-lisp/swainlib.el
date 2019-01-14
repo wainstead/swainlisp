@@ -1250,12 +1250,13 @@ the SQL to select the most recent lines from nfmc.audit_log."
    (let ((completion-ignore-case  t))
      (list (completing-read "Format as: " '(
 					    "diff"
+					    "emacs-lisp"
 					    "example"
+					    "html"
+					    "lisp"
+					    "perl"
 					    "ruby"
 					    "sql"
-					    "perl"
-					    "lisp"
-					    "emacs-lisp"
 					    ) nil t))
      ))
 
