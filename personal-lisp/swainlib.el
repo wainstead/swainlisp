@@ -159,7 +159,7 @@
 (desktop-load-default)
 ;; automatically save the desktop on exit.
 (setq desktop-enable t)
-(load "desktop-auto-save.el")
+(load "desktop-auto-save")
 (load "tail-logs.el")
 (load-library "ibuffer")
 
@@ -897,11 +897,11 @@ the kill ring."
 (define-key sw-jx-map (kbd "a") 'sw-qs)
 
 ;; thank you https://stackoverflow.com/questions/25473660/how-do-i-use-a-key-chord-combination-as-a-prefix-binding
-(key-chord-define-global "jx" sw-map)
-(define-key sw-map (kbd "t") 'org-todo)
-(define-key sw-map (kbd "m") 'compile)
-(define-key sw-map (kbd "u") 'winner-undo)
-(define-key sw-map (kbd "r") 'winner-redo)
+;;(key-chord-define-global "jx" sw-map)
+(define-key sw-jx-map (kbd "t") 'org-todo)
+(define-key sw-jx-map (kbd "m") 'compile)
+(define-key sw-jx-map (kbd "u") 'winner-undo)
+(define-key sw-jx-map (kbd "r") 'winner-redo)
 
 ;; doesn't work... have to figure out what the active keymap is in the
 ;; frame for *Compilation*
