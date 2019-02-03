@@ -156,7 +156,8 @@
 (global-font-lock-mode t)
 
 ;; load the desktop on startup (from ~/)
-(desktop-load-default)
+;; this function has become obsolete
+;;(desktop-load-default)
 ;; automatically save the desktop on exit.
 (setq desktop-enable t)
 (load "desktop-auto-save")
@@ -204,10 +205,13 @@
 (setq gnus-select-method '(nntp "news.panix.com"))
 
 ;; get the speedbar... or not...
-(unless window-system
+(if window-system
   ;;(speedbar) ;; we just never use it. alas.
   ;; else
-  (menu-bar-mode nil))
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar t)
+  )
 
 ;; check the man page for the 'date' command to format the day/time
 ;; differently..
@@ -1212,10 +1216,6 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
-;; rails stuff
-(add-hook 'ruby-mode-hook 'robe-mode)
-
-
 ;; Put begin/end strings around a region in org-mode
 ;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
 (defun sw-org-format-example (mode)
@@ -1252,3 +1252,17 @@ the SQL to select the most recent lines from nfmc.audit_log."
       (kill-region beg end)
       (insert resulting-text))
   ))
+
+(add-hook 'ruby-mode-hook 'robe-mode)
+(robe-mode)
+;; jan 2019
+;; meddle with robe's keymap
+;; rails stuff
+(define-key robe-mode-map (kbd "M-,") nil)
+(define-key robe-mode-map (kbd "M-.") nil)
+(define-key robe-mode-map (kbd "C-x ,") 'pop-tag-mark)
+;; not until I get rails running locally for my app..
+;;(define-key robe-mode-map (kbd "C-x .") 'robe-jump)
+(define-key robe-mode-map (kbd "C-x .") 'xref-find-definitions)
+
+
