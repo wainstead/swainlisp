@@ -114,6 +114,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
+(load "org-mode-mods")
 
 (when window-system
   ;; make pretty
