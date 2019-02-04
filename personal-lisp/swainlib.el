@@ -889,12 +889,14 @@ the kill ring."
 (define-prefix-command 'sw-jx-map)
 (key-chord-define-global "jx" sw-jx-map)
 
-;; for zx
-(define-prefix-command 'sw-zx-map)
-(key-chord-define-global "zx" sw-zx-map)
+;; god-mode, local buffer, keybinding
+(key-chord-define-global "jg" 'god-local-mode)
 
-;; not working yet.
-;;(define-key sw-zx-map (kbd "h") 'helm-command-prefix)
+;; for jz
+(define-prefix-command 'sw-jz-map)
+(key-chord-define-global "jz" sw-jz-map)
+;; (require 'helm)
+;; (define-key sw-jz-map (kbd "h") 'helm-command-prefix)
 
 (global-set-key [(control ?;)] 'sw-jx-map)
 
@@ -1267,3 +1269,8 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (define-key robe-mode-map (kbd "C-x .") 'xref-find-definitions)
 
 
+;; god-mode stuff
+;; https://github.com/chrisdone/god-mode
+(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
+(global-set-key (kbd "<escape>") 'god-local-mode)
+(global-set-key (kbd "<escape>") 'god-mode-all)
