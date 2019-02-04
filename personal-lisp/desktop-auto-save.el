@@ -43,7 +43,7 @@
   "Added to auto-save-hook so the desktop is not lost."
   (desktop-save "~/")
   (sw-save-shell-buffer-contents)
-  ;;(message "Wrote desktop.")
+  (message "Wrote desktop.")
   )
 
 (add-hook 'auto-save-hook 'desktop-auto-save t)

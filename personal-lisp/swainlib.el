@@ -116,6 +116,13 @@
 (add-to-list 'load-path "~/.emacs.d/external-packages")
 (load "org-mode-mods")
 
+;; god-mode stuff
+;; https://github.com/chrisdone/god-mode
+(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
+;;(global-set-key (kbd "<escape>") 'god-local-mode)
+;;(global-set-key (kbd "<escape>") 'god-mode-all)
+
+
 (when window-system
   ;; make pretty
   ;; (defvar default-frame-alist '((background-color . "#040000")
@@ -1267,10 +1274,3 @@ the SQL to select the most recent lines from nfmc.audit_log."
 ;; not until I get rails running locally for my app..
 ;;(define-key robe-mode-map (kbd "C-x .") 'robe-jump)
 (define-key robe-mode-map (kbd "C-x .") 'xref-find-definitions)
-
-
-;; god-mode stuff
-;; https://github.com/chrisdone/god-mode
-(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
-(global-set-key (kbd "<escape>") 'god-local-mode)
-(global-set-key (kbd "<escape>") 'god-mode-all)
