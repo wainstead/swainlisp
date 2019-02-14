@@ -12,6 +12,9 @@
                               ("T" "Tickler" entry
                                (file+headline "~/Documents/GTD/tickler.org" "Tickler")
                                "* %i%? \n %U")
+                              ("w" "Waiting [inbox]" entry
+                               (file+headline "~/Documents/GTD/inbox.org" "Waiting")
+                               "* WAITING %i%?")
 			      ("Q" "Question" entry
 			       (file+headline "~/Documents/GTD/inbox.org" "Question")
                                "* %i%? \n %U")
