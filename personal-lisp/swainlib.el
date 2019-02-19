@@ -1210,15 +1210,3 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
-(add-hook 'ruby-mode-hook 'robe-mode)
-(robe-mode)
-;; jan 2019
-;; meddle with robe's keymap
-;; rails stuff
-(define-key robe-mode-map (kbd "M-,") nil)
-(define-key robe-mode-map (kbd "M-.") nil)
-(define-key robe-mode-map (kbd "C-x ,") 'pop-tag-mark)
-;; not until I get rails running locally for my app..
-;;(define-key robe-mode-map (kbd "C-x .") 'robe-jump)
-(define-key robe-mode-map (kbd "C-x .") 'xref-find-definitions)
