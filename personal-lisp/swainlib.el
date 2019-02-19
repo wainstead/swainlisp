@@ -369,9 +369,8 @@ them."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-;; Switch to org-mode for my work diary
 (defun sw-start-new-log-entry ()
-  "Insert a new node for the day's entries"
+  "Insert a new (org-mode) node for the day's entries"
   (interactive)
   (goto-char (point-max))
   ;; This line is still visually useful for marking the end of an
@@ -755,15 +754,6 @@ the kill ring."
   (save-excursion (newline (length killed-rectangle)))
   (yank-rectangle))
 
-
-;; load a newer version of org-mode
-;; (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/lisp" load-path))
-;; (setq load-path (cons "~/Dropbox/Applications/org-8.2.4/contrib/lisp" load-path))
-
-;; capture tasks easily
-;;(setq org-default-notes-file "~/Dropbox/projects/GTD/notes.org")
-(define-key global-map "\C-cc" 'org-capture)
-
 (defun sw-git-show-sha-at-point ()
   "Run git-show on the SHA at point as a shell command."
   (interactive)
@@ -1011,11 +1001,6 @@ the kill ring."
 (define-key sw-meta-a-map "u" 'untabify)
 (define-key sw-meta-a-map "o" 'comint-delete-output)
 
-;; take it away from org-mode
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (define-key org-mode-map (kbd "M-a") nil)))
-
 ;; Compilation stuff
 (defvar sw-compile-map nil
   "Steve Wainstead's personal keymap for compilation commands")
@@ -1225,43 +1210,6 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-
-;; Put begin/end strings around a region in org-mode
-;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
-(defun sw-org-format-example (mode)
-  ;; as cool as this is -- it lets you enter lambdas -- we'll stick
-  ;; with plain strings for now. Later: allow a choice that prompts
-  ;; the user for a lambda. Also need: let user enter arbitrary mode
-  ;; name.
-  ;;(interactive "XFunction to apply to region: ")
-  (interactive
-   (let ((completion-ignore-case  t))
-     (list (completing-read "Format as: " '(
-					    "diff"
-					    "emacs-lisp"
-					    "example"
-					    "html"
-					    "lisp"
-					    "perl"
-					    "ruby"
-					    "sql"
-					    ) nil t))
-     ))
-
-  (save-excursion
-    (let* ((beg (region-beginning))
-           (end (region-end))
-	   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
-	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
-
-	   (resulting-text
-	    (format "%s%s\n%s%s%s\n"
-		    beginstr mode
-		    (buffer-substring-no-properties beg end)
-		    endstr mode)))
-      (kill-region beg end)
-      (insert resulting-text))
-  ))
 
 (add-hook 'ruby-mode-hook 'robe-mode)
 (robe-mode)
