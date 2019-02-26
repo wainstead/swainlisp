@@ -760,7 +760,8 @@ the kill ring."
   (let ( (git-sha (thing-at-point 'word)) )
     (if  (null git-sha)
         (error "Point does not appear to be on a Unix timestamp"))
-    (shell-command (format "git show %s" git-sha))
+    (shell-command
+     (format "git show %s" git-sha) (format "git show %s" git-sha))
     )
   )
 
