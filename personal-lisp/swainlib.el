@@ -209,10 +209,8 @@
 ;; gnus config
 (setq gnus-select-method '(nntp "news.panix.com"))
 
-;; get the speedbar... or not...
 (if window-system
-  ;;(speedbar) ;; we just never use it. alas.
-  ;; else
+    ;; disable these things
   (tool-bar-mode -1)
   (menu-bar-mode -1)
   (toggle-scroll-bar t)
@@ -257,6 +255,12 @@
   (interactive "P")
   (scroll-right (prefix-numeric-value n)))
 
+;; Haven't been bound to keys in ages
+;; Would have been super useful in csv-mode
+;; (global-set-key "\C-x," 'sw-scroll-left-n)
+;; (global-set-key "\C-x." 'sw-scroll-right-n)
+
+;; Use these for symbol searches (i.e. TAGS file)
 (global-set-key "\C-x," 'xref-pop-marker-stack)
 (global-set-key "\C-x." 'xref-find-definitions)
 
