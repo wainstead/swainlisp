@@ -57,14 +57,15 @@
 					    "perl"
 					    "ruby"
 					    "sql"
+					    "yaml"
 					    ) nil t))
      ))
 
   (save-excursion
     (let* ((beg (region-beginning))
            (end (region-end))
-	   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
-	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
+	   (beginstr (if (string= mode "example") "#+BEGIN " "#+BEGIN_SRC "))
+	   (endstr   (if (string= mode "example") "#+END " "#+END_SRC "))
 
 	   (resulting-text
 	    (format "%s%s\n%s%s%s\n"
