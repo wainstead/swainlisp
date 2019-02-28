@@ -163,11 +163,8 @@
 ;; always use font-lock-mode in modes that support it
 (global-font-lock-mode t)
 
-;; load the desktop on startup (from ~/)
-;; this function has become obsolete
-;;(desktop-load-default)
 ;; automatically save the desktop on exit.
-(setq desktop-enable t)
+(setq desktop-save-mode t)
 (load "desktop-auto-save")
 (load "tail-logs.el")
 (load-library "ibuffer")
