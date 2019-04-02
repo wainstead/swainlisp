@@ -35,7 +35,12 @@
 			   ("~/Documents/GTD/habits.org" :maxlevel . 2)
 			   ))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)")))
+
+(setq org-todo-keyword-faces
+      '(("DEFERRED" . (:foreground "red" :weight bold)) ("STARTED" . "yellow")
+        ("CANCELLED" . (:foreground "red" :weight bold))))
+
 
 
 ;; Put begin/end strings around a region in org-mode
