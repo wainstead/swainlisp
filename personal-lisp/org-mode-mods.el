@@ -58,6 +58,7 @@
 					    "emacs-lisp"
 					    "example"
 					    "html"
+					    "json"
 					    "lisp"
 					    "perl"
 					    "ruby"
