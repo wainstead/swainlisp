@@ -116,12 +116,25 @@
 (add-to-list 'load-path "~/.emacs.d/external-packages")
 (load "org-mode-mods")
 
-;; god-mode stuff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
 ;; https://github.com/chrisdone/god-mode
 (load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
 ;;(global-set-key (kbd "<escape>") 'god-local-mode)
 ;;(global-set-key (kbd "<escape>") 'god-mode-all)
 
+(defun god-mode-enabled-hook ()
+  "Hook function to run when god-mode enabled"
+  ;;(message "God mode enabled")
+  (setq-local face-remapping-alist '((default . (:foreground "lime" :background "midnightblue"))))
+  )
+(defun god-mode-disabled-hook ()
+  "Hook function to run when disabling god-mode"
+  ;;(message "God mode disabled")
+  (setq-local face-remapping-alist '((default . (:foreground "goldenrod" :background "black"))))
+  )
+(add-hook 'god-mode-enabled-hook 'god-mode-enabled-hook)
+(add-hook 'god-mode-disabled-hook 'god-mode-disabled-hook)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end god-mode stuff
 
 (when window-system
   ;; make pretty
@@ -1212,3 +1225,4 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
