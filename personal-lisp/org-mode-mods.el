@@ -64,6 +64,7 @@
 					    "ruby"
 					    "sql"
 					    "yaml"
+					    "sh"
 					    ) nil t))
      ))
 

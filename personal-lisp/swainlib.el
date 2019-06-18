@@ -426,16 +426,10 @@ them."
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
 
-;; doesn't seem to work. 4/27/2018.
-(defun sw-color-background-for-fixture-functions ()
-  "Distinguish conftest.py files from others"
-  (setq-local face-remapping-alist
-	      '((default .
-		  (:foreground "goldenrod" :background "#2E002E")))))
+;; highlight-indentation-mode is pretty essential for these major modes
+(add-hook 'yaml-mode-hook 'highlight-indentation-mode)
+(add-hook 'json-mode-hook 'highlight-indentation-mode)
 
-(add-to-list 'auto-mode-alist '("conftest.py" . python-mode ))
-
-;; I don't remember adding this or why.
 (put 'downcase-region 'disabled nil)
 
 ;; snappy: macro + keybinding = hooha
@@ -445,7 +439,6 @@ them."
 ;; highlight-regexp is an alias to a hi-lock command, set in hi-lock.
 ;; I now use "M-s h r" because it's in easy reach, and there's other
 ;; cool things under the "M-s h" prefix.
-(global-set-key [\C-f11] 'unhighlight-regexp)
 (global-set-key [f12] 'toggle-truncate-lines)
 (global-set-key [home] 'beginning-of-buffer)
 (global-set-key [end] 'end-of-buffer)
