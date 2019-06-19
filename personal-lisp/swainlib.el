@@ -420,11 +420,12 @@ them."
 (add-to-list 'auto-mode-alist '("\\.vps$"     . python-mode     ))
 (add-to-list 'auto-mode-alist '("\\.tt2$"     . html-mode       ))
 (add-to-list 'auto-mode-alist '("\\.xsd$"     . sgml-mode       ))
-(add-to-list 'auto-mode-alist '("\\.js$"      . js-mode ))
+(add-to-list 'auto-mode-alist '("\\.js$"      . js-mode         ))
 (add-to-list 'auto-mode-alist '("\\.xpi$"     . archive-mode    ))
 (add-to-list 'auto-mode-alist '("\\.rb$"      . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rby$"     . ruby-mode       ))
 (add-to-list 'auto-mode-alist '("\\.rhtml$"   . ruby-mode       ))
+(add-to-list 'auto-mode-alist '("\\.tsx$"     . typescript-mode ))
 
 ;; highlight-indentation-mode is pretty essential for these major modes
 (add-hook 'yaml-mode-hook 'highlight-indentation-mode)
