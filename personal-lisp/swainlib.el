@@ -125,7 +125,7 @@
 (defun god-mode-enabled-hook ()
   "Hook function to run when god-mode enabled"
   ;;(message "God mode enabled")
-  (setq-local face-remapping-alist '((default . (:foreground "lime" :background "midnightblue"))))
+  (setq-local face-remapping-alist '((default . (:foreground "goldenrod" :background "#003333"))))
   )
 (defun god-mode-disabled-hook ()
   "Hook function to run when disabling god-mode"
@@ -142,7 +142,7 @@
   ;;                               (foreground-color . "goldenrod")
   ;;                               (cursor-color     . "red")))
   (add-to-list 'default-frame-alist '(foreground-color . "goldenrod"))
-  (add-to-list 'default-frame-alist '(background-color . "#040000"))
+  (add-to-list 'default-frame-alist '(background-color . "black"))
   ;;(add-to-list 'default-frame-alist '(cursor-color . "red"))
   "Default colors for Emacs.")
 
