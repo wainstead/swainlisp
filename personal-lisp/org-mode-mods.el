@@ -57,14 +57,16 @@
 					    "diff"
 					    "emacs-lisp"
 					    "example"
+					    "expect"
 					    "html"
 					    "json"
 					    "lisp"
 					    "perl"
 					    "ruby"
-					    "sql"
-					    "yaml"
 					    "sh"
+					    "sql"
+					    "tcl"
+					    "yaml"
 					    ) nil t))
      ))
 
