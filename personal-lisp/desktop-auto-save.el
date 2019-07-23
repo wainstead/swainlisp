@@ -41,7 +41,7 @@
 ;; save the desktop every time you auto-save-file
 (defun desktop-auto-save ()
   "Added to auto-save-hook so the desktop is not lost."
-  (desktop-save "~/")
+  (desktop-save "~/") ;; here is why!
   (sw-save-shell-buffer-contents)
   (message "Wrote desktop.")
   )

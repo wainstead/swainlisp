@@ -130,7 +130,8 @@
 (defun god-mode-disabled-hook ()
   "Hook function to run when disabling god-mode"
   ;;(message "God mode disabled")
-  (setq-local face-remapping-alist '((default . (:foreground "goldenrod" :background "black"))))
+  (kill-local-variable 'face-remapping-alist)
+  ;;(setq-local face-remapping-alist '((default . (:foreground "goldenrod" :background "black"))))
   )
 (add-hook 'god-mode-enabled-hook 'god-mode-enabled-hook)
 (add-hook 'god-mode-disabled-hook 'god-mode-disabled-hook)
