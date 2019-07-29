@@ -1221,3 +1221,6 @@ the SQL to select the most recent lines from nfmc.audit_log."
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+
+(add-hook 'html-mode 'emmet-mode)
+(add-hook 'css-mode 'emmet-mode)
