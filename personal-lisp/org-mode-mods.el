@@ -59,6 +59,7 @@
 					    "example"
 					    "expect"
 					    "html"
+					    "javascript"
 					    "json"
 					    "lisp"
 					    "perl"
