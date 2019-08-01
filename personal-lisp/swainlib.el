@@ -850,6 +850,9 @@ the kill ring."
 ;; note that 'jx' is now reserved as the prefix code for my keymap
 ;; sw-jx-map.
 
+;; Bringing this back since I keep hitting it anyway.
+(global-set-key "\M-`" 'other-frame)
+
 ;; new prompt parsing for shells
 (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)]" 1 nil))
 (dirtrack-mode)
