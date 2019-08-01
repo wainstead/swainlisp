@@ -1010,7 +1010,7 @@ the kill ring."
 (define-prefix-command 'sw-meta-a-map)
 (global-set-key "\M-a" 'sw-meta-a-map)
 (define-key sw-meta-a-map "d" 'delete-trailing-whitespace)
-(define-key sw-meta-a-map "f" 'find-file-at-point)
+(define-key sw-meta-a-map "f" 'find-file)
 (define-key sw-meta-a-map "u" 'untabify)
 (define-key sw-meta-a-map "o" 'comint-delete-output)
 
