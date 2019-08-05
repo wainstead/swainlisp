@@ -842,7 +842,25 @@ the kill ring."
 (key-chord-define-global "jc" 'sw-cli)
 ;;(key-chord-define-global "JC" 'sw-cli)
 
-(key-chord-define-global "js" 'save-buffer)
+(defun sw-intermodal-save-buffer ()
+  "Save the buffer:
+1. If it's a shell buffer, write its contents out silently
+2. If it's a file, save the file
+3. If it's neither, beep and complain"
+  (interactive)
+  (if (derived-mode-p 'comint-mode)
+      (sw-save-buffer-invisibly (current-buffer))
+    ;; else
+    (if buffer-file-name (save-buffer)
+      (progn
+	(beep)
+	(message "Buffer is not visiting a file")
+	)
+      )
+    )
+  )
+
+(key-chord-define-global "js" 'sw-intermodal-save-buffer)
 ;;(key-chord-define-global "JS" 'save-buffer)
 
 (key-chord-define-global "jw" 'other-frame)
