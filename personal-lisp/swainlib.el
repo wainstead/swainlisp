@@ -1246,3 +1246,15 @@ the SQL to select the most recent lines from nfmc.audit_log."
 
 (add-hook 'html-mode 'emmet-mode)
 (add-hook 'css-mode 'emmet-mode)
+
+
+(defun sw-remove-zero-width-space ()
+  "Remove that weird character from the O'Reilly books"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    ;; our argument contains some zero width whitespace thing
+    ;; U+200B	​	e2 80 8b	ZERO WIDTH SPACE
+    ;; see https://www.utf8-chartable.de/unicode-utf8-table.pl?start=8192&number=128
+    (while (re-search-forward "​" nil t)
+      (replace-match "" nil nil))))
