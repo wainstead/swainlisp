@@ -851,14 +851,10 @@ the kill ring."
   (if (derived-mode-p 'comint-mode)
       (sw-save-buffer-invisibly (current-buffer))
     ;; else
-    (if buffer-file-name (save-buffer)
-      (progn
-	(beep)
-	(message "Buffer is not visiting a file")
-	)
-      )
-    )
-  )
+    (if buffer-file-name
+	(save-buffer)
+      (beep)
+      (message "Buffer is not visiting a file"))))
 
 (key-chord-define-global "js" 'sw-intermodal-save-buffer)
 ;;(key-chord-define-global "JS" 'save-buffer)
