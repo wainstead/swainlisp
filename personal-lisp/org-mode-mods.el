@@ -68,6 +68,7 @@
 					    "sql"
 					    "tcl"
 					    "yaml"
+					    "xml"
 					    ) nil t))
      ))
 
