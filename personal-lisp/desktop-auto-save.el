@@ -70,7 +70,7 @@ consequences.")
            (setq buff (car bufflist))
            (save-excursion
              (set-buffer buff)
-             (when (or (string= major-mode "shell-mode") (or (string= (buffer-name) "psql") (string= (buffer-name) "*Python*")) )
+	     (when (derived-mode-p 'comint-mode)
                ;;(message (format "it's a shell: %s" (buffer-name buff)))
                ;; if this buffer's contents have not been reloaded...
 
