@@ -1,4 +1,4 @@
-;; Copyright 2005 Steve Wainstead (swain@panix.com)
+;; Copyright 2005, 2019 Steve Wainstead (steve@flappingjets.com)
 
 ;; This file is NOT part of GNU Emacs.
 
