@@ -67,6 +67,7 @@
 					    "sh"
 					    "sql"
 					    "tcl"
+						"typescript"
 					    "yaml"
 					    "xml"
 					    ) nil t))
