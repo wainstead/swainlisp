@@ -857,7 +857,12 @@ the kill ring."
       (message "Buffer is not visiting a file"))))
 
 (key-chord-define-global "js" 'sw-intermodal-save-buffer)
-;;(key-chord-define-global "JS" 'save-buffer)
+;; Cannot turn off caps lock from Emacs, alas... so just complain
+(key-chord-define-global "JS"
+			 '(lambda ()
+			    (interactive)
+			    (beep)
+			    (message "Nope, caps lock key engaged")))
 
 (key-chord-define-global "jw" 'other-frame)
 ;;(key-chord-define-global "JW" 'other-frame)
