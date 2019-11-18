@@ -54,36 +54,37 @@
   (interactive
    (let ((completion-ignore-case  t))
      (list (completing-read "Format as: " '(
-					    "diff"
-					    "emacs-lisp"
-					    "example"
-					    "expect"
-					    "html"
-					    "javascript"
-					    "json"
-					    "lisp"
-					    "perl"
-					    "ruby"
-					    "sh"
-					    "sql"
-					    "tcl"
-						"typescript"
-					    "yaml"
-					    "xml"
-					    ) nil t))
+											"conf"
+											"diff"
+											"emacs-lisp"
+											"example"
+											"expect"
+											"html"
+											"javascript"
+											"json"
+											"lisp"
+											"perl"
+											"ruby"
+											"sh"
+											"sql"
+											"tcl"
+											"typescript"
+											"yaml"
+											"xml"
+											) nil t))
      ))
 
   (save-excursion
     (let* ((beg (region-beginning))
            (end (region-end))
-	   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
-	   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
+		   (beginstr (if (string= mode "example") "#+BEGIN_" "#+BEGIN_SRC "))
+		   (endstr   (if (string= mode "example") "#+END_" "#+END_SRC "))
 
-	   (resulting-text
-	    (format "%s%s\n%s%s%s\n"
-		    beginstr mode
-		    (buffer-substring-no-properties beg end)
-		    endstr mode)))
+		   (resulting-text
+			(format "%s%s\n%s%s%s\n"
+					beginstr mode
+					(buffer-substring-no-properties beg end)
+					endstr mode)))
       (kill-region beg end)
       (insert resulting-text))
-  ))
+	))
