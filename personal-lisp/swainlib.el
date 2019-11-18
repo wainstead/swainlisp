@@ -115,7 +115,7 @@
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
 (load "org-mode-mods")
-(load "sw-sql-map")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
 ;; https://github.com/chrisdone/god-mode
 (load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
@@ -227,7 +227,8 @@
     ;; disable these things
   (tool-bar-mode -1)
   (menu-bar-mode -1)
-  (toggle-scroll-bar t)
+  ;;(toggle-scroll-bar t)
+
   )
 
 ;; check the man page for the 'date' command to format the day/time
@@ -1041,6 +1042,8 @@ the kill ring."
 (define-key sw-meta-a-map "u" 'untabify)
 (define-key sw-meta-a-map "o" 'comint-delete-output)
 
+;; Now we can load this, hopefully
+(load "sw-sql-map")
 ;; Compilation stuff
 (defvar sw-compile-map nil
   "Steve Wainstead's personal keymap for compilation commands")
