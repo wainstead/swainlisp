@@ -1,0 +1,6 @@
+yasnippet needs this directory to hold collections of snippets.
+
+Name the directory after the mode, for example: sql-mode would be the
+name of the directory holding snippets for SQL statements, stored
+procedures, triggers, etc.
+
