@@ -114,11 +114,14 @@
 
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
+(add-to-list 'load-path "~/.emacs.d/external-packages/emacs-solargraph")
+(add-to-list 'load-path "~/.emacs.d/external-packages/god-mode")
 (load "org-mode-mods")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
 ;; https://github.com/chrisdone/god-mode
-(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
+;; trying via load-path now, see above
+;;(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
 ;;(global-set-key (kbd "<escape>") 'god-local-mode)
 ;;(global-set-key (kbd "<escape>") 'god-mode-all)
 
@@ -392,7 +395,7 @@ them."
   ;; This line is still visually useful for marking the end of an
   ;; entry and the start of the next.
   (insert "\n#########################################################################\n")
-  (insert (format-time-string "**** %y%m%d %c\n\n" (current-time))))
+  (insert (format-time-string "*** %y%m%d %c\n\n" (current-time))))
 
 ;; make n and p work without control key for buffers like *grep*
 ;; h/t to Dale Sedivec for suggesting modifying the parent mode's map!
@@ -1030,7 +1033,8 @@ the kill ring."
 (define-key sw-jx-map [f5] 'compile)
 (define-key sw-jx-map [f6] `toggle-buffer-full-filename)
 (define-key sw-jx-map (kbd "%") `query-replace)
-
+;; does not work. hrmm.
+;;(define-key sw-jx-map (kbd "l") '(lambda () (interactive) (org-set-tags "learning" nil)))
 
 (defvar sw-meta-a-map nil
   "Steve Wainstead's personal keymap bound to M-a.")
