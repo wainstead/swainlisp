@@ -35,7 +35,7 @@
 			   ("~/Documents/GTD/habits.org" :maxlevel . 2)
 			   ))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
 
 (setq org-todo-keyword-faces
       '(("DEFERRED" . (:foreground "red" :weight bold)) ("STARTED" . "yellow")
@@ -55,10 +55,12 @@
    (let ((completion-ignore-case  t))
      (list (completing-read "Format as: " '(
 											"conf"
+											"css"
 											"diff"
 											"emacs-lisp"
 											"example"
 											"expect"
+											"hexl"
 											"html"
 											"javascript"
 											"json"
@@ -88,3 +90,12 @@
       (kill-region beg end)
       (insert resulting-text))
 	))
+
+
+;; (defun sw-org-complete-and-file ()
+;;   "Mark a TODO item done, or canceled, or whatever, then archive it"
+;;   (interactive)
+;;   (org-todo)
+;;   (org-archive-subtree)
+;;   (message "Item status changed, and item archived")
+;;   )
