@@ -929,6 +929,7 @@ the kill ring."
 ;; (require 'helm)
 ;; (define-key sw-jz-map (kbd "h") 'helm-command-prefix)
 ;;(define-key sw-jz-map (kbd "l") 'sw-lint)
+(define-key sw-jz-map (kbd "o") 'comint-show-output)
 
 
 (defvar sw-zx-map nil
