@@ -967,6 +967,7 @@ the kill ring."
           (lambda ()
 	    (define-key comint-mode-map "\M-P" 'comint-previous-prompt)
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
+(add-hook 'comint-mode-hook 'dirtrack-mode)
 
 (defvar load-projectile-mode nil)
 (and load-projectile-mode (projectile-mode +1))
