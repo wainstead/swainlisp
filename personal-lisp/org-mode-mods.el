@@ -29,7 +29,7 @@
 (setq org-agenda-files '("~/Documents/GTD/inbox.org"
                          "~/Documents/GTD/gtd.org"
                          "~/Documents/GTD/tickler.org"
-						 "~/Documents/GTD/minutes.org"
+			 ;;"~/Documents/GTD/minutes.org"
 						 )
 	  )
 
@@ -37,8 +37,8 @@
 (setq org-refile-targets '(("~/Documents/GTD/gtd.org" :maxlevel . 3)
                            ("~/Documents/GTD/someday.org" :level . 1)
                            ("~/Documents/GTD/tickler.org" :maxlevel . 2)
-						   ("~/Documents/GTD/minutes.org" :maxlevel . 2)
-						   ("~/Documents/GTD/habits.org" :maxlevel . 2)
+			   ("~/Documents/GTD/minutes.org" :maxlevel . 2)
+			   ("~/Documents/GTD/habits.org" :maxlevel . 1)
 			   ))
 
 (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
