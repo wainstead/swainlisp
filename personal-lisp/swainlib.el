@@ -1012,7 +1012,7 @@ the kill ring."
 (defun sw-open-cheatsheet ()
   "open my cheatsheet"
   (interactive)
-  (find-file "~/Documents/workfiles/cheatsheet.org")
+  (find-file "~/Documents/work-journal/cheatsheet.org")
   )
 (define-key sw-jx-map (kbd "c") 'sw-open-cheatsheet)
 (define-key sw-jx-map (kbd "o") 'comint-delete-output)

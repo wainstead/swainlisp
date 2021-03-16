@@ -1,2 +1,6 @@
 # Use this .gitignore to manage Emacs packages that come from, say, GitHub.
 god-mode
+!load-external-packages.el
+emacs-solargraph
+emmet-mode
+prettier-emacs

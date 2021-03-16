@@ -1,3 +1,4 @@
+* Tasks
 ** TODO :refactor: Factor out unique buffers into a function
 In this function, I need to move the "or" statement out into a
 function:
@@ -227,6 +228,12 @@ matching "sw-templates/grantee," for example, the function name
 should be parsed to find the base function (sw-templates) and
 append the rest of the path info ("grantee") to the string.
 
+** TODO Write "yank-as-example"
+
+I can paste faster into my log if I just wrap the item in the kill
+ring when it's pasted. No mucking around with setting the region.
+** TODO Learn Emacs lisp macros
+
 * Bugs
 ** TODO :bug: ipython in Emacs is broken
    :PROPERTIES:
@@ -279,6 +286,9 @@ So the commonality here lies in the "separation" number. And we don't want black
 
 Brute force: keep calling (random) until we get a number in the range we like. This would be recursive so it wouldn't be hard to write.
 
+** TODO Fix ls so I get colour output
+
+Switch to gnu ls, I suppose
 * Items from my old TODO list in swainlib.el:
 ;;;;;;;;; TODO
 
