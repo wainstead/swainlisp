@@ -7,7 +7,7 @@
 
 (define-key global-map "\C-cc" 'org-capture)
 
-(setq org-capture-templates '(("t" "Todo [inbox]"       entry (file+headline "~/Documents/GTD/inbox.org" "Items")       "* TODO %i%?")
+(setq org-capture-templates '(("t" "Todo [inbox]"       entry (file+headline "~/Documents/GTD/inbox.org" "Items")       "* %i%?")
                               ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
                               ("w" "Waiting [inbox]"    entry (file+headline "~/Documents/GTD/inbox.org" "Waiting")     "* WAITING %i%?")
                               ("r" "Question [inbox]"   entry (file+headline "~/Documents/GTD/inbox.org" "Question")    "* %i%? \n %U")
@@ -30,7 +30,6 @@
 						 "~/Documents/GTD/reference.org"
                          ;;"~/Documents/GTD/minutes.org"
                          "~/.emacs.d/emacs.org"
-                         "~/.emacs.d/notes.org"
 						 "~/wainstead/study-projects/subjects-and-progress.org"
                          )
       )
