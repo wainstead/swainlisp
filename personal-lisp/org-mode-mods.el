@@ -43,7 +43,7 @@
                            ("~/Documents/GTD/habits.org" :maxlevel . 1)
 						   ("~/Documents/GTD/reference.org" :maxlevel . 1)
 						   ("~/.emacs.d/emacs.org" :maxlevel . 1)
-						   ("~/wainstead/study-projects/subjects-and-progress.org" :maxlevel . 1)
+						   ("~/wainstead/study-projects/subjects-and-progress.org" :regexp . "learning")
                ))
 
 (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
