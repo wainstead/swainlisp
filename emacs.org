@@ -234,8 +234,32 @@ I can paste faster into my log if I just wrap the item in the kill
 ring when it's pasted. No mucking around with setting the region.
 ** TODO Learn Emacs lisp macros
 
+** TODO Comment/uncomment matching lines
+A command that uses a regular expression to comment out all matching
+lines. Should use the commenting convention of the current mode
+(possibly: use cursor movement commands this way: match line. Move
+cursor to beginning of statement. Set mark. Move cursor to end of
+statement. Comment region.
+
+** TODO Optimize overflowing buffer faster
+I still need lisp to self-truncate a buffer. That is, when program
+output in shell mode is excessive, turn off font lock mode and keep
+the buffer size under a certain limit.
+** TODO Revisit comint-truncate-buffer
+M-x comint-truncate-buffer This command truncates the shell buffer
+to a certain maximum number of lines, specified by the variable
+comint-buffer-maximum-size. Here's how to do this automatically
+each time you get output from the subshell:
+
+              (add-hook 'comint-output-filter-functions
+                        'comint-truncate-buffer)
+** TODO Improve desktop-auto-save
+For desktop-auto-save, defvar a flag variable t or null that tells us
+whether we've already written out a file. If it's null, test to see if
+the file is there; if it is, prompt the user yes or no if we can
+overwrite it.
 * Bugs
-** TODO :bug: ipython in Emacs is broken
+** TODO ipython in Emacs is broken
    :PROPERTIES:
    :ID:       07159AC3-6D8F-463B-8372-EC91CE8FA8DA
    :END:
@@ -251,17 +275,17 @@ ring when it's pasted. No mucking around with setting the region.
 	:PROPERTIES:
 	:ID:       0B7DA056-6FC9-40DC-BF61-7D299F4114F8
 	:END:
-** TODO :bug: sw-tail-nfmc-logs tries to start new frame+buffers
+** TODO sw-tail-nfmc-logs tries to start new frame+buffers
    :PROPERTIES:
    :ID:       F75B57F1-353A-413D-AA0A-5D44A77C4B20
    :END:
 This function should detect if the frame already exists and, if so,
 switch to that frame.
-** TODO :bug: Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
    :PROPERTIES:
    :ID:       219BC314-B0B9-41A1-A80B-C33CDB4019FF
    :END:
-** TODO :bug: Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
+** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
    :PROPERTIES:
    :ID:       53193E9C-6446-4046-B15D-D3976237B04A
    :END:
@@ -270,7 +294,7 @@ via comint-mode to just kill the buffer and avoid the prompt but there
 is most likely some way to do it. comint-interrupt-subjob will at
 least kill the 'tail' command running in the window but I need a way
 to off the shell itself. Or terminate-with-prejudice.
-** TODO :bug: Tweak the randomized colors for *compilation*
+** TODO Tweak the randomized colors for *compilation*
    :PROPERTIES:
    :ID:       529A1D63-A7C8-4B75-8CEE-D57532A075F1
    :END:
@@ -289,66 +313,8 @@ Brute force: keep calling (random) until we get a number in the range we like. T
 ** TODO Fix ls so I get colour output
 
 Switch to gnu ls, I suppose
-* Items from my old TODO list in swainlib.el:
-;;;;;;;;; TODO
-
-;; a command that uses a regular expression to comment out all
-;; matching lines. Should use the commenting convention of the current
-;; mode (possibly: use cursor movement commands this way: match
-;; line. Move cursor to beginning of statement. Set mark. Move cursor
-;; to end of statement. Comment region.
-
-;; When I use F8 to find file at point, first put the cursor back to
-;; point max before switching to the new file.
-
-;; I still need lisp to self-truncate a buffer. That is, when program
-;; output in shell mode is excessive, turn off font lock mode and keep
-;; the buffer size under a certain limit.
-
-;; M-x comint-truncate-buffer This command truncates the shell buffer
-;; to a certain maximum number of lines, specified by the variable
-;; comint-buffer-maximum-size. Here's how to do this automatically
-;; each time you get output from the subshell:
-
-;;               (add-hook 'comint-output-filter-functions
-;;                         'comint-truncate-buffer)
 
 
-;; for desktop-auto-save, defvar a flag variable t or null that tells
-;; us whether we've already written out a file. If it's null, test to
-;; see if the file is there; if it is, prompt the user yes or no if we
-;; can overwrite it.
 
 
-* Done
-** DONE Get *compilation* buffer to stay put somewhere
-   CLOSED: [2012-02-28 Tue 12:33]
-It would be nice to have this buffer in its own frame somewhere, and
-when I run F5 compilation can be viewed in that buffer it that
-frame... unfortunately a new buffer always opens in the active frame.
-Probably: when tapping "f5" the following should happen:
-*** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
-*** start compilation
 
-#+STARTUP: content
-** DONE When I hit compile, focus should return to the current buffer.
-   CLOSED: [2012-08-14 Tue 09:41]
-Compilation now happens in its own frame but that frame retains
-focus... even more annoying, switching focus means the cursor stops
-moving and output rolls off the bottom where I can't see it anymore.
-** DONE The compilation frame should choose random light and dark colors every time
-   CLOSED: [2012-08-14 Tue 10:48]
-This should be fairly trivial:
-
-(switch-to-frame)
-(set-foreground-color-randomly)
-(set-background-color-randomly)
-** DONE Write a proper Cheetah mode maybe
-   CLOSED: [2012-08-30 Thu 20:43]
-This wasn't necessary.
-http://advogato.org/person/wainstead/diary/98.html
-** DONE psql is not being saved to .emacs.shellbuffers.
-   CLOSED: [2012-08-22 Wed 09:54]
-** DONE :refactor: There are two versions of sw-tail-logs-meta now, consolidate
-   CLOSED: [2012-12-20 Thu 12:15]
-Dunno when this occurred but I only find one copy of the function now
