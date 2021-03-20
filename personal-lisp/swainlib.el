@@ -927,9 +927,16 @@ the kill ring."
 (key-chord-define-global "jz" sw-jz-map)
 
 ;; (require 'helm)
+
 ;; (define-key sw-jz-map (kbd "h") 'helm-command-prefix)
 ;;(define-key sw-jz-map (kbd "l") 'sw-lint)
+
 (define-key sw-jz-map (kbd "o") 'comint-show-output)
+;; complete-symbol is bound to C-M-i, and in org-mode to M-tab; but
+;; M-tab is used by macOS to cycle between applications, so let's try
+;; jz-i. Tho I'm skeptical I'll use it much. At the moment my thinking
+;; is to use jz a lot for org-mode commands I like.
+(define-key sw-jz-map (kbd "i") 'complete-symbol)
 
 
 (defvar sw-zx-map nil
