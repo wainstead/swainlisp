@@ -114,7 +114,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
-(add-to-list 'load-path "~/.emacs.d/external-packages/emacs-solargraph")
+;;(add-to-list 'load-path "~/.emacs.d/external-packages/emacs-solargraph")
 (add-to-list 'load-path "~/.emacs.d/external-packages/god-mode")
 (load "org-mode-mods")
 
@@ -1019,7 +1019,7 @@ the kill ring."
 (defun sw-open-cheatsheet ()
   "open my cheatsheet"
   (interactive)
-  (find-file "~/Documents/workfiles/cheatsheet.org")
+  (find-file "~/Documents/work-journal/cheatsheet.org")
   )
 (define-key sw-jx-map (kbd "c") 'sw-open-cheatsheet)
 (define-key sw-jx-map (kbd "o") 'comint-delete-output)
@@ -1211,3 +1211,13 @@ might be a special case.
     ;; see https://www.utf8-chartable.de/unicode-utf8-table.pl?start=8192&number=128
     (while (re-search-forward "​" nil t)
       (replace-match "" nil nil))))
+
+
+;; Inspired by Steve Yegge: let me easily create trash buffers
+(defun sw-temp-buffer (buf-name)
+  "Switch to a new buffer named buf-name, or to that buffer if it already exists. Is not visiting a file."
+  (interactive "sOpen temporary buffer: ")
+  (switch-to-buffer buf-name)
+  )
+
+(define-key sw-meta-a-map "b" 'sw-temp-buffer)

@@ -1,0 +1,99 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE Get *compilation* buffer to stay put somewhere
+  CLOSED: [2012-02-28 Tue 12:33]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+It would be nice to have this buffer in its own frame somewhere, and
+when I run F5 compilation can be viewed in that buffer it that
+frame... unfortunately a new buffer always opens in the active frame.
+Probably: when tapping "f5" the following should happen:
+** create/raise/switch to frame "compilation" (which is elsewhere, another monitor perhaps)
+** start compilation
+
+#+STARTUP: content
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE When I hit compile, focus should return to the current buffer.
+  CLOSED: [2012-08-14 Tue 09:41]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+Compilation now happens in its own frame but that frame retains
+focus... even more annoying, switching focus means the cursor stops
+moving and output rolls off the bottom where I can't see it anymore.
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE The compilation frame should choose random light and dark colors every time
+  CLOSED: [2012-08-14 Tue 10:48]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+This should be fairly trivial:
+
+(switch-to-frame)
+(set-foreground-color-randomly)
+(set-background-color-randomly)
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE Write a proper Cheetah mode maybe
+  CLOSED: [2012-08-30 Thu 20:43]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+This wasn't necessary.
+http://advogato.org/person/wainstead/diary/98.html
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE psql is not being saved to .emacs.shellbuffers.
+  CLOSED: [2012-08-22 Wed 09:54]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+
+Archived entries from file /Users/spawlowski/.emacs.d/emacs.org
+
+
+* DONE :refactor: There are two versions of sw-tail-logs-meta now, consolidate
+  CLOSED: [2012-12-20 Thu 12:15]
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2021-03-19 Fri 16:15
+  :ARCHIVE_FILE: ~/.emacs.d/emacs.org
+  :ARCHIVE_OLPATH: Done
+  :ARCHIVE_CATEGORY: emacs
+  :ARCHIVE_TODO: DONE
+  :END:
+Dunno when this occurred but I only find one copy of the function now
