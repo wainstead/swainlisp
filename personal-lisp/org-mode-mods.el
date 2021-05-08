@@ -27,10 +27,10 @@
 (setq org-agenda-files '(
 			 "~/Documents/GTD/inbox.org"
                          "~/Documents/GTD/gtd.org"
-                         "~/Documents/GTD/tickler.org"
                          "~/Documents/GTD/reference.org"
+			 "~/Documents/GTD/someday.org"
                          "~/.emacs.d/emacs.org"
-                         ;;"~/wainstead/study-projects/subjects-and-progress.org"
+                         "~/Projects/study-projects/subjects-and-progress.org"
                          ))
 
 ;; For use in refiling tasks from inbox.org (or anywhere probably)
@@ -42,8 +42,9 @@
                            ("~/Documents/GTD/minutes.org" :maxlevel . 1)
                            ("~/Documents/GTD/habits.org" :maxlevel . 1)
                            ("~/Documents/GTD/reference.org" :maxlevel . 1)
+			   ("~/Documents/GTD/done.org" :maxlevel . 1)
                            ("~/.emacs.d/emacs.org" :maxlevel . 1)
-                           ;;("~/wainstead/study-projects/subjects-and-progress.org" :regexp . "learning")
+                           ("~/Projects/study-projects/subjects-and-progress.org" :regexp . "learning")
 			   ))
 
 (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
@@ -52,7 +53,11 @@
       '(("DEFERRED" . (:foreground "red" :weight bold)) ("STARTED" . "yellow")
         ("CANCELLED" . (:foreground "red" :weight bold))))
 
-
+;; When changing to DONE, mark it with a timestamp so I know when it
+;; was done. Actually, adding a property would ultimately be better
+;; because I could cook up some org-columns magic to show how long a
+;; task took to complete fromm the time I thought of it.
+(setq org-log-done t)
 
 ;; Put begin/end strings around a region in org-mode
 ;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
