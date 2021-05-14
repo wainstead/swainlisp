@@ -59,6 +59,12 @@
 ;; task took to complete fromm the time I thought of it.
 (setq org-log-done t)
 
+;; Couldn't get (org-refile "done") to work; the manual and Google did
+;; not answer for it. So we use a macro.
+(fset 'sw-donedone
+   (kmacro-lambda-form [?\C-c ?\C-t ?d ?\C-c ?\C-w ?d ?o ?n ?e tab return] 0 "%d"))
+
+
 ;; Put begin/end strings around a region in org-mode
 ;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
 (defun sw-org-format-example (mode)

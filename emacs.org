@@ -1,5 +1,5 @@
 * Tasks
-** TODO :refactor: Factor out unique buffers into a function
+** TODO :#refactor: Factor out unique buffers into a function
 In this function, I need to move the "or" statement out into a
 function:
 
@@ -31,25 +31,25 @@ For SSC it would be something like:
 ;; include more string comparisons here
 )
  
-** TODO :undone: F4 is my sytax checking. It should be context-sensitive.
+** TODO :#undone: F4 is my sytax checking. It should be context-sensitive.
 When I'm in PHP it should check PHP sytax, when in Perl, Perl and etc.
-** TODO :undone: sw-comment-lines: comment lines matching regexp
+** TODO :#undone: sw-comment-lines: comment lines matching regexp
    :PROPERTIES:
    :ID:       435EBD98-FBE1-40A9-8B7F-D4393E7FD562
    :END:
 This is unfinished, sitting in swainlib.el
-** TODO :undone: Finish Dismiss all "popups"
+** TODO :#undone: Finish Dismiss all "popups"
    :PROPERTIES:
    :ID:       702BA5DD-0F45-4C76-88A3-64B9F9C58A20
    :END:
 This makes all buffers whose names start with an asterisk to
 vanish... like *Occur*, *Help* and so on.
 
-** TODO :new: Try eshell for tailing log files instead of bash
+** TODO :#new: Try eshell for tailing log files instead of bash
    :PROPERTIES:
    :ID:       932FEE5A-F9AC-48A0-9153-8598BDB40137
    :END:
-** TODO :new: Write a command to display database table info
+** TODO :#new: Write a command to display database table info
    :PROPERTIES:
    :ID:       457C0E80-7E2B-4B3D-87C8-90161895EC0E
    :END:
@@ -66,28 +66,28 @@ comments. Might be a way, haven't investigated).
 Then: while reading model.py, place cursor on a table name, execute
 this new command I write and the above shell calls are displayed.
 
-** TODO :new: Try the Emacs command that watches a file for updates (found via stackoverflow I think)
+** TODO :#new: Try the Emacs command that watches a file for updates (found via stackoverflow I think)
    :PROPERTIES:
    :ID:       14FF9139-FC2A-41C4-8E2D-F64583C0C9E9
    :END:
 Sadly that post was deleted for being in the wrong category, of all things.
-** TODO :new: Use one of the Git modes to speed up work...
+** TODO :#new: Use one of the Git modes to speed up work...
    :PROPERTIES:
    :ID:       760FB9E4-20F1-4640-A840-1D65C71160BB
    :END:
 Find a way to do "git log (current buffer)" since that's broken in
 Emacs. The main problem is using Git means I need to reload the files,
 and currently I hit F13 to run a macro I wrote to get around this problem.
-** TODO :new: Still not using flymake and bretheren for on-the-fly syntax checking
+** TODO :#new: Still not using flymake and bretheren for on-the-fly syntax checking
    :PROPERTIES:
    :ID:       ACC396A9-B364-4178-9CAB-E1F8480C4B9B
    :END:
-** TODO :new: See the comment block on top of sw-highlight-stuff
+** TODO :#new: See the comment block on top of sw-highlight-stuff
    :PROPERTIES:
    :ID:       3434E34C-3D44-4189-89EE-E42CA3E9458C
    :END:
 Saving the settings of hi-lock for a given buffer
-** TODO :refactor: Rewrite sw-tail-logs-meta to take a function argument
+** TODO :#refactor: Rewrite sw-tail-logs-meta to take a function argument
    :PROPERTIES:
    :ID:       B312F8B4-FBB7-4287-BC52-6052248249FE
    :END:
@@ -103,7 +103,7 @@ tailpg='tail -f /tmp/postgres_out.log | perl -ne '\''s/\t/ /g; print'\'''
 Or maybe not? start.dev? At any rate, the code is messy and
 duplicated. Not sure why.
 
-** TODO :refactor: Revisit sw-tail-logs-meta
+** TODO :#refactor: Revisit sw-tail-logs-meta
    :PROPERTIES:
    :ID:       363C28D7-8098-4C86-88C8-DC5A73E0FEEB
    :END:
@@ -130,13 +130,13 @@ sw-kill-FOO-logs should not have to be defined this way... either
 autovivify these commands or make them simple one line declarations
 (wrappers around a more general function).
 
-** TODO :refactor: Move shell buffer functions into a new file
+** TODO :#refactor: Move shell buffer functions into a new file
    :PROPERTIES:
    :ID:       59981AB8-7C24-412F-834F-534904CCD576
    :END:
 sw-git-commit-buffer and brethren have probably outgrown
 desktop-auto-save... or have they? Uncertain.
-** TODO :enhancement: Save the shell buffer, not just its contents
+** TODO :#enhancement: Save the shell buffer, not just its contents
    :PROPERTIES:
    :ID:       9F879E40-68D6-414B-A2D1-3A897BBBB17D
    :END:
@@ -186,26 +186,26 @@ to a shell is more general than I thought.. when I do sw-nose I get a
 bash shell buffer that cd's to ~/bin/pippin... this is kinda the same
 thing as tailing a log file or whatever. Hmm.
 
-** TODO :enhancement: Update sw-start-new-log-entry to add correct amount of whitespace
+** TODO :#enhancement: Update sw-start-new-log-entry to add correct amount of whitespace
    :PROPERTIES:
    :ID:       233BEBAE-67A0-462E-92E3-174601F50BD6
    :END:
 It's always been random how much whitespace separates the start of a
 new entry.
-** TODO :enhancement: sw-cli should switch-to-window
+** TODO :#enhancement: sw-cli should switch-to-window
    :PROPERTIES:
    :ID:       846DB845-F1EA-4371-8687-1299105892AC
    :END:
 I don't know if that's an actual function; but if cli is visible in
 the frame, sw-cli should not switch the current window to that buffer
 but instead give focus to the window holding the cli buffer.
-** TODO :enhancement: Revisit calling Applescript from Emacs
+** TODO :#enhancement: Revisit calling Applescript from Emacs
    :PROPERTIES:
    :ID:       35D00654-253C-4F67-A8B3-AA3FC2A39ACA
    :END:
 Update the file; see if anyone else has written anything
 
-** TODO :experiment: Create minor mode to highlight things in the file?
+** TODO :#experiment: Create minor mode to highlight things in the file?
    :PROPERTIES:
    :ID:       BE1B3D1E-59CE-4212-AEA9-D865F38311E1
    :END:
@@ -217,7 +217,7 @@ way of fontifying a buffer... that way I can add the file to the list
 for that major mode and every time I reload the file it's
 automagically highlighted. Might work for tailing log files too;
 perhaps I really want a minor mode.
-** TODO :experiment: Emacs Lisp version of AUTOLOAD?
+** TODO :#experiment: Emacs Lisp version of AUTOLOAD?
    :PROPERTIES:
    :ID:       08C154E7-F843-4596-BE4F-54D2217075FD
    :END:
@@ -281,11 +281,11 @@ overwrite it.
    :END:
 This function should detect if the frame already exists and, if so,
 switch to that frame.
-** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :bug:
+** TODO Only four of the five buffers display in a window when I run sw-tail-nfmc-logs :#bug:
    :PROPERTIES:
    :ID:       219BC314-B0B9-41A1-A80B-C33CDB4019FF
    :END:
-** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :bug:
+** TODO Get prompted for every buffer "Kill process?" when sw-kill-nfmc-logs :#bug:
    :PROPERTIES:
    :ID:       53193E9C-6446-4046-B15D-D3976237B04A
    :END:
