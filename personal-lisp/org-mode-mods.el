@@ -43,6 +43,7 @@
                            ("~/Documents/GTD/habits.org" :maxlevel . 1)
                            ("~/Documents/GTD/reference.org" :maxlevel . 1)
 			   ("~/Documents/GTD/done.org" :maxlevel . 1)
+			   ("~/Documents/GTD/outdated.org" :maxlevel . 1)
                            ("~/.emacs.d/emacs.org" :maxlevel . 1)
                            ("~/Projects/study-projects/subjects-and-progress.org" :regexp . "learning")
 			   ))
