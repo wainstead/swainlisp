@@ -89,6 +89,7 @@
                                             "json"
                                             "lisp"
                                             "perl"
+					    "python"
                                             "ruby"
                                             "sh"
                                             "sql"
