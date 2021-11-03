@@ -11,6 +11,10 @@
                               ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
                               ("w" "Waiting [inbox]"    entry (file+headline "~/Documents/GTD/inbox.org" "Waiting")     "* WAITING %i%?")
                               ("r" "Question [inbox]"   entry (file+headline "~/Documents/GTD/inbox.org" "Question")    "* %i%? \n %U")
+							  ;; for this entry, see: https://www.reddit.com/r/orgmode/comments/c26qja/capture_template_based_in_a_file/
+							  ;; which explains how to load your template from a file
+							  ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
+							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
                               ))
 
 ;; org-mode uses this for highlighting a node (via org-mark-element);
