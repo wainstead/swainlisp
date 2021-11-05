@@ -15,7 +15,7 @@
 							  ;; which explains how to load your template from a file
 							  ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
 							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
-							  ("f" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
+							  ("f" "Additional morning checklist items for Fridays"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
                               ))
 
 ;; org-mode uses this for highlighting a node (via org-mark-element);
