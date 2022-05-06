@@ -88,6 +88,7 @@
                                             "sh"
                                             "sql"
                                             "tcl"
+											"terraform"
                                             "typescript"
                                             "yaml"
                                             "xml"
