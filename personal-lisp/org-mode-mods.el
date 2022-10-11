@@ -43,6 +43,7 @@
 ;; maxlevel will search <= N for headings to file under
 (setq org-refile-targets '(("~/Documents/GTD/gtd.org" :maxlevel . 1)
                            ("~/Documents/GTD/someday.org" :level . 1)
+						   ("~/Documents/GTD/backlog.org" :level . 1)
                            ("~/Documents/GTD/tickler.org" :maxlevel . 1)
                            ("~/Documents/GTD/minutes.org" :maxlevel . 1)
                            ("~/Documents/GTD/habits.org" :maxlevel . 1)
@@ -82,6 +83,7 @@
                                             "javascript"
                                             "json"
                                             "lisp"
+											"markdown"
                                             "perl"
 											"python"
                                             "ruby"

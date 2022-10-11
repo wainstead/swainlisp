@@ -4,6 +4,6 @@
 # create ~/.emacs_bash
 
 # See: https://www.gnu.org/software/emacs/manual/html_node/emacs/Interactive-Shell.html
-export EDITOR=emacsclient
+export EDITOR=/usr/local/bin/emacsclient
 export EMACS_BASH_IN_EFFECT=1
 

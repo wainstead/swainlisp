@@ -229,7 +229,7 @@
 (if window-system
     ;; disable these things
   (tool-bar-mode -1)
-  (menu-bar-mode -1)
+  (menu-bar-mode t)
   ;;(toggle-scroll-bar t)
 
   )
