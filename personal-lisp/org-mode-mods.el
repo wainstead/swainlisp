@@ -7,16 +7,71 @@
 
 (define-key global-map "\C-cc" 'org-capture)
 
+
+;; https://orgmode.org/manual/Template-elements.html
+
+;; Entries in org-capture-templates are "templates" for
+;; org-capture. They are not some native Lisp type or anything. Per
+;; the page above, each entry in the list is:
+
+;; key (below, our keys are t, i, w, r, m, f; they are the menu
+;; selection).
+
+;; description (helpful display text when you are choosing from the
+;; menu
+
+;; type -- the type of entry. Valid choices are entry, item,
+;; checkitem, table-line, and plain. checkitem inserts a checkbox;
+;; table-line adds a new line to the table at that location.
+
+;; target -- where the item should be placed. Usually, it's a node in
+;; an Org file.
+
+;; template -- defaults to "an appropriate default template," per the
+;; manual. Otherwise it's a string with escape codes (e.g. "* %i%?"),
+;; a file, or a function that returns the template.
+
+;; The template is tricky; the manual could use some more
+;; explication. If you pass a string it 1) has to start with an
+;; asterisk, it seems; and 2) it MUST contain at least one escape
+;; sequence (e.g. %U, or %i%?, etc.)
+
+;; The escape codes are described in
+;; https://orgmode.org/manual/Template-expansion.html
+
+;; properties -- the manual lists many; interesting ones include
+;; setting how many blank lines to add above/below or to prepend
+;; instead of append to the list. For elisp property lists see:
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Property-Lists.html
+
 (setq org-capture-templates '(("t" "Todo [inbox]"       entry (file+headline "~/Documents/GTD/inbox.org" "Items")       "* %i%?")
-                              ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
+							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
+							  ("f" "Additional morning checklist items for Fridays"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
                               ("w" "Waiting [inbox]"    entry (file+headline "~/Documents/GTD/inbox.org" "Waiting")     "* WAITING %i%?")
                               ("r" "Question [inbox]"   entry (file+headline "~/Documents/GTD/inbox.org" "Question")    "* %i%? \n %U")
+                              ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
 							  ;; for this entry, see: https://www.reddit.com/r/orgmode/comments/c26qja/capture_template_based_in_a_file/
 							  ;; which explains how to load your template from a file
 							  ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
-							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
-							  ("f" "Additional morning checklist items for Fridays"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
+							  ;; (https://orgmode.org/manual/Template-elements.html#index-org_002ddefault_002dnotes_002dfile-1)
+							  ;; experimental
+							  ("l" "New log entry" entry(file+olp+datetree "~/Documents/work-journal/testjournal.org"))
+							  ("x" "Experimental"  entry(file+olp+datetree "~/Documents/work-journal/testjournal.org") "* %i%? \n %U")
+							  ("y" "Eyperimental"  entry(file+olp+datetree "~/Documents/work-journal/testjournal.org") (function sw-experimental-template))
+							  ("z" "Ezperimental"  entry(file+olp+datetree "~/Documents/work-journal/testjournal.org") "* hooha %U %u %T %t" :prepend t :empty-lines-after 2)
                               ))
+
+;; A suitable time stamp for log updates throughout a given day:
+;; (format-time-string "*** %I:%M %p" (current-time))
+;; which outputs:
+;; "*** 02:23 PM"
+
+(defun sw-experimental-template ()
+  "Return a string for org-capture-templates. Experimental."
+  "* Hello sailor! %i%?"
+  )
+
+(sw-experimental-template)
 
 ;; org-mode uses this for highlighting a node (via org-mark-element);
 ;; but I use it for a prefix key
