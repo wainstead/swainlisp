@@ -48,24 +48,26 @@
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Property-Lists.html
 
 (setq org-capture-templates '(("t" "Todo [inbox]"       entry (file+headline "~/Documents/GTD/inbox.org" "Items")       "* %i%?")
-							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
-							  ("f" "Additional morning checklist items for Fridays"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
+			      ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org")
+			       (file "~/Documents/GTD/checklist-template.org"))
+			      ("f" "Additional morning checklist items for Fridays"
+			       entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
                               ("w" "Waiting [inbox]"    entry (file+headline "~/Documents/GTD/inbox.org" "Waiting")     "* WAITING %i%?")
                               ("r" "Question [inbox]"   entry (file+headline "~/Documents/GTD/inbox.org" "Question")    "* %i%? \n %U")
                               ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
-							  ;; for this entry, see: https://www.reddit.com/r/orgmode/comments/c26qja/capture_template_based_in_a_file/
-							  ;; which explains how to load your template from a file
-							  ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
-							  ;; (https://orgmode.org/manual/Template-elements.html#index-org_002ddefault_002dnotes_002dfile-1)
-							  ;; experimental
-							  ("l" "Experimental: New log entry" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org"))
-							  ("x" "Experimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* %i%? \n %U")
-							  ("y" "Eyperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") (function sw-experimental-template))
-							  ;; prepends the entry, instead of putting it at the end... and puts empty lines after...
-							  ("z" "Ezperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* hooha %U %u %T %t" :prepend t :empty-lines-after 2)
-							  ("j" "Experimental: Journal-x" table-line (file+datetree "~/Documents/work-journal/testjournal.org") "* %?\nEntered on %U\n %a")
-							  ;; This will insert a timestamp like "02:23 PM" by using the %<> template expansion... "token", the manual doesn't give them a name...
-							  ("v" "Experimental: Journal-v" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* Recorded at: %<%I:%M %p>")
+			      ;; for this entry, see: https://www.reddit.com/r/orgmode/comments/c26qja/capture_template_based_in_a_file/
+			      ;; which explains how to load your template from a file
+			      ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
+			      ;; (https://orgmode.org/manual/Template-elements.html#index-org_002ddefault_002dnotes_002dfile-1)
+			      ;; experimental
+			      ("l" "Experimental: New log entry" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org"))
+			      ("x" "Experimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* %i%? \n %U")
+			      ("y" "Eyperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") (function sw-experimental-template))
+			      ;; prepends the entry, instead of putting it at the end... and puts empty lines after...
+			      ("z" "Ezperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* hooha %U %u %T %t" :prepend t :empty-lines-after 2)
+			      ("j" "Experimental: Journal-x" table-line (file+datetree "~/Documents/work-journal/testjournal.org") "* %?\nEntered on %U\n %a")
+			      ;; This will insert a timestamp like "02:23 PM" by using the %<> template expansion... "token", the manual doesn't give them a name...
+			      ("v" "Experimental: Journal-v" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* Recorded at: %<%I:%M %p>")
                               ))
 
 ;; A suitable time stamp for log updates throughout a given day:
