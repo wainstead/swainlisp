@@ -229,7 +229,7 @@
 (if window-system
     ;; disable these things
   (tool-bar-mode -1)
-  (menu-bar-mode -1)
+  ;;(menu-bar-mode -1) ;; 6/4/22: this disables the macos menubar!
   ;;(toggle-scroll-bar t)
 
   )
@@ -670,7 +670,7 @@ the kill ring."
 
 ;; stolen from:
 ;; http://www.splode.com/~friedman/software/emacs-lisp/src/buffer-fns.el
-;; this is a utility function used elsewherei
+;; this is a utility function used elsewhere
 (defun apply-on-rectangle-region-points (fun beg end &rest args)
   "Like `apply-on-rectangle', but pass points in the buffer instead of columns."
   (apply-on-rectangle

@@ -29,6 +29,7 @@
                          "~/Documents/GTD/gtd.org"
                          "~/Documents/GTD/reference.org"
 			 "~/Documents/GTD/someday.org"
+			 "~/Documents/GTD/house.org"
                          "~/.emacs.d/emacs.org"
                          "~/Projects/study-projects/subjects-and-progress.org"
                          ))
@@ -43,6 +44,7 @@
                            ("~/Documents/GTD/habits.org" :maxlevel . 1)
                            ("~/Documents/GTD/reference.org" :maxlevel . 1)
 			   ("~/Documents/GTD/done.org" :maxlevel . 1)
+			   ("~/Documents/GTD/house.org" :maxlevel . 1)
 			   ("~/Documents/GTD/outdated.org" :maxlevel . 1)
                            ("~/.emacs.d/emacs.org" :maxlevel . 1)
                            ("~/Projects/study-projects/subjects-and-progress.org" :regexp . "learning")
