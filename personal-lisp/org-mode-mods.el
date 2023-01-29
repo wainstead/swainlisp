@@ -7,11 +7,89 @@
 
 (define-key global-map "\C-cc" 'org-capture)
 
+;; Curiously, org-sort-entries has no keybinding, so we put it on
+;; contol-c-e.
+(define-key org-mode-map "\C-ce" 'org-sort-entries)
+
+;; https://orgmode.org/manual/Template-elements.html
+
+;; Entries in org-capture-templates are "templates" for
+;; org-capture. They are not some native Lisp type or anything. Per
+;; the page above, each entry in the list is:
+
+;; key (below, our keys are t, i, w, r, m, f; they are the menu
+;; selection).
+
+;; description (helpful display text when you are choosing from the
+;; menu
+
+;; type -- the type of entry. Valid choices are entry, item,
+;; checkitem, table-line, and plain. checkitem inserts a checkbox;
+;; table-line adds a new line to the table at that location.
+
+;; target -- where the item should be placed. Usually, it's a node in
+;; an Org file.
+
+;; template -- defaults to "an appropriate default template," per the
+;; manual. Otherwise it's a string with escape codes (e.g. "* %i%?"),
+;; a file, or a function that returns the template.
+
+;; The template is tricky; the manual could use some more
+;; explication. If you pass a string it 1) has to start with an
+;; asterisk, it seems; and 2) it MUST contain at least one escape
+;; sequence (e.g. %U, or %i%?, etc.)
+
+;; The escape codes are described in
+;; https://orgmode.org/manual/Template-expansion.html
+
+;; properties -- the manual lists many; interesting ones include
+;; setting how many blank lines to add above/below or to prepend
+;; instead of append to the list. For elisp property lists see:
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Property-Lists.html
+
 (setq org-capture-templates '(("t" "Todo [inbox]"       entry (file+headline "~/Documents/GTD/inbox.org" "Items")       "* %i%?")
-                              ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
+							  ("m" "Morning checklist"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template.org"))
+							  ("f" "Additional morning checklist items for Fridays"  entry (file+olp+datetree "~/Documents/GTD/morning_checklist.org") (file "~/Documents/GTD/checklist-template-fridays.org"))
                               ("w" "Waiting [inbox]"    entry (file+headline "~/Documents/GTD/inbox.org" "Waiting")     "* WAITING %i%?")
                               ("r" "Question [inbox]"   entry (file+headline "~/Documents/GTD/inbox.org" "Question")    "* %i%? \n %U")
+                              ("i" "Tickler"            entry (file+headline "~/Documents/GTD/tickler.org" "Tickler")   "* %i%? \n %U")
+							  ;; for this entry, see: https://www.reddit.com/r/orgmode/comments/c26qja/capture_template_based_in_a_file/
+							  ;; which explains how to load your template from a file
+							  ;; also note the use of 'file+olp+datetree' which is magical and could be used for my LOG.org
+							  ;; (https://orgmode.org/manual/Template-elements.html#index-org_002ddefault_002dnotes_002dfile-1)
+							  ;; experimental
+							  ("l" "Experimental: New log entry" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org"))
+							  ("x" "Experimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* %i%? \n %U")
+							  ("y" "Eyperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") (function sw-experimental-template))
+							  ;; prepends the entry, instead of putting it at the end... and puts empty lines after...
+							  ("z" "Ezperimental"  entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* hooha %U %u %T %t" :prepend t :empty-lines-after 2)
+							  ("j" "Experimental: Journal-x" table-line (file+datetree "~/Documents/work-journal/testjournal.org") "* %?\nEntered on %U\n %a")
+							  ;; This will insert a timestamp like "02:23 PM" by using the %<> template expansion... "token", the manual doesn't give them a name...
+							  ("v" "Experimental: Journal-v" entry (file+olp+datetree "~/Documents/work-journal/testjournal.org") "* Recorded at: %<%I:%M %p>")
                               ))
+
+;; A suitable time stamp for log updates throughout a given day:
+;; (format-time-string "*** %I:%M %p" (current-time))
+;; which outputs:
+;; "*** 02:23 PM"
+
+;; Some of the ones used above:
+;; %U [2022-12-19 Mon 12:59]
+;; %u [2022-12-19 Mon]
+;; %T <2022-12-19 Mon 12:59>
+;; %t <2022-12-19 Mon>
+
+;; They appear to be different data types (square brackets versus
+;; angle brackets)... but the manual doesn't say anything. But they
+;; may function that way?
+;; See: https://orgmode.org/manual/Template-expansion.html
+
+(defun sw-experimental-template ()
+  "Return a string for org-capture-templates. Experimental."
+  "* Hello sailor! %i%?"
+  )
+
+(sw-experimental-template)
 
 ;; org-mode uses this for highlighting a node (via org-mark-element);
 ;; but I use it for a prefix key
@@ -31,8 +109,9 @@
 			 "~/Documents/GTD/someday.org"
 			 "~/Documents/GTD/house.org"
                          "~/.emacs.d/emacs.org"
-                         "~/Projects/study-projects/subjects-and-progress.org"
-                         ))
+                       ;;"~/wainstead/study-projects/subjects-and-progress.org"
+                         )
+      )
 
 ;; For use in refiling tasks from inbox.org (or anywhere probably)
 ;; maxlevel will search <= N for headings to file under
@@ -49,24 +128,26 @@
                            ("~/.emacs.d/emacs.org" :maxlevel . 1)
                            ("~/Projects/study-projects/subjects-and-progress.org" :regexp . "learning")
 			   ))
+               ))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
 
 (setq org-todo-keyword-faces
-      '(("DEFERRED" . (:foreground "red" :weight bold)) ("STARTED" . "yellow")
+      '(("DEFERRED" . (:foreground "red" :weight bold))
+		("STARTED" . "yellow")
+		("WAITING" . "red")
+		("BLOCKED" . "red")
         ("CANCELLED" . (:foreground "red" :weight bold))))
 
-;; When changing to DONE, mark it with a timestamp so I know when it
-;; was done. Actually, adding a property would ultimately be better
-;; because I could cook up some org-columns magic to show how long a
-;; task took to complete fromm the time I thought of it.
-(setq org-log-done t)
+;; Items marked DONE get a timestamp. Note that CANCELLED, DEFERRED,
+;; OBSOLETE also get the timestamp probably because of the structure
+;; of org-todo-keywords. Just a guess.
+(setq org-log-done 'time)
 
 ;; Couldn't get (org-refile "done") to work; the manual and Google did
 ;; not answer for it. So we use a macro.
 (fset 'sw-donedone
    (kmacro-lambda-form [?\C-c ?\C-t ?d ?\C-c ?\C-w ?d ?o ?n ?e tab return] 0 "%d"))
-
 
 ;; Put begin/end strings around a region in org-mode
 ;; see https://stackoverflow.com/questions/14201740/replace-region-with-result-of-calling-a-function-on-region
@@ -96,6 +177,7 @@
                                             "sh"
                                             "sql"
                                             "tcl"
+											"terraform"
                                             "typescript"
                                             "yaml"
                                             "xml"
@@ -125,3 +207,8 @@
 ;;   (org-archive-subtree)
 ;;   (message "Item status changed, and item archived")
 ;;   )
+
+
+;; Keyboard macro to cut subtree from gtd.org and paste into LOG.m1.org.
+(fset 'sw-donedone
+   (kmacro-lambda-form [?\C-c ?\C-t ?d ?\M-x ?o ?r ?g ?  ?c ?u ?t ?  ?s ?u ?b ?t ?r ?e ?e return ?\C-x ?\C-b ?L ?O ?G ?. ?m ?1 ?. ?o ?r ?g return ?\M-> ?\M-x ?o ?r ?g ?  ?p ?a ?g ?e backspace backspace ?s ?t ?e ?  ?s ?u ?b ?t ?r ?e ?e return M-right M-left M-S-right] 0 "%d"))
