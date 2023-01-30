@@ -191,15 +191,3 @@
     ))
 
 
-;; (defun sw-org-complete-and-file ()
-;;   "Mark a TODO item done, or canceled, or whatever, then archive it"
-;;   (interactive)
-;;   (org-todo)
-;;   (org-archive-subtree)
-;;   (message "Item status changed, and item archived")
-;;   )
-
-
-;; Keyboard macro to cut subtree from gtd.org and paste into LOG.m1.org.
-(fset 'sw-donedone
-   (kmacro-lambda-form [?\C-c ?\C-t ?d ?\M-x ?o ?r ?g ?  ?c ?u ?t ?  ?s ?u ?b ?t ?r ?e ?e return ?\C-x ?\C-b ?L ?O ?G ?. ?m ?1 ?. ?o ?r ?g return ?\M-> ?\M-x ?o ?r ?g ?  ?p ?a ?g ?e backspace backspace ?s ?t ?e ?  ?s ?u ?b ?t ?r ?e ?e return M-right M-left M-S-right] 0 "%d"))
