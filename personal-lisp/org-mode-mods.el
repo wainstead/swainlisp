@@ -104,6 +104,7 @@
 ;; showing up in "agenda buffers"
 (setq org-agenda-files '("~/Documents/GTD/inbox.org"
                          "~/Documents/GTD/gtd.org"
+                         "~/Documents/GTD/someday.org"
                          "~/Documents/GTD/tickler.org"
 						 "~/Documents/GTD/reference.org"
                          ;;"~/Documents/GTD/minutes.org"
@@ -191,3 +192,15 @@
     ))
 
 
+;; TODO: fix "today" "today" as it's not correct, tho it works.
+(defun sw-org-today ()
+  "Show tasks tagged 'today'"
+  (interactive)
+(org-tags-view "today" "today")
+)
+
+;; Found here: https://emacs.stackexchange.com/a/17405
+;; Create different colors for the priorities
+(setq org-priority-faces '((?A . (:foreground "green" :weight 'bold))
+                           (?B . (:foreground "yellow"))
+                           (?C . (:foreground "skyblue"))))

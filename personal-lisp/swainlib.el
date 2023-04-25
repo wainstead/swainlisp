@@ -1022,7 +1022,7 @@ the kill ring."
   "Set the selected window's width."
   (adjust-window-trailing-edge (selected-window) (- n (window-width)) t))
 
-(defun set-80-columns ()
+(defun sw-80-columns ()
   "Set the selected window to 80 columns."
   (interactive)
   (set-window-width 80))
