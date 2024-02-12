@@ -123,17 +123,19 @@
 						   ("~/Documents/GTD/reference.org" :maxlevel . 1)
 						   ("~/Documents/GTD/done.org" :maxlevel . 1)
 						   ("~/Documents/GTD/backlog.org" :maxlevel . 1)
+						   ("~/Documents/GTD/maybe.org" :maxlevel . 1)
 						   ("~/.emacs.d/emacs.org" :maxlevel . 1)
 						   ;;("~/wainstead/study-projects/subjects-and-progress.org" :regexp . "learning")
                ))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "QUESTION(k)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
 
 (setq org-todo-keyword-faces
       '(("DEFERRED" . (:foreground "red" :weight bold))
 		("STARTED" . "yellow")
 		("WAITING" . "red")
 		("BLOCKED" . "red")
+		("QUESTION" . "blue")
         ("CANCELLED" . (:foreground "red" :weight bold))))
 
 ;; Items marked DONE get a timestamp. Note that CANCELLED, DEFERRED,

@@ -621,6 +621,17 @@ the kill ring."
     )
   )
 
+;; 2024 reimplementation: convert Unix timestamp to human food, but
+;; this assumes thing-at-point is a number, unlike the previous
+;; function. Also, the implementation is totally native Emacs Lisp.
+
+(defun sw-convert-unix-timestamp ()
+  "Convert the Unix timestamp at point to a human-readable format"
+  (interactive)
+  (message
+   (format-time-string "%Y-%m-%d %a %H:%M:%S"
+					   (seconds-to-time (thing-at-point 'number)))))
+
  (require 'man)
 (defun perldoc (man-args)
   (interactive "sPerldoc: ")
