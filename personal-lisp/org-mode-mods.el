@@ -175,6 +175,7 @@
                                             "typescript"
                                             "yaml"
                                             "xml"
+											"makefile"
                                             ) nil t))
      ))
 
