@@ -3,6 +3,7 @@ auto-save-list
 NOTES
 .emacs.desktop
 elpa
+elpa.bak
 projectile-bookmarks.eld
 bookmarks
 .emacs.desktop.lock

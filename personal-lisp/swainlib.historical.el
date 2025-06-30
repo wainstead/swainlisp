@@ -1,9 +1,129 @@
+;; hints:
+;; rename-uniquely
+;; rename-buffer is better though
+;; send-invisible
+;; C-u M-| to run command on region
+;; C-u M-! to put in current buffer
+
+;; C-c C-r in cmd mode jumps back to previous prompt, if you have a lot of output
+;; C-c C-e to go back
+;; C-c C-p, C-c C-n to jump between commands
+
+;; C-x r m sets bookmark
+;; C-x r b prompts for bookmark
+;; C-x r l to get the list and use dir-style commands
+;; all bookmark commands start with 'bookmark'
+
+;; C-x v v is 'next action' in VC mode
+;; vc-default-back-end
+
+;; these only appear to work in picture/rectangle mode
+;; C-c C-w \w for saving something to a register
+;; C-c C-x \w for getting it back
+;; string-rectangle will replace rectangle with string
+;; C-x M M to access the command history of the minibuffer
+
+;; registers!!!
+;; M-x apropos register for a list of register commands, which allow you
+;; to store points (marks) in registers and jump to them, and store text
+;; in them like vi can.
+;; C-x r SPACE to save a point to a register
+;; C-x r j to jump to a point stored in a register
+;; C-x r i insert contents of a register
+;; C-x r x or s copy to register
+
+;; M-m moves to first nonwhitespace char of current line
+;; M-r moves cursor to center of window
+
+;; Recursive edits:
+;; C-r to edit, C-w to delete match and start custom edit, ESC C-c to continue
+;; C-] exits recursive edit and query-replace
+;; a comma replaces the instance to show you what it will look like, hit y or n
+;; a carret will go back to the previous match
+;; a period replaces the current instance and quits.
+
+;; v t toggles terse display in vc-directory
+
+;; delete-indentation is like 'J' in vi. Use M-^ to join current
+;; line to previous, and C-u M-^ to join to next.
+
+;; double space a region: C-u M-| sed G RET
+;; delete ALL blank lines from a file (same as "grep '.' "): sed '/^$/d'
+
+;; M-/ is dabbrev-expand, which searches all buffers for an expansion. Rules.
+
+;; The oddly named finder-by-keyword is how you discover modes that are
+;; available. Also f1-p.
+
+;; C-x RET f undecided-unix RET to convert DOS files to Unix format.
+;; However see the node "Text and Binary" in the Emacs manual (info)
+;; on how to tell Emacs whole dirs are a particular format.
+
+;; Replacing text in multiple files: find-dired, mark the files, type Q
+
+;; hi-lock is the mode that allows arbitrary highlighting of regexps.
+;; try highlight-regexp.
+
+;; Info-speedbar-browser gives you all the info nodes in a speedbar.
+
+;; cperl-mode does a better job of syntax highlighting
+
+;; M-x make-frame-on-display opens a frame on another machine, so two
+;; people can edit the same buffer.
+
+;; show-paren-mode highlights matching delimiters like () {} [] etc.
+
+;; changing faces:
+;; Sorry for the empty other mail.  Try M-x customize-group RET ansi-color
+;; RET.  There is a vector with the color names used somewhere in that
+;; buffer.  Personally, I use cornflowerblue instead of blue.  :)
+;; Alex. <alex@gnu.org>
+
+;; vc-annotate labels the lines with the author's name; just do v g in
+;; vc-dired mode.
+
+;; To open a tag in a new window instead of C-x . do C-x 5 .
+
+;; M C x when editing a shell script runs sh-execute-region
+
+;; escaping from recursive edits: abort-recursive-edit
+
+;; make a TAGS file for your install of Emacs plus the libraries locally
+;; find /usr/local/share/emacs ~/.emacs.d \( -name \*.el -o -name .emacs \) | sudo etags -
+
+;; make any old tags table:
+;; find . -name "*.[chCH]" -print | etags -
+
+;; compilation, for speedy loading:
+;; emacs -batch -f batch-byte-compile *.el
+;; byte-recompile-directory
+;; byte-compile-file
+
+;; term mode: http://www.bothner.com/~bothner/software/README.term
+;; C-c C-l for line mode (like shell mode) and C-c C-k for char mode (xterm)
+
+
+;; C-M-f goto closing brace (standing on the opening brace)
+;; C-M-b goto opening brace (standing on the closing brace)
+
+;; M-x set-goal-column
+
+;; (global-set-key (kbd "<f2> w") 'keyboard-quit)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end cheat sheet
+
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
+;;(add-to-list 'load-path "~/.emacs.d/external-packages/emacs-solargraph")
 (add-to-list 'load-path "~/.emacs.d/external-packages/god-mode")
 (load "org-mode-mods")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
+;; https://github.com/chrisdone/god-mode
+;; trying via load-path now, see above
+;;(load-file "~/.emacs.d/external-packages/god-mode/god-mode.el")
+;;(global-set-key (kbd "<escape>") 'god-local-mode)
+;;(global-set-key (kbd "<escape>") 'god-mode-all)
 
 (defun god-mode-enabled-hook ()
   "Hook function to run when god-mode enabled"
@@ -21,9 +141,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; end god-mode stuff
 
 (when window-system
+  ;; make pretty
+  ;; (defvar default-frame-alist '((background-color . "#040000")
+  ;;                               (foreground-color . "goldenrod")
+  ;;                               (cursor-color     . "red")))
   (add-to-list 'default-frame-alist '(foreground-color . "goldenrod"))
   (add-to-list 'default-frame-alist '(background-color . "black"))
-  "Custom colors for Emacs.")
+  ;;(add-to-list 'default-frame-alist '(cursor-color . "red"))
+  "Default colors for Emacs.")
+
+;; default mode gunk
+
+
+;; set the default command for M-x compile
+;;(setq compile-command "make -C ~/git/pippin nfmc")
+;;"cd .; ant -emacs -f build.xml targetName")
 
 ;; always scroll the buffer as compilation proceeds...
 (setq compilation-scroll-output t)
@@ -35,6 +167,8 @@
 ;; (global-set-key [(meta ??)] 'help) ;; finally
 ;; (global-unset-key [(meta ??)])
 
+;; from a post on slashdot: how to do away with some of the gunk
+;;(setq emacs22 (eq emacs-major-version 22))
 
 (blink-cursor-mode t)
 
@@ -99,6 +233,17 @@
   ;;(toggle-scroll-bar t)
 
   )
+
+;; check the man page for the 'date' command to format the day/time
+;; differently..
+(defun sw-display-seconds-in-status-bar ()
+  "Make the clock display the seconds so I know when cron is going to run..."
+  (interactive)
+  (setq display-time-interval 1)
+  (setq display-time-format "%c")
+  (display-time)
+  )
+
 
 ;; scroll one line at a time
 
@@ -340,6 +485,31 @@ already.  Give error if buffer is not associated with a file."
 
 (global-set-key [(control ?0)] 'unexpand-abbrev)
 
+;; found this on http://www.emacswiki.org/cgi-bin/wiki.pl?HtmlEndOfLine
+(defun html-end-of-line ()
+  "If there is an HTML tag at the end of the line, then go to start of tag.
+    Otherwise go to the real end of the line."
+  (interactive)
+  (if (or (looking-at ".*>$") ; if we're on a line that ends with a tag
+          (and (= (char-before) 62)
+               (= (point) (save-excursion
+                            (end-of-line)
+                            (point))))) ; or we're at the end of a line
+                                        ; with a tag
+      (let ((where-now (point)))
+        (narrow-to-region
+         (save-excursion
+           (beginning-of-line)
+           (point))
+         (save-excursion
+           (end-of-line)
+           (point)))
+        (end-of-line)
+        (re-search-backward "<" nil t)
+        (if (= (point) where-now)
+            (end-of-line))
+        (widen))
+    (end-of-line)))
 
 ;; prompt user for a background color; foreground and cursor colors
 ;; are hardwired.
@@ -357,6 +527,10 @@ already.  Give error if buffer is not associated with a file."
 (fset 'view-kill-ring
       [?\M-x ?h ?e ?l ?p return ?v ?k ?i ?l ?l ?- ?r ?i ?n ?g return])
 
+;; set up stuff for the sql-mysql mode
+(setq sql-mysql-program "/usr/local/mysql/bin/mysql")
+(setq sql-user "root")
+(setq sql-database "v3")
 
 ;; Try to set the history list for hi-lock (formerly p-whim-lock)
 (defvar hi-lock-face-history
@@ -536,7 +710,25 @@ the kill ring."
   (interactive "r")
   (apply-on-rectangle-region-points 'upcase-region beg end))
 
+(defun sw-xml-prettyprint ()
+  "Pretty print the farking ugly xml file we're looking at"
+  (interactive)
+  (shell-command (format "xmllint --format %s" (buffer-file-name)))
+  (switch-to-buffer (get-buffer "*Shell Command Output*"))
+  (xml-mode)
+  (delete-other-windows)
+  (toggle-read-only)
+  )
 
+(defun sw-xml-prettyprint-region ()
+  "Pretty print the farking ugly xml file we're looking at"
+  (interactive)
+  (shell-command (format "xmllint --format --nowarning -" ))
+  (switch-to-buffer (get-buffer "*Shell Command Output*"))
+  (xml-mode)
+  (delete-other-windows)
+  (toggle-read-only)
+  )
 
 (fset 'sw-xml-format-region
    [?\C-u ?\M-| ?x ?m ?l ?l ?i ?n ?g backspace ?t ?  ?- ?- ?f ?o ?r ?m ?a ?t ?  ?- ?- ?n ?o ?a ?r backspace backspace ?w ?a ?r ?n ?i ?n ?g ?  ?- return])
@@ -597,6 +789,8 @@ the kill ring."
     )
   )
 
+(load "python-settings.el")
+
 ;; New code from Dale: toggle full screen mode. Light edits from
 ;; original.
 
@@ -605,6 +799,15 @@ the kill ring."
   (set-frame-parameter frame 'fullscreen
                        (if (frame-parameter frame 'fullscreen) nil 'fullboth)))
 
+
+;; usage: type in your sql statement, then type \C-x. This wraps the
+;; query in \x commands.
+(fset 'psql-expand-output
+   [?\C-a ?\C-k ?\\ ?x return ?\C-y return ?\\ ?x return])
+;; need to add this via a hook function though
+;; (define-key sql-mode-map (kbd "x") 'psql-expand-output)
+
+;;(define-key comint-mode-map [(meta-prior)] 'comint-previous-prompt)
 
 ;; Perhaps these should be in a personal minor mode. The key bindings
 ;; were originally set to ones from Writing GNU Emacs Extensions, and
@@ -624,21 +827,11 @@ the kill ring."
 (global-set-key [\C-prior] 'comint-previous-prompt)
 (global-set-key [\C-next] 'comint-next-prompt)
 
-(defun sw-intermodal-save-buffer ()
-  "Save the buffer:
-1. If it's a shell buffer, write its contents out silently
-2. If it's a file, save the file
-3. If it's neither, beep and complain"
-  (interactive)
-  (if (derived-mode-p 'comint-mode)
-      (sw-save-buffer-invisibly (current-buffer))
-    ;; else
-    (if buffer-file-name
-	(save-buffer)
-      (beep)
-      (message "Buffer is not visiting a file"))))
 
-
+;; it ain't bound to anything, so bind it and save my pinkies another
+;; trip
+;; Nope: let's use "M-g n" instead and avoid the control key
+;;(global-set-key [(control ?`)] 'next-error)
 
 
 ;; key-chord stuff
@@ -663,6 +856,20 @@ the kill ring."
 
 (key-chord-define-global "jc" 'sw-cli)
 ;;(key-chord-define-global "JC" 'sw-cli)
+
+(defun sw-intermodal-save-buffer ()
+  "Save the buffer:
+1. If it's a shell buffer, write its contents out silently
+2. If it's a file, save the file
+3. If it's neither, beep and complain"
+  (interactive)
+  (if (derived-mode-p 'comint-mode)
+      (sw-save-buffer-invisibly (current-buffer))
+    ;; else
+    (if buffer-file-name
+	(save-buffer)
+      (beep)
+      (message "Buffer is not visiting a file"))))
 
 (key-chord-define-global "js" 'sw-intermodal-save-buffer)
 ;; Cannot turn off caps lock from Emacs, alas... so just complain
@@ -730,8 +937,11 @@ the kill ring."
 (define-prefix-command 'sw-jz-map)
 (key-chord-define-global "jz" sw-jz-map)
 
-
+;; (require 'helm)
+;; (define-key sw-jz-map (kbd "h") 'helm-command-prefix)
+;;(define-key sw-jz-map (kbd "l") 'sw-lint)
 (define-key sw-jz-map (kbd "o") 'comint-show-output)
+
 
 (defvar sw-zx-map nil
   "Another of Steve Wainstead's personal keymaps for any mode.")
@@ -752,6 +962,9 @@ the kill ring."
 (define-key sw-jx-map (kbd "u") 'winner-undo)
 (define-key sw-jx-map (kbd "r") 'winner-redo)
 
+;; doesn't work... have to figure out what the active keymap is in the
+;; frame for *Compilation*
+;;(define-key compilation-button-map "d" `other-window)
 
 ;; Dale told me this: make the Option key send 'alt'
 (setq ns-option-modifier 'alt)
@@ -767,9 +980,44 @@ the kill ring."
 	    (define-key comint-mode-map "\M-N" 'comint-next-prompt)))
 (add-hook 'comint-mode-hook 'dirtrack-mode)
 
+(defvar load-projectile-mode nil)
+(and load-projectile-mode (projectile-mode +1))
+
+;; (defvar sw-projectile-map nil "Steve's own keymap for projectile commands")
+;; (define-prefix-command 'sw-projectile-map)
+(global-set-key "\M-sp" 'projectile-command-map)
 (global-set-key "\M-ss" 'isearch-forward)
 (global-set-key "\M-sr" 'isearch-backward)
 (global-set-key "\M-sc" 'clr)
+
+(global-set-key "\M-sl" (lambda () (interactive) (select-frame-by-name "nfmc logs")))
+
+;; Update speedbar to display... a directory? Dale provided this
+;; tidbit when Speedbar was not behaving as I expected it would.
+;;(add-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+;; Nov 30 2018 was getting:
+;; Updating speedbar to: /Users/spawlowski/dev/minutes-api/...
+;; error in process filter: speedbar-update-localized-contents: Wrong type argument: stringp, nil
+;; error in process filter: Wrong type argument: stringp, nil
+;;(remove-hook 'dirtrack-directory-change-hook 'speedbar-update-localized-contents)
+
+(global-set-key "\M-s\M-s" 'speedbar-get-focus)
+
+;; (define-key sw-projectile-map (kbd "f") 'projectile-find-file)
+
+;; I wondered if shift-spacebar might make a handy prefix key. Below I
+;; coded this to ring the bell any time I hit shift-spacebar to see if
+;; it happens in my normal typing, and it did, a lot.
+;; (setq visible-bell nil)
+;; (defun sw-ding ()
+;;   "ring the bell when S-SPC is typed"
+;;   (interactive)
+;;   (setq visible-bell t)
+;;   (ding)
+;;   (setq visible-bell nil)
+;;   )
+;; (global-set-key [(shift ? )] 'sw-ding)
+;; (global-unset-key [(shift ? )])
 
 ;; I open my cheatsheet so often I may as well bind it
 (defun sw-open-cheatsheet ()
@@ -799,6 +1047,7 @@ the kill ring."
 (define-key sw-jx-map [f6] `toggle-buffer-full-filename)
 (define-key sw-jx-map (kbd "%") `query-replace)
 ;; does not work. hrmm.
+;;(define-key sw-jx-map (kbd "l") '(lambda () (interactive) (org-set-tags "learning" nil)))
 
 (defvar sw-meta-a-map nil
   "Steve Wainstead's personal keymap bound to M-a.")
@@ -818,6 +1067,13 @@ the kill ring."
 (define-prefix-command 'sw-compile-map)
 (global-set-key "\M-ac" 'sw-compile-map)
 
+(define-key sw-compile-map "t" '(lambda () "Make TAGS file" (interactive) (compile "make -C ~/git/pippin TAGS")))
+(define-key sw-compile-map "n" '(lambda () (interactive) (compile "make -C ~/git/pippin nfmc")))
+(define-key sw-compile-map "f" '(lambda () (interactive) (compile "make -C ~/git/pippin clean full")))
+(define-key sw-compile-map "k" '(lambda () (interactive) (compile "make -C ~/git/pippin kick-nfmc-services")))
+;; works, but fugly
+;;(define-key sw-compile-map "c" (defun sw-compile-templates () "make templates" (interactive) (compile "make -C ~/git/pippin clean full")))
+
 (global-set-key "\M-h" 'ns-do-hide-emacs)
 
 ;; bind uppercase equivalents to vim cursor movement keys
@@ -834,12 +1090,90 @@ the kill ring."
 
 ;;(global-set-key (kbd "M-j") 'forward-char)
 
+(defun sw-pp ()
+  "Make iTunes either pause or play"
+  (interactive)
+  (do-applescript "tell application \"iTunes\" to playpause")
+  )
 (define-key sw-meta-a-map "p" 'sw-pp)
+
+
+(defun sw-jump-to-line-from-stacktrace (stacktrace-string)
+  "Highlight line in Firefox, copy, run this command.
+
+Experimental.
+
+Example input lines from stack traces in Firefox:
+  File \"/Users/swain/ssc/nfmc-reporting/grantee_actions.py\", line 151, in sub_navigation_items
+  File \"/Users/swain/ssc/nfmc-reporting/grantee_reporting_csv.py\", line 85, in process_nfmc_upload
+  File \"/Users/swain/ssc/nfmc-reporting/greyzone.py\", line 67, in greyzone_index
+  File \"/Users/swain/ssc/nfmc-reporting/model.py\", line 96, in foo
+  File \"/Users/swain/ssc/nfmc-reporting/nfmc_chunked_form.py\", line 24, in populate
+  File \"/Users/swain/ssc/nfmc-reporting/pippin-core/pippin-fcgi.py\", line 32, in <module>
+  File \"/Users/swain/ssc/nfmc-reporting/programmatic_report_facades.py\", line 383, in status_message
+  File \"/Users/swain/ssc/nfmc-reporting/siteoutage.py\", line 150, in enforce_or_load_outages
+  File \"/Users/swain/ssc/nfmc-reporting/user_actions.py\", line 467, in post_init
+  File \"/Users/swain/ssc/pippin-core/BaseSkinTemplate.py\", line 33, in do_header
+  File \"/Users/swain/ssc/pippin-core/SkinnedTemplate.py\", line 130, in respond
+  File \"/Users/swain/ssc/pippin-core/SkinnedTemplate.py\", line 93, in respond
+  File \"/Users/swain/ssc/pippin-core/pippin.py\", line 848, in handle_request
+  File \"/Users/swain/ssc/pippin-core/pippin_fastcgi_server.py\", line 69, in handler
+  File \"/Users/swain/ssc/pippin-core/pippin_logging.py\", line 91, in wrapper
+  File \"/Users/swain/ssc/py/datasource.py\", line 938, in execute
+  File \"/Users/swain/ssc/py/htmlforms.py\", line 553, in process
+  File \"/Users/swain/ssc/py/ormapper.py\", line 630, in extension_getattr
+  File \"/Users/swain/ssc/py/sql.py\", line 580, in _query_inner
+  File \"/Users/swain/ssc/sites/nfmc/nfmc_csv_swallower.py\", line 79, in process_events
+  File \"/Users/swain/ssc/sites/nfmc/templates/skins/default.html\", line 307, in skin_header
+  File \"/Users/swain/ssc/sites/templates/skins/base.py\", line 405, in base_header
+
+Notable is the second-to-last, which is a template file. This
+might be a special case.
+
+"
+  (interactive "sString from stack trace: ")
+  ;;(setq pieces (split-string stacktrace-string "[\s,\"]"))
+
+  ;; The file path as seen in the stack trace in the browser, for
+  ;; example: /Users/swain/ssc/nfmc-reporting/navigation.py
+  ;;(setq ssc-filepath (nth 4 pieces))
+  ;; The line number reported in the line from the stack trace
+  ;;(setq lineno (nth 8 pieces))
+
+  (let
+      (input-pieces ssc-path line-num nfmcpattern is-in-mods path-prefix-string)
+    (setq input-pieces (split-string stacktrace-string "[\s,\"]"))
+    (setq ssc-path (nth 4 input-pieces))
+    (setq line-num (nth 8 input-pieces))
+    (setq nfmcpattern "/Users/swain/ssc/nfmc-reporting/")
+    (setq is-in-mods (string= nfmcpattern (substring ssc-path 0 (string-width nfmcpattern))))
+    (setq path-prefix-string "~/git/pippin")
+
+    (message "ssc-path: %s line-num: %s is-in-mods %s" ssc-path line-num is-in-mods)
+    (if is-in-mods
+    	(setq addsites "sites/")
+      (setq addsites "")
+      )
+    (setq pythonscript (format "%s/%s/%s" path-prefix-string addsites
+    			       (substring ssc-path
+    					  (string-width path-prefix-string)
+    					  (string-width ssc-path)
+    					  )))
+    (message (format "Looking for %s line number %s" pythonscript line-num))
+    ;;(find-file pythonscript)
+    ;; (goto-line (string-to-number line-num))
+    )
+  )
 
 (define-key sw-meta-a-map "j" 'sw-jmp-to-place)
 (define-key sw-meta-a-map "y" 'yank)
 (define-key sw-meta-a-map "r" 'insert-register)
 (define-key sw-meta-a-map "6" `toggle-buffer-full-filename)
+
+;; Load Dired X when Dired is loaded.
+;; https://www.emacswiki.org/emacs/DiredOmitMode
+;; (add-hook 'dired-load-hook '(lambda () (require 'dired-x)))
+;; (setq dired-omit-mode t)
 
 ;; https://www.emacswiki.org/emacs/WinnerMode
 ;; undo/redo window configurations
@@ -849,12 +1183,38 @@ the kill ring."
 (winner-mode 1)
 
 
+;; sqlup
+;; https://github.com/Trevoke/sqlup-mode.el
+;; h/t Dale for pointing it out
+;; Capitalize keywords in SQL mode
+(add-hook 'sql-mode-hook 'sqlup-mode)
+;; Capitalize keywords in an interactive session (e.g. psql)
+(add-hook 'sql-interactive-mode-hook 'sqlup-mode)
+;; Set a global keyword to use sqlup on a region
+(global-set-key (kbd "C-c u") 'sqlup-capitalize-keywords-in-region)
+
 
 ;; From magit's documentation pages
 ;; https://magit.vc/manual/magit/Installing-from-an-Elpa-Archive.html#Installing-from-an-Elpa-Archive
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
+
+(add-hook 'html-mode 'emmet-mode)
+(add-hook 'css-mode 'emmet-mode)
+
+
+(defun sw-remove-zero-width-space ()
+  "Remove that weird character from the O'Reilly books"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    ;; our argument contains some zero width whitespace thing
+    ;; U+200B	​	e2 80 8b	ZERO WIDTH SPACE
+    ;; see https://www.utf8-chartable.de/unicode-utf8-table.pl?start=8192&number=128
+    (while (re-search-forward "​" nil t)
+      (replace-match "" nil nil))))
 
 
 ;; Inspired by Steve Yegge: let me easily create trash buffers
