@@ -128,7 +128,7 @@
 						   ;;("~/wainstead/study-projects/subjects-and-progress.org" :regexp . "learning")
                ))
 
-(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "QUESTION(k)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "QUESTION(k)" "NEXT(n)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)" )))
 
 (setq org-todo-keyword-faces
       '(("DEFERRED" . (:foreground "red" :weight bold))
@@ -136,6 +136,7 @@
 		("WAITING" . "red")
 		("BLOCKED" . "red")
 		("QUESTION" . "blue")
+		("NEXT" . "green")
         ("CANCELLED" . (:foreground "red" :weight bold))))
 
 ;; Items marked DONE get a timestamp. Note that CANCELLED, DEFERRED,

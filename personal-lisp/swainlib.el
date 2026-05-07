@@ -1,6 +1,8 @@
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
 (add-to-list 'load-path "~/.emacs.d/external-packages")
 (add-to-list 'load-path "~/.emacs.d/external-packages/god-mode")
+;; Load org-mode-mods from GTD repository
+(add-to-list 'load-path "~/Documents/GTD")
 (load "org-mode-mods")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
