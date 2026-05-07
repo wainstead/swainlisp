@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -v '^\\\\.$')",
+      "Bash(emacs -batch -u spawlowski -l ~/.emacs.d/init.el)"
+    ]
+  }
+}

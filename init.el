@@ -1,24 +1,7 @@
 ;; Minimal init.el for debugging
-(require 'package)
 
-;; Add MELPA repository
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t))
-
-;; Initialize package system
-(package-initialize)
-
-;; Refresh package contents if needed
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Install and configure key-chord
-(unless (package-installed-p 'key-chord)
-  (package-install 'key-chord))
-(require 'key-chord)
-(key-chord-mode 1)
+;; Load packages (straight.el bootstrap + core packages: god-mode, key-chord, alfred-buffers)
+(load-file "~/.emacs.d/personal-lisp/packages-core.el")
 
 ;; Basic settings
 (show-paren-mode t)

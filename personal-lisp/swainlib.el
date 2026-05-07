@@ -1,9 +1,11 @@
 (add-to-list 'load-path "~/.emacs.d/personal-lisp")
-(add-to-list 'load-path "~/.emacs.d/external-packages")
-(add-to-list 'load-path "~/.emacs.d/external-packages/god-mode")
 ;; Load org-mode-mods from GTD repository
 (add-to-list 'load-path "~/Documents/GTD")
 (load "org-mode-mods")
+
+;; Load modular package declarations
+(load "packages-langs")
+(load "packages-tools")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
 
@@ -644,7 +646,7 @@ the kill ring."
 
 
 ;; key-chord stuff
-(require 'key-chord)
+;; (loaded by packages-core.el)
 (key-chord-mode 1)
 (key-chord-define-global "jv" 'next-buffer)
 (key-chord-define-global "j1" 'delete-other-windows)

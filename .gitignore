@@ -4,6 +4,7 @@ NOTES
 .emacs.desktop
 elpa
 elpa.bak
+straight
 projectile-bookmarks.eld
 bookmarks
 .emacs.desktop.lock
