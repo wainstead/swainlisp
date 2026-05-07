@@ -9,6 +9,4 @@
 (require 'claude-code-ide)
 (claude-code-ide-emacs-tools-setup)
 
-(define-key global-map (kbd "C-c C-'") 'claude-code-ide-menu)
-
 (provide 'packages-ai)

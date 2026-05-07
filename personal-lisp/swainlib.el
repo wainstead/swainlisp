@@ -782,7 +782,7 @@ the kill ring."
   (interactive)
   (find-file "~/Documents/work-journal/cheatsheet.org")
   )
-(define-key sw-jx-map (kbd "c") 'sw-open-cheatsheet)
+(define-key sw-jx-map (kbd "c") 'claude-code-ide-menu)
 (define-key sw-jx-map (kbd "o") 'comint-delete-output)
 
 ;; filched from http://nullprogram.com/blog/2010/10/06/
