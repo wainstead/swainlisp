@@ -11,3 +11,6 @@ god-mode
 eshell
 games
 .emacs.desktop-*
+org-clock-save.el
+recentf
+projects
