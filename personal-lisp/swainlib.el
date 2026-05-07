@@ -6,6 +6,7 @@
 ;; Load modular package declarations
 (load "packages-langs")
 (load "packages-tools")
+(load "packages-ai")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; god-mode stuff
 
