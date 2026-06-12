@@ -3,6 +3,9 @@
 ;; Load packages (straight.el bootstrap + core packages: god-mode, key-chord, alfred-buffers)
 (load-file "~/.emacs.d/personal-lisp/packages-core.el")
 
+;; Default font
+(set-face-attribute 'default nil :family "Menlo" :height 140)
+
 ;; Basic settings
 (show-paren-mode t)
 (column-number-mode t)
