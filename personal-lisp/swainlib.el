@@ -870,3 +870,10 @@ the kill ring."
   )
 
 (define-key sw-meta-a-map "b" 'sw-temp-buffer)
+
+(let ((machine-file (expand-file-name
+                     (format "customization-files/emacs-%s-custom.el"
+                             (system-name))
+                     user-emacs-directory)))
+  (when (file-exists-p machine-file)
+    (load-file machine-file)))

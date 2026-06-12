@@ -20,25 +20,12 @@
 ;; (setq ns-right-option-modifier 'control)
 ;; (setq insert-directory-program "gls" dired-use-ls-dired t)
 ;; (setq dired-listing-switches "-al --group-directories-first")
-;; (load-file "~/Documents/workfiles/lisp.el")
 
-;; Commented out custom-set-variables and custom-set-faces
-;; (custom-set-variables ...)
-;; (custom-set-faces ...) 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   '("/Users/spawlowski/Documents/GTD/inbox.org"
-	 "/Users/spawlowski/Documents/GTD/gtd.org"
-	 "/Users/spawlowski/Documents/GTD/jira-tickets.org"
-	 "/Users/spawlowski/Documents/GTD/someday.org"
-	 "/Users/spawlowski/Documents/GTD/kanban-project.org"
-	 "/Users/spawlowski/Documents/GTD/team-building.org"
-	 "/Users/spawlowski/Documents/GTD/reference.org"
-	 "/Users/spawlowski/.emacs.d/emacs.org"))
  '(safe-local-variable-values '((eval visual-line-mode t))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
