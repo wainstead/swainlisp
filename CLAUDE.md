@@ -8,18 +8,46 @@ A personal Emacs configuration. The primary working language is Emacs Lisp. Ther
 
 ## How Configuration Loads
 
-1. `init.el` — entry point; sets up MELPA, installs key-chord, configures macOS key modifiers, then calls:
-2. `personal-lisp/swainlib.el` — the main library (~870 lines); loads all other modules from `personal-lisp/`
-3. `personal-lisp/org-mode-mods.el` — GTD/org-mode setup (capture templates, agenda, refile, TODO keywords)
-4. Language-specific files: `python-settings.el`, `ruby-rails.el`, `java-custom.el`, `php-custom.el`
-5. Feature files: `desktop-auto-save.el`, `tail-logs.el`, `sw-sql-map.el`, `compilation-buffer-extras.el`
+1. `init.el` — entry point; bootstraps straight.el, configures macOS key modifiers, then calls:
+2. `personal-lisp/packages-core.el` — straight.el bootstrap, god-mode, key-chord, alfred-buffers
+3. `personal-lisp/swainlib.el` — the main library; loads all other modules, then at the end auto-loads `customization-files/emacs-<hostname>-custom.el` if present
+4. `personal-lisp/org-mode-mods.el` — GTD/org-mode base config (portable capture templates, agenda, refile, TODO keywords)
+5. `personal-lisp/packages-langs.el` — language modes (markdown, yaml, json, terraform, etc.)
+6. `personal-lisp/packages-tools.el` — dev tools (magit, highlight-indentation, llama)
+7. `personal-lisp/packages-ai.el` — claude-code-ide and vterm
+8. Feature files: `desktop-auto-save.el`, `tail-logs.el`, `sw-sql-map.el`
 
 ## Package Management
 
-- **No use-package or straight.el.** Packages are installed via the native ELPA system and then `require`d directly.
-- The active `elpa/` directory is gitignored and contains only key-chord. Most previously used packages are archived in `elpa.bak/`.
-- External packages that aren't on MELPA live in `external-packages/` and are loaded manually.
-- To add a package: install it via `M-x package-install`, add a `(require ...)` in the appropriate `personal-lisp/` file, and commit.
+- **straight.el** is the package manager. It bootstraps itself on first launch and clones packages from git.
+- To add a package: add `(straight-use-package 'package-name)` to the appropriate `personal-lisp/packages-*.el` file and restart Emacs. straight.el will install it automatically.
+- `external-packages/alfred-buffers.el` is the only package not on MELPA; it is loaded directly from `packages-core.el`.
+- The `straight/` directory is gitignored (managed by straight.el, not committed).
+
+## Machine-Specific Configuration
+
+Per-machine overrides live in `customization-files/emacs-<hostname>-custom.el` and are loaded automatically at the end of `swainlib.el`. The file is optional — if absent, Emacs loads cleanly with base config only.
+
+To find the hostname for a new machine: `hostname -s` in a terminal.
+
+The work laptop file (`customization-files/emacs-REM-MAC-19585-custom.el`) adds:
+- `~/Documents/workfiles/lisp.el`
+- Work org-agenda files (jira-tickets.org, kanban-project.org, team-building.org)
+- Work org-capture templates (morning checklist, Friday checklist)
+
+## New Machine Setup (Personal Laptop)
+
+After cloning or pulling `master` on a new machine:
+
+1. **Install prerequisites**: Emacs 28+, CMake (`brew install cmake`), and the Claude Code CLI (`npm install -g @anthropic-ai/claude-code`)
+2. **Launch Emacs** — straight.el will bootstrap itself and install all packages on first run. This takes a minute; watch `*Messages*` for progress.
+3. **Verify** no errors in `*Messages*` (`M-x view-echo-area-messages`)
+4. **Get the hostname**: run `hostname -s` in a terminal
+5. **Create a machine customization file**: `customization-files/emacs-<hostname>-custom.el` — can be empty or contain any machine-specific overrides (fonts, paths, org files for personal projects, etc.)
+6. **Test key-chord**: type `jv` quickly — should call `next-buffer`
+7. **Test god-mode**: type `jg` — background should change to dark navy/goldenrod
+8. **Test magit**: `M-x magit-status`
+9. Commit the new customization file to the repo
 
 ## Key Architectural Patterns
 
