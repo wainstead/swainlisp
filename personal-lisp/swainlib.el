@@ -964,6 +964,10 @@ the kill ring."
 
 ;; Dale told me this: make the Option key send 'alt'
 (setq ns-option-modifier 'alt)
+;; I don't trust keyloggers like Karabiner Elements, but don't want to
+;; give up my option key completely. So Emacs only: bind right option
+;; to control
+(setq ns-right-option-modifier 'control)
 
 (defvar sw-magit-map nil "Steve's own keymap for magit commands.")
 (define-prefix-command 'sw-magit-map)

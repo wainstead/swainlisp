@@ -102,16 +102,17 @@
 
 ;; Pilfered from
 ;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
-;; Notably 'someday.org' is not here because we do not want its items
-;; showing up in "agenda buffers"
 (setq org-agenda-files '(
 			 "~/Documents/GTD/inbox.org"
                          "~/Documents/GTD/gtd.org"
+			 "~/Documents/GTD/someday.org"
                          "~/Documents/GTD/reference.org"
 			 "~/Documents/GTD/someday.org"
 			 "~/Documents/GTD/house.org"
+			 "~/Documents/GTD/habits.org"
+			 "~/Documents/GTD/hacking-priorities.org"
                          "~/.emacs.d/emacs.org"
-                       ;;"~/wainstead/study-projects/subjects-and-progress.org"
+			 "~/Projects/study-projects/subjects-and-progress.org"
                          )
       )
 
@@ -130,7 +131,7 @@
                            ("~/.emacs.d/emacs.org" :maxlevel . 1)
                            ("~/Projects/study-projects/subjects-and-progress.org" :regexp . "learning")
 			   ))
-               ))
+               
 
 (setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)" "DEFERRED(r)" "OBSOLETE(o)")))
 
@@ -175,11 +176,12 @@
                                             "lisp"
                                             "perl"
 					    "python"
+					    "quote"
                                             "ruby"
                                             "sh"
                                             "sql"
                                             "tcl"
-											"terraform"
+					    "terraform"
                                             "typescript"
                                             "yaml"
                                             "xml"
@@ -211,6 +213,3 @@
 ;;   )
 
 
-;; Keyboard macro to cut subtree from gtd.org and paste into LOG.m1.org.
-(fset 'sw-donedone
-   (kmacro-lambda-form [?\C-c ?\C-t ?d ?\M-x ?o ?r ?g ?  ?c ?u ?t ?  ?s ?u ?b ?t ?r ?e ?e return ?\C-x ?\C-b ?L ?O ?G ?. ?m ?1 ?. ?o ?r ?g return ?\M-> ?\M-x ?o ?r ?g ?  ?p ?a ?g ?e backspace backspace ?s ?t ?e ?  ?s ?u ?b ?t ?r ?e ?e return M-right M-left M-S-right] 0 "%d"))
